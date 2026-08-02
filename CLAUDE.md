@@ -46,14 +46,31 @@ There is no test runner wired up yet. If you add one, add the script here.
 ## Layout
 
 ```
-index.html          Vite entry HTML; links src/styles/main.css and src/main.js
-src/main.js         application entry point
-src/styles/main.css Tailwind entry + theme customisation
+index.html          Vite entry HTML; the landing page markup lives here
+src/main.js         entry point — wires the page up to the pattern module
+src/pattern.js      glyph mapping + SVG pattern rendering (no DOM access)
+src/styles/main.css Tailwind entry + @theme tokens
+public/             copied to the build root as-is (favicon, fonts)
 prompts.md          the task prompts driving this repo's development
 ```
 
 `index.html` at the repo root is the Vite entry — Vite resolves `/src/...` paths
-in it against the project root, so keep those absolute-from-root.
+in it against the project root, so keep those absolute-from-root. Anything in
+`public/` is referenced from the root instead (`/favicon.svg`, `/fonts/*.woff2`).
+
+The landing page's look comes from CloudCannon's MIT-licensed
+[SendIt](https://github.com/CloudCannon/sendit-astro-template) template: primary
+`#e71818`, secondary `#ffffff`, link `#f5e30d`, Sora for headings and UI, Space
+Grotesk for body copy, `max-w-7xl` containers, `py-16 sm:py-20` sections, and a
+black band for the closing content section and footer. Those tokens live in the
+`@theme` block; reach for `primary`/`secondary`/`link` rather than hard-coding
+hex values.
+
+Both fonts are self-hosted from `public/fonts` — the page makes no external
+requests at all, so it works offline and behind a strict network policy. Only
+weights 400–700 exist as files, so do **not** use `font-extrabold` or heavier:
+the browser would synthesise the weight instead. See `public/fonts/README.md`
+for provenance and licensing.
 
 ## Conventions
 

@@ -1,1 +1,109 @@
 @import 'tailwindcss';
+
+/*
+ * Self-hosted fonts, taken from the SendIt template's own woff2 files and
+ * served from public/fonts. Both families are SIL Open Font License 1.1
+ * (Sora by Jonathan Barnbrook, Space Grotesk by Florian Karsten).
+ *
+ * Only 400-700 exist as real files, so nothing in the markup should ask for a
+ * heavier weight — the browser would synthesise it and the result looks smeared.
+ * font-display: swap keeps text readable while the files load.
+ */
+@font-face {
+  font-family: 'Sora';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/sora-v10-latin-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Sora';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/sora-v10-latin-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Sora';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/sora-v10-latin-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Sora';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/sora-v10-latin-700.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/space-grotesk-v12-latin-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/space-grotesk-v12-latin-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/space-grotesk-v12-latin-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/space-grotesk-v12-latin-700.woff2') format('woff2');
+}
+
+/*
+ * Theme tokens mirror the SendIt template's palette and typography
+ * (CloudCannon SendIt: primary #e71818, secondary #ffffff, anchor #f5e30d;
+ * Sora for headings/UI, Space Grotesk for body copy).
+ */
+@theme {
+  --color-primary: #e71818;
+  --color-secondary: #ffffff;
+  --color-link: #f5e30d;
+
+  --font-sans: 'Sora', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* SendIt sets headings in Sora at 700 with a tightened tracking. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    letter-spacing: -0.5px;
+  }
+
+  /* Body copy is Space Grotesk with generous leading. */
+  p {
+    font-family: var(--font-body);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
