@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact — crypto-patterns</title>
+    <meta
+      name="description"
+      content="How to reach the operator of crypto-patterns, and who is responsible for this site."
+    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- Fonts are self-hosted from public/fonts; see @font-face in src/styles/main.css. -->
+    <link rel="preload" href="/fonts/sora-v10-latin-700.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/space-grotesk-v12-latin-regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/src/styles/main.css" />
+  </head>
+
+  <body class="flex min-h-screen flex-col bg-white font-sans text-gray-900">
+    <a
+      href="#main"
+      class="sr-only rounded-md bg-primary px-4 py-3 text-sm font-medium text-secondary shadow-lg focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50"
+    >
+      Skip to content
+    </a>
+
+    <!-- Navigation -->
+    <header class="sticky top-0 z-40 border-b border-gray-100 bg-white/90 backdrop-blur">
+      <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8" aria-label="Main">
+        <a href="./" class="flex items-center gap-3 rounded-md focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:outline-none">
+          <svg viewBox="0 0 100 100" class="h-9 w-9" aria-hidden="true">
+            <rect x="4" y="4" width="42" height="42" rx="6" fill="#e71818" />
+            <circle cx="75" cy="25" r="21" fill="#f5e30d" />
+            <path d="M25 96 L4 54 H46 Z" fill="#111827" />
+            <path d="M75 54 L96 75 L75 96 L54 75 Z" fill="#e71818" />
+          </svg>
+          <span class="text-lg font-bold tracking-tight">crypto-patterns</span>
+        </a>
+
+        <button
+          type="button"
+          data-nav-toggle
+          aria-controls="nav-menu"
+          aria-expanded="false"
+          class="flex h-10 w-10 items-center justify-center rounded-md focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:outline-none lg:hidden"
+        >
+          <span class="sr-only">Toggle navigation</span>
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
+
+        <div
+          id="nav-menu"
+          data-nav-menu
+          class="absolute inset-x-0 top-full hidden border-b border-gray-100 bg-white px-4 pb-6 shadow-lg lg:static lg:flex lg:items-center lg:gap-8 lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none"
+        >
+          <ul class="grid gap-1 py-4 lg:flex lg:items-center lg:gap-8 lg:py-0">
+            <li><a class="block py-2 font-medium transition-colors hover:text-primary" href="./#how-it-works">How it works</a></li>
+            <li><a class="block py-2 font-medium transition-colors hover:text-primary" href="./#demo">Try it</a></li>
+            <li><a class="block py-2 font-medium transition-colors hover:text-primary" href="./#principles">Principles</a></li>
+            <li><a class="block py-2 font-medium transition-colors hover:text-primary" href="./privacy.html">Privacy</a></li>
+            <li><a class="block py-2 font-medium text-primary" href="./contact.html" aria-current="page">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main" class="flex-1">
+      <!-- Page header -->
+      <section class="relative isolate overflow-hidden bg-primary/5">
+        <div class="pointer-events-none absolute -top-64 left-1/2 -z-10 h-[700px] w-[700px] -translate-x-1/2 rounded-[45%] bg-primary/10 blur-3xl" aria-hidden="true"></div>
+        <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+          <div class="mx-auto max-w-3xl text-center">
+            <p class="mb-5 inline-flex items-center rounded-full border border-primary/20 bg-white px-4 py-1.5 text-sm font-semibold tracking-wider text-primary uppercase">
+              Get in touch
+            </p>
+            <h1 class="mb-6 text-4xl leading-tight font-bold sm:text-5xl md:text-6xl">
+              Contact <span class="text-primary">us</span>
+            </h1>
+            <p class="text-xl leading-relaxed text-gray-600">
+              By email or through the repository. There is no contact form here, and that is deliberate.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <div class="space-y-12">
+          <section>
+            <h2 class="mb-4 text-2xl font-bold sm:text-3xl">Who runs this site</h2>
+            <p class="mb-4 leading-relaxed text-gray-700">
+              These are the details required by Art. 13 GDPR, identifying the controller responsible for the processing
+              described in the privacy policy.
+            </p>
+            <address class="rounded-xl border border-gray-200 bg-gray-50 p-6 not-italic">
+              <span class="font-semibold">Michael Kügeler</span><br />
+              Stengelstr. 2<br />
+              80805 München<br />
+              Germany
+            </address>
+          </section>
+
+          <section>
+            <h2 class="mb-4 text-2xl font-bold sm:text-3xl">By email</h2>
+            <p class="mb-4 leading-relaxed text-gray-700">
+              For questions about the project, and for any request concerning your personal data — access, rectification,
+              erasure, restriction, portability, or objection under Art. 15 to 21 GDPR:
+            </p>
+            <p class="mb-4">
+              <a class="group inline-flex items-center gap-2 text-lg font-bold tracking-wider text-primary transition-all duration-300 hover:text-primary/80" href="mailto:michael@5deen.com">
+                michael@5deen.com
+                <svg class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
+            </p>
+            <p class="leading-relaxed text-gray-700">
+              What happens to the contents of your message is set out in
+              <a class="font-semibold text-primary underline" href="./privacy.html">section 5 of the privacy policy</a>.
+            </p>
+          </section>
+
+          <section>
+            <h2 class="mb-4 text-2xl font-bold sm:text-3xl">About the project itself</h2>
+            <p class="mb-4 leading-relaxed text-gray-700">
+              Bugs, feature ideas and questions about the code are better raised in the open, where the answer is useful to
+              everyone:
+            </p>
+            <ul class="space-y-3 leading-relaxed text-gray-700">
+              <li class="flex gap-3">
+                <span class="font-bold text-primary" aria-hidden="true">—</span>
+                <span><a class="font-semibold text-primary underline" href="https://github.com/5deen/crypto-patterns/issues">Open an issue</a> for a bug or a feature request.</span>
+              </li>
+              <li class="flex gap-3">
+                <span class="font-bold text-primary" aria-hidden="true">—</span>
+                <span><a class="font-semibold text-primary underline" href="https://github.com/5deen/crypto-patterns">Browse the source</a> — the site and the pattern logic are both there.</span>
+              </li>
+            </ul>
+            <p class="mt-4 leading-relaxed text-gray-700">
+              Note that GitHub is a separate service with its own privacy policy. Anything you post there is governed by
+              GitHub's terms, not by this site's.
+            </p>
+          </section>
+
+          <section class="rounded-xl border border-gray-200 bg-gray-50 p-6">
+            <h2 class="mb-3 text-lg font-bold">Why there is no contact form</h2>
+            <p class="leading-relaxed text-gray-700">
+              This is a static site with no server of its own, so a form would have to hand your message to a third-party
+              form service. That would mean another processor holding your data, another entry in the privacy policy, and
+              another cross-border transfer to disclose. A plain email address avoids all of it and reaches the same
+              inbox.
+            </p>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative bg-black pt-16 pb-12 sm:pb-16 2xl:pt-24">
+      <div class="w-full px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl 2xl:max-w-[1500px]">
+          <div class="flex flex-wrap">
+            <div class="order-2 w-full lg:order-1 lg:mr-auto lg:w-1/3">
+              <div class="mt-7 text-center sm:text-left md:mt-0 lg:text-left">
+                <a href="./" class="mb-6 inline-flex items-center gap-3 sm:mb-5">
+                  <svg viewBox="0 0 100 100" class="h-10 w-10" aria-hidden="true">
+                    <rect x="4" y="4" width="42" height="42" rx="6" fill="#e71818" />
+                    <circle cx="75" cy="25" r="21" fill="#f5e30d" />
+                    <path d="M25 96 L4 54 H46 Z" fill="#ffffff" />
+                    <path d="M75 54 L96 75 L75 96 L54 75 Z" fill="#e71818" />
+                  </svg>
+                  <span class="text-lg font-bold text-white">crypto-patterns</span>
+                </a>
+                <p class="mb-6 text-sm font-semibold text-gray-300 sm:mb-8">
+                  Text encryption method using geometric patterns.
+                </p>
+              </div>
+            </div>
+
+            <div class="order-1 w-full lg:w-2/3">
+              <div class="flex flex-wrap">
+                <div class="w-1/2 px-4 md:w-1/4 lg:w-1/3">
+                  <div class="mb-6 sm:mb-8 lg:mb-8 2xl:ml-20">
+                    <h2 class="mb-6 text-sm font-semibold text-gray-300 opacity-70">Explore</h2>
+                    <ul class="space-y-2">
+                      <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="./#how-it-works">How it works</a></li>
+                      <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="./#demo">Try it</a></li>
+                      <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="./#principles">Principles</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="w-1/2 px-4 md:w-1/4 lg:w-1/3">
+                  <div class="mb-6 sm:mb-8 lg:mb-8 2xl:ml-20">
+                    <h2 class="mb-6 text-sm font-semibold text-gray-300 opacity-70">Project</h2>
+                    <ul class="space-y-2">
+                      <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="https://github.com/5deen/crypto-patterns">Source</a></li>
+                      <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="https://github.com/5deen/crypto-patterns/issues">Issues</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="w-1/2 px-4 md:w-1/4 lg:w-1/3">
+                  <div class="mb-6 sm:mb-8 lg:mb-8 2xl:ml-20">
+                    <h2 class="mb-6 text-sm font-semibold text-gray-300 opacity-70">Legal</h2>
+                    <ul class="space-y-2">
+                      <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="./privacy.html">Privacy</a></li>
+                      <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="./contact.html">Contact</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-10 border-t border-gray-800 pt-8">
+            <p class="text-sm text-gray-400">
+              &copy; <span data-year>2026</span> crypto-patterns. MIT licensed. Layout adapted from the
+              <a class="text-link hover:underline" href="https://github.com/CloudCannon/sendit-astro-template">SendIt</a>
+              template by CloudCannon.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
