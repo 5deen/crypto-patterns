@@ -11,4 +11,4 @@ SendIt. See reference here: <https://www.tailawesome.com/resources/sendit>
 
 ## Prompt 3
 
-Create a github.io page that runs the landing page.
+Create a github.io page that runs the landing page. Setup GitHub Actions accordingly.
