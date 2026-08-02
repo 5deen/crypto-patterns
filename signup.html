@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact — crypto-patterns</title>
+    <title>Sign up — crypto-patterns</title>
     <meta
       name="description"
-      content="How to reach the operator of crypto-patterns, and who is responsible for this site."
+      content="Request access to the crypto-patterns beta. The demo stays open to everyone; the beta list is for early access to what comes next."
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <!-- Fonts are self-hosted from public/fonts; see @font-face in src/styles/main.css. -->
@@ -61,6 +61,7 @@
           </ul>
           <a
             href="./signup.html"
+            aria-current="page"
             class="inline-flex items-center rounded-xl border border-primary bg-primary/10 px-6 py-3 text-base text-primary transition-all duration-300 hover:bg-primary hover:text-secondary focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:outline-none"
           >
             Sign up
@@ -76,83 +77,74 @@
         <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
           <div class="mx-auto max-w-3xl text-center">
             <p class="mb-5 inline-flex items-center rounded-full border border-primary/20 bg-slate-900 px-4 py-1.5 text-sm font-semibold tracking-wider text-primary uppercase">
-              Get in touch
+              Beta
             </p>
             <h1 class="mb-6 text-4xl leading-tight font-bold sm:text-5xl md:text-6xl">
-              Contact <span class="gradient-text">us</span>
+              Join the <span class="gradient-text">beta</span>
             </h1>
             <p class="text-xl leading-relaxed text-slate-400">
-              By email or through the repository. There is no contact form here, and that is deliberate.
+              The demo is open to everyone — no account needed. The beta list is for what comes after it.
             </p>
           </div>
         </div>
       </section>
 
       <div class="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <!--
+          Shown until AIRTABLE_BETA_FORM_URL is filled in in src/config.js.
+          main.js hides it and enables the button once a URL is configured.
+        -->
+        <aside data-beta-unconfigured class="mb-12 rounded-xl border-2 border-primary bg-primary/5 p-6">
+          <h2 class="mb-2 text-lg font-bold text-primary">Not connected yet</h2>
+          <p class="leading-relaxed text-slate-300">
+            The beta form is not linked up. Create a form on the <strong>Beta</strong> base in Airtable, copy its shared
+            form URL, and paste it into <code class="rounded bg-slate-800 px-1.5 py-0.5 font-mono text-sm">AIRTABLE_BETA_FORM_URL</code>
+            in <code class="rounded bg-slate-800 px-1.5 py-0.5 font-mono text-sm">src/config.js</code>. This notice
+            disappears on its own once it is set.
+          </p>
+        </aside>
+
         <div class="space-y-12">
-          <section>
-            <h2 class="mb-4 text-2xl font-bold sm:text-3xl">Who runs this site</h2>
-            <p class="mb-4 leading-relaxed text-slate-300">
-              These are the details required by Art. 13 GDPR, identifying the controller responsible for the processing
-              described in the privacy policy.
+          <section class="rounded-2xl bg-slate-900 p-6 shadow-xl ring-1 ring-slate-800 sm:p-10">
+            <h2 class="mb-4 text-2xl font-bold sm:text-3xl">Request access</h2>
+            <p class="mb-8 leading-relaxed text-slate-300">
+              Sign-up runs on an Airtable form. Following the link opens Airtable in a new tab — this site does not
+              collect anything itself, and nothing you enter passes through it.
             </p>
-            <address class="rounded-xl border border-slate-800 bg-slate-900 p-6 not-italic">
-              <span class="font-semibold">Michael Kügeler</span><br />
-              Stengelstr. 2<br />
-              80805 München<br />
-              Germany
-            </address>
+
+            <a
+              data-beta-form
+              href="#"
+              aria-disabled="true"
+              class="group inline-flex items-center gap-2 rounded-2xl border border-indigo-600 bg-indigo-600 px-8 py-4 text-lg font-bold tracking-wider text-white transition-all duration-300 ease-in-out hover:border-indigo-500 hover:bg-indigo-500 aria-disabled:pointer-events-none aria-disabled:opacity-40"
+            >
+              Open the beta form
+              <svg class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
           </section>
 
           <section>
-            <h2 class="mb-4 text-2xl font-bold sm:text-3xl">By email</h2>
+            <h2 class="mb-4 text-2xl font-bold sm:text-3xl">What happens to what you enter</h2>
             <p class="mb-4 leading-relaxed text-slate-300">
-              For questions about the project, and for any request concerning your personal data — access, rectification,
-              erasure, restriction, portability, or objection under Art. 15 to 21 GDPR:
-            </p>
-            <p class="mb-4">
-              <a class="group inline-flex items-center gap-2 text-lg font-bold tracking-wider text-primary transition-all duration-300 hover:text-primary/80" href="mailto:michael@5deen.com">
-                michael@5deen.com
-                <svg class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
+              Airtable, Inc. receives and stores your submission — it is the processor for the beta list, and it is based
+              in the United States, so signing up involves a transfer to a third country. Section 6 of the
+              <a class="font-semibold text-primary underline" href="./privacy.html">privacy policy</a> sets out the
+              detail: what is collected, the legal basis, how long it is kept, and how to have it deleted.
             </p>
             <p class="leading-relaxed text-slate-300">
-              What happens to the contents of your message is set out in
-              <a class="font-semibold text-primary underline" href="./privacy.html">section 5 of the privacy policy</a>.
-            </p>
-          </section>
-
-          <section>
-            <h2 class="mb-4 text-2xl font-bold sm:text-3xl">About the project itself</h2>
-            <p class="mb-4 leading-relaxed text-slate-300">
-              Bugs, feature ideas and questions about the code are better raised in the open, where the answer is useful to
-              everyone:
-            </p>
-            <ul class="space-y-3 leading-relaxed text-slate-300">
-              <li class="flex gap-3">
-                <span class="font-bold text-primary" aria-hidden="true">—</span>
-                <span><a class="font-semibold text-primary underline" href="https://github.com/5deen/crypto-patterns/issues">Open an issue</a> for a bug or a feature request.</span>
-              </li>
-              <li class="flex gap-3">
-                <span class="font-bold text-primary" aria-hidden="true">—</span>
-                <span><a class="font-semibold text-primary underline" href="https://github.com/5deen/crypto-patterns">Browse the source</a> — the site and the pattern logic are both there.</span>
-              </li>
-            </ul>
-            <p class="mt-4 leading-relaxed text-slate-300">
-              Note that GitHub is a separate service with its own privacy policy. Anything you post there is governed by
-              GitHub's terms, not by this site's.
+              You can ask for your entry to be removed at any time, without giving a reason, by writing to the address on
+              the <a class="font-semibold text-primary underline" href="./contact.html">contact page</a>.
             </p>
           </section>
 
           <section class="rounded-xl border border-slate-800 bg-slate-900 p-6">
-            <h2 class="mb-3 text-lg font-bold">Why there is no contact form</h2>
+            <h2 class="mb-3 text-lg font-bold">You do not need an account to try it</h2>
             <p class="leading-relaxed text-slate-300">
-              This is a static site with no server of its own, so a form would have to hand your message to a third-party
-              form service. That would mean another processor holding your data, another entry in the privacy policy, and
-              another cross-border transfer to disclose. A plain email address avoids all of it and reaches the same
-              inbox.
+              The pattern demo on the home page is open to everyone and always will be. It runs entirely in your browser,
+              so gating it behind a login would be theatre — the code is already on your machine either way. Signing up
+              gets you early access to what comes next, not access to the demo.
             </p>
           </section>
         </div>

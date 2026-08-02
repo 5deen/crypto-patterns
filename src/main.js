@@ -1,4 +1,5 @@
 import { ALPHABET, mapCharacter, renderGlyph, renderPattern } from './pattern.js';
+import { AIRTABLE_BETA_FORM_URL } from './config.js';
 
 /** Mobile navigation toggle. */
 function initNav() {
@@ -102,6 +103,28 @@ function initCounters() {
   for (const counter of counters) observer.observe(counter);
 }
 
+/**
+ * Point the beta button at the Airtable form, once one is configured.
+ *
+ * The button ships disabled with a visible "not connected" notice beside it, so
+ * an unconfigured deploy shows an honest message rather than a link to nowhere.
+ * `noopener noreferrer` keeps the new tab from reaching back into this one and
+ * stops the referrer — which would name this site — going to Airtable.
+ */
+function initBetaForm() {
+  const link = document.querySelector('[data-beta-form]');
+  const notice = document.querySelector('[data-beta-unconfigured]');
+  if (!link) return;
+
+  if (!AIRTABLE_BETA_FORM_URL) return;
+
+  link.href = AIRTABLE_BETA_FORM_URL;
+  link.removeAttribute('aria-disabled');
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  if (notice) notice.hidden = true;
+}
+
 /** Keep the footer copyright year current. */
 function initYear() {
   const year = document.querySelector('[data-year]');
@@ -113,4 +136,5 @@ initGlyphLegend();
 initStaticPatterns();
 initDemo();
 initCounters();
+initBetaForm();
 initYear();

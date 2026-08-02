@@ -49,6 +49,9 @@ There is no test runner wired up yet. If you add one, add the script here.
 index.html          Vite entry HTML; the landing page markup lives here
 privacy.html        GDPR privacy policy
 contact.html        contact details / controller identification
+signup.html         beta list — links out to an Airtable form
+signin.html         states plainly that accounts are not open yet
+src/config.js       AIRTABLE_BETA_FORM_URL, the one value to fill in
 src/main.js         entry point — wires the page up to the pattern module
 src/pattern.js      glyph mapping + SVG pattern rendering (no DOM access)
 src/styles/main.css Tailwind entry + @theme tokens
@@ -136,9 +139,33 @@ style. Two things about them are load-bearing:
   If you add anything of that kind, update `privacy.html` in the same change.
 
 There is no shared layout — the header and footer markup is duplicated across
-the three pages. Editing navigation means editing all three. Sub-page links
-back into the landing page's sections are written `./#demo`, since those
-anchors do not exist on the sub-page itself.
+all five pages. Editing navigation means editing all five. Sub-page links back
+into the landing page's sections are written `./#demo`, since those anchors do
+not exist on the sub-page itself.
+
+## The beta list
+
+There is no login and no backend. `signup.html` **links** to an Airtable form;
+`signin.html` says accounts are not open. Three constraints hold this together:
+
+- **Never use the Airtable API from this site.** It needs a token, and on a
+  static site the token ships inside the JS bundle — published to a public repo
+  and a public site, handing anyone read/write on the base. The shared form URL
+  in `src/config.js` is not a credential: it accepts submissions and exposes
+  nothing else.
+- **Link the form, never embed it.** An `<iframe>` would make every visitor's
+  browser call `airtable.com` on page load, disclosing their IP to a third
+  party whether or not they sign up, and falsifying the "no external requests"
+  claim in `privacy.html`. A verification script asserts that loading
+  `signup.html` produces zero requests to Airtable.
+- **Do not gate the demo.** Pattern generation runs client-side, so a login in
+  front of it hides a button rather than protecting anything. Making the gate
+  real would mean sending the phrase to a server, which section 3 of the
+  privacy policy says never happens.
+
+With `AIRTABLE_BETA_FORM_URL` empty, the button is disabled and a visible
+notice explains what is missing — an unconfigured deploy says so rather than
+offering a link to nowhere.
 
 ## Conventions
 
