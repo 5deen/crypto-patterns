@@ -9,12 +9,9 @@
       content="crypto-patterns turns a text password into a grid of coloured geometric shapes. The grid is public; only the mapping is secret."
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Fonts are self-hosted from public/fonts; see @font-face in src/styles/main.css. -->
+    <link rel="preload" href="/fonts/sora-v10-latin-700.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/space-grotesk-v12-latin-regular.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="/src/styles/main.css" />
   </head>
 
@@ -93,13 +90,13 @@
             <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
               <a
                 href="#demo"
-                class="group inline-flex items-center rounded-2xl border border-primary bg-primary px-8 py-4 text-lg font-extrabold tracking-wider text-secondary transition-all duration-300 ease-in-out hover:bg-secondary hover:text-primary"
+                class="group inline-flex items-center rounded-2xl border border-primary bg-primary px-8 py-4 text-lg font-bold tracking-wider text-secondary transition-all duration-300 ease-in-out hover:bg-secondary hover:text-primary"
               >
                 Try it now
               </a>
               <a
                 href="#how-it-works"
-                class="group inline-flex items-center gap-2 border-0 bg-transparent text-lg font-extrabold tracking-wider text-primary transition-all duration-300 hover:text-primary/80"
+                class="group inline-flex items-center gap-2 border-0 bg-transparent text-lg font-bold tracking-wider text-primary transition-all duration-300 hover:text-primary/80"
               >
                 See how it works
                 <svg class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -197,7 +194,7 @@
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div class="flex flex-col items-center gap-8 lg:flex-row lg:gap-12">
             <div class="relative z-20 order-2 w-full lg:order-1 lg:w-1/2">
-              <p class="mb-4 text-sm font-extrabold tracking-widest text-primary uppercase">Step one</p>
+              <p class="mb-4 text-sm font-bold tracking-widest text-primary uppercase">Step one</p>
               <h3 class="pb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl lg:text-5xl">
                 Every character becomes a shape
               </h3>
@@ -208,7 +205,7 @@
               </p>
               <a
                 href="#demo"
-                class="group mt-6 inline-flex items-center gap-2 text-lg font-extrabold tracking-wider text-primary transition-all duration-300 hover:text-primary/80"
+                class="group mt-6 inline-flex items-center gap-2 text-lg font-bold tracking-wider text-primary transition-all duration-300 hover:text-primary/80"
               >
                 See the mapping
                 <svg class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -244,7 +241,7 @@
               </div>
             </div>
             <div class="relative z-20 w-full lg:w-1/2">
-              <p class="mb-4 text-sm font-extrabold tracking-widest text-primary uppercase">Step two</p>
+              <p class="mb-4 text-sm font-bold tracking-widest text-primary uppercase">Step two</p>
               <h3 class="pb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl lg:text-5xl">
                 The grid is public by design
               </h3>
@@ -262,7 +259,7 @@
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div class="flex flex-col items-center gap-8 lg:flex-row lg:gap-12">
             <div class="relative z-20 order-2 w-full lg:order-1 lg:w-1/2">
-              <p class="mb-4 text-sm font-extrabold tracking-widest text-primary uppercase">Step three</p>
+              <p class="mb-4 text-sm font-bold tracking-widest text-primary uppercase">Step three</p>
               <h3 class="pb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl lg:text-5xl">
                 Verification is recognition
               </h3>
@@ -303,7 +300,7 @@
           </div>
 
           <div class="mx-auto max-w-3xl rounded-2xl bg-white p-6 shadow-xl ring-1 ring-gray-900/5 sm:p-10">
-            <label for="phrase" class="mb-3 block text-sm font-extrabold tracking-widest text-gray-500 uppercase">
+            <label for="phrase" class="mb-3 block text-sm font-bold tracking-widest text-gray-500 uppercase">
               Your phrase
             </label>
             <input
