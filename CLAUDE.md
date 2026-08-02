@@ -47,6 +47,8 @@ There is no test runner wired up yet. If you add one, add the script here.
 
 ```
 index.html          Vite entry HTML; the landing page markup lives here
+privacy.html        GDPR privacy policy
+contact.html        contact details / controller identification
 src/main.js         entry point — wires the page up to the pattern module
 src/pattern.js      glyph mapping + SVG pattern rendering (no DOM access)
 src/styles/main.css Tailwind entry + @theme tokens
@@ -91,6 +93,25 @@ leave the project site and land on the user's root Pages domain. The `base`
 value applies to `npm run dev` and `npm run preview` as well, so both serve from
 `/crypto-patterns/` and match production. Renaming the repo means changing that
 one line.
+
+## Legal pages
+
+`privacy.html` and `contact.html` are plain static pages in the same SendIt
+style. Two things about them are load-bearing:
+
+- **Each page is a separate Vite entry.** Vite only discovers `index.html` by
+  itself, so any new page has to be added to `build.rollupOptions.input` in
+  `vite.config.js` or it is silently missing from `dist/`.
+- **The privacy policy makes factual claims about the site**: no cookies, no
+  analytics, no external requests, nothing in `localStorage`/`sessionStorage`,
+  and the demo phrase never leaving the browser. Adding an embed, a CDN asset,
+  a font service, an analytics snippet or a form would falsify one of them.
+  If you add anything of that kind, update `privacy.html` in the same change.
+
+There is no shared layout — the header and footer markup is duplicated across
+the three pages. Editing navigation means editing all three. Sub-page links
+back into the landing page's sections are written `./#demo`, since those
+anchors do not exist on the sub-page itself.
 
 ## Conventions
 

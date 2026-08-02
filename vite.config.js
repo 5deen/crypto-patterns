@@ -1,3 +1,4 @@
+import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -10,4 +11,16 @@ export default defineConfig({
   // and this is the one line to change.
   base: '/crypto-patterns/',
   plugins: [tailwindcss()],
+
+  // Multi-page build. Vite only picks up index.html on its own, so every other
+  // entry HTML has to be listed here or it is silently left out of dist/.
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(import.meta.dirname, 'index.html'),
+        privacy: resolve(import.meta.dirname, 'privacy.html'),
+        contact: resolve(import.meta.dirname, 'contact.html'),
+      },
+    },
+  },
 });
