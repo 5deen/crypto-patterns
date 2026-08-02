@@ -16,3 +16,7 @@ Create a github.io page that runs the landing page. Setup GitHub Actions accordi
 ## Prompt 4
 
 Add a GDPR conform privacy and contact site to the web page. 
+
+## Prompt 5
+
+Use the color scheme and logo from <https://github.com/5deen/5deen.github.io> to update the css scheme of the page.
