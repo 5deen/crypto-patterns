@@ -51,6 +51,8 @@ src/main.js         entry point — wires the page up to the pattern module
 src/pattern.js      glyph mapping + SVG pattern rendering (no DOM access)
 src/styles/main.css Tailwind entry + @theme tokens
 public/             copied to the build root as-is (favicon, fonts)
+vite.config.js      Tailwind plugin + the GitHub Pages `base` path
+.github/workflows/  GitHub Actions; deploy.yml publishes to Pages
 prompts.md          the task prompts driving this repo's development
 ```
 
@@ -71,6 +73,24 @@ requests at all, so it works offline and behind a strict network policy. Only
 weights 400–700 exist as files, so do **not** use `font-extrabold` or heavier:
 the browser would synthesise the weight instead. See `public/fonts/README.md`
 for provenance and licensing.
+
+## Deployment
+
+The site is published to GitHub Pages at
+<https://5deen.github.io/crypto-patterns/> by `.github/workflows/deploy.yml`,
+which builds on every push to `main` and uploads `dist/` as a Pages artifact.
+The Pages source in repository settings must be set to **GitHub Actions**, not
+"Deploy from a branch".
+
+Because a project repo is served from a subpath rather than the domain root,
+`vite.config.js` sets `base: '/crypto-patterns/'`. Vite rewrites the absolute
+URLs it owns — script and stylesheet tags, `<link rel="preload">`, and `url()`
+in CSS — but **not** plain `href` attributes on anchors. So an in-site link must
+be written relative (`href="./"`, `href="#demo"`); `href="/"` would silently
+leave the project site and land on the user's root Pages domain. The `base`
+value applies to `npm run dev` and `npm run preview` as well, so both serve from
+`/crypto-patterns/` and match production. Renaming the repo means changing that
+one line.
 
 ## Conventions
 
