@@ -62,13 +62,40 @@ prompts.md          the task prompts driving this repo's development
 in it against the project root, so keep those absolute-from-root. Anything in
 `public/` is referenced from the root instead (`/favicon.svg`, `/fonts/*.woff2`).
 
-The landing page's look comes from CloudCannon's MIT-licensed
-[SendIt](https://github.com/CloudCannon/sendit-astro-template) template: primary
-`#e71818`, secondary `#ffffff`, link `#f5e30d`, Sora for headings and UI, Space
-Grotesk for body copy, `max-w-7xl` containers, `py-16 sm:py-20` sections, and a
-black band for the closing content section and footer. Those tokens live in the
-`@theme` block; reach for `primary`/`secondary`/`link` rather than hard-coding
-hex values.
+The **layout** comes from CloudCannon's MIT-licensed
+[SendIt](https://github.com/CloudCannon/sendit-astro-template) template —
+`max-w-7xl` containers, `py-16 sm:py-20` sections, alternating feature rows, a
+darker band for the closing content section, and the `title` + accented-suffix
+heading pattern.
+
+The **colours** come from the [5deen design
+system](https://github.com/5deen/5deen.github.io): a dark slate surface with
+indigo and pink accents.
+
+| Token | Value | Used for |
+| --- | --- | --- |
+| `primary` | `#818cf8` indigo-400 | accent text, borders, tinted backgrounds |
+| `secondary` | `#ffffff` | contrast colour on top of `primary` |
+| `link` | `#ec4899` pink-500 | the far end of the gradient |
+| `brand` | `#f54905` | the orange of the 5deen logo |
+
+Neutrals use Tailwind's own slate scale, as 5deen does: `slate-950` page,
+`slate-900` panels, `slate-800` hairlines, `slate-200`/`slate-300`/`slate-400`
+text, white headings (set in `@layer base`, so a utility on the element still
+wins).
+
+Reach for the token names rather than hex values. Two contrast constraints are
+load-bearing and easy to undo by accident:
+
+- `primary` is indigo-**400**, not the indigo-500 that 5deen uses. As text on a
+  `slate-900` panel indigo-500 measures 3.99:1, under the 4.5:1 WCAG AA floor.
+- Button *fills* therefore use `bg-indigo-600` in the markup, not `bg-primary`,
+  so their white labels pass. White on indigo-500 is 4.47:1 — also just short.
+- Do not drop below `slate-400` for body or caption text on a panel;
+  `slate-500` measures 3.69:1 at the sizes used here.
+
+`.gradient-text` (in `main.css`) is 5deen's signature indigo→pink clip, used on
+the accented word in section headings.
 
 Both fonts are self-hosted from `public/fonts` — the page makes no external
 requests at all, so it works offline and behind a strict network policy. Only
@@ -120,6 +147,11 @@ anchors do not exist on the sub-page itself.
   `src/styles/main.css` only for `@theme` tokens and genuine one-offs.
 - Keep the glyph mapping and pattern-generation logic free of DOM access so it
   stays testable and reusable outside the browser.
+- `COLORS` in `src/pattern.js` must stay six entries, all light enough to read
+  against the dark cell. The landing page quotes 6 colours and 48 glyph cells as
+  facts about that array, and a dark entry would render an invisible glyph —
+  which would quietly break the "one wrong character is visible" property the
+  whole scheme depends on.
 
 ## Notes
 

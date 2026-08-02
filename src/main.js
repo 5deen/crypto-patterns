@@ -28,10 +28,10 @@ function initGlyphLegend() {
     .map((letter) => {
       const { shape } = mapCharacter(letter);
       return `
-        <div class="flex flex-col items-center gap-2 rounded-xl border border-gray-100 p-4">
+        <div class="flex flex-col items-center gap-2 rounded-xl border border-slate-800 p-4">
           <div class="w-12">${renderGlyph(letter)}</div>
           <span class="font-mono text-lg font-bold">${letter}</span>
-          <span class="text-xs tracking-wider text-gray-500 uppercase">${shape}</span>
+          <span class="text-xs tracking-wider text-slate-400 uppercase">${shape}</span>
         </div>`;
     })
     .join('');
@@ -55,7 +55,7 @@ function initDemo() {
   const draw = () => {
     const phrase = input.value.trim();
     if (!phrase) {
-      output.innerHTML = '<p class="py-12 text-center text-gray-400">Type a phrase to see its pattern.</p>';
+      output.innerHTML = '<p class="py-12 text-center text-slate-400">Type a phrase to see its pattern.</p>';
       return;
     }
     output.innerHTML = renderPattern(phrase, { title: `Pattern for the phrase ${phrase}` });
