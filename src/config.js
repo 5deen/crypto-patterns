@@ -1,0 +1,21 @@
+/*
+ * Site configuration.
+ *
+ * AIRTABLE_BETA_FORM_URL is the public URL of the "crypto-pattern-registration"
+ * form on the Beta base. It is a public URL, not a credential: it accepts
+ * submissions and exposes nothing else. That is the whole reason this site uses
+ * a form URL rather than the Airtable API. An API token in a static site would
+ * ship inside the JavaScript bundle, published to a public repo and a public
+ * site, handing anyone read/write on the base.
+ *
+ * The form is *linked*, never embedded in an iframe. An embed would make the
+ * page call airtable.com on load, disclosing every visitor's IP address to
+ * Airtable whether or not they ever sign up — and would falsify the "no
+ * external requests" claim in privacy.html. A link only reaches Airtable once
+ * someone chooses to follow it.
+ *
+ * If this is ever emptied, the sign-up page falls back to a "not yet connected"
+ * notice with the button disabled, rather than presenting a link that goes
+ * nowhere.
+ */
+export const AIRTABLE_BETA_FORM_URL = 'https://airtable.com/appHvRGiXkRAxAJbB/pagnktZuEdUx0OR0c/form';
