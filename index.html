@@ -15,23 +15,22 @@
     <link rel="stylesheet" href="/src/styles/main.css" />
   </head>
 
-  <body class="flex min-h-screen flex-col bg-white font-sans text-gray-900">
+  <body class="flex min-h-screen flex-col bg-slate-950 font-sans text-slate-200">
     <a
       href="#main"
-      class="sr-only rounded-md bg-primary px-4 py-3 text-sm font-medium text-secondary shadow-lg focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50"
+      class="sr-only rounded-md bg-indigo-600 px-4 py-3 text-sm font-medium text-white shadow-lg focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50"
     >
       Skip to content
     </a>
 
     <!-- Navigation -->
-    <header class="sticky top-0 z-40 border-b border-gray-100 bg-white/90 backdrop-blur">
+    <header class="sticky top-0 z-40 border-b border-slate-800 bg-slate-950/80 backdrop-blur">
       <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8" aria-label="Main">
         <a href="./" class="flex items-center gap-3 rounded-md focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:outline-none">
-          <svg viewBox="0 0 100 100" class="h-9 w-9" aria-hidden="true">
-            <rect x="4" y="4" width="42" height="42" rx="6" fill="#e71818" />
-            <circle cx="75" cy="25" r="21" fill="#f5e30d" />
-            <path d="M25 96 L4 54 H46 Z" fill="#111827" />
-            <path d="M75 54 L96 75 L75 96 L54 75 Z" fill="#e71818" />
+          <svg viewBox="0 0 300 300" class="h-9 w-9" aria-hidden="true">
+            <circle cx="150" cy="150" r="150" fill="#f54905" />
+            <circle cx="150" cy="150" r="90" fill="#ffffff" />
+            <rect x="50" y="50" width="100" height="100" fill="#f54905" />
           </svg>
           <span class="text-lg font-bold tracking-tight">crypto-patterns</span>
         </a>
@@ -52,7 +51,7 @@
         <div
           id="nav-menu"
           data-nav-menu
-          class="absolute inset-x-0 top-full hidden border-b border-gray-100 bg-white px-4 pb-6 shadow-lg lg:static lg:flex lg:items-center lg:gap-8 lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none"
+          class="absolute inset-x-0 top-full hidden border-b border-slate-800 bg-slate-950 px-4 pb-6 shadow-lg lg:static lg:flex lg:items-center lg:gap-8 lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none"
         >
           <ul class="grid gap-1 py-4 lg:flex lg:items-center lg:gap-8 lg:py-0">
             <li><a class="block py-2 font-medium transition-colors hover:text-primary" href="#how-it-works">How it works</a></li>
@@ -63,7 +62,7 @@
           </ul>
           <a
             href="#demo"
-            class="inline-flex items-center rounded-xl border border-primary bg-secondary px-6 py-3 text-base text-primary transition-all duration-300 hover:bg-primary hover:text-secondary focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:outline-none"
+            class="inline-flex items-center rounded-xl border border-primary bg-transparent px-6 py-3 text-base text-primary transition-all duration-300 hover:bg-primary hover:text-secondary focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:outline-none"
           >
             Generate a pattern
           </a>
@@ -79,20 +78,20 @@
 
         <div class="mx-auto max-w-[1500px] px-6 pt-16 pb-24 sm:pb-32 lg:flex lg:px-8 lg:py-32">
           <div class="mx-auto max-w-2xl shrink-0 lg:mx-0 lg:pt-8">
-            <p class="mb-5 inline-flex items-center rounded-full border border-primary/20 bg-white px-4 py-1.5 text-sm font-semibold tracking-wider text-primary uppercase">
+            <p class="mb-5 inline-flex items-center rounded-full border border-primary/20 bg-slate-900 px-4 py-1.5 text-sm font-semibold tracking-wider text-primary uppercase">
               Pattern-based verification
             </p>
             <h1 class="mb-6 text-4xl leading-tight font-bold sm:text-5xl md:text-6xl lg:text-7xl">
-              Passwords you can <span class="text-primary">see</span>.
+              Passwords you can <span class="gradient-text">see</span>.
             </h1>
-            <p class="text-pretty text-xl leading-relaxed text-gray-600">
+            <p class="text-pretty text-xl leading-relaxed text-slate-400">
               crypto-patterns maps every character of a phrase to a coloured geometric shape and lays them out on a grid.
               Type the phrase again and the same grid comes back — pixel for pixel. Type it wrong and the pattern breaks.
             </p>
             <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
               <a
                 href="#demo"
-                class="group inline-flex items-center rounded-2xl border border-primary bg-primary px-8 py-4 text-lg font-bold tracking-wider text-secondary transition-all duration-300 ease-in-out hover:bg-secondary hover:text-primary"
+                class="group inline-flex items-center rounded-2xl border border-indigo-600 bg-indigo-600 px-8 py-4 text-lg font-bold tracking-wider text-white transition-all duration-300 ease-in-out hover:border-indigo-500 hover:bg-indigo-500"
               >
                 Try it now
               </a>
@@ -109,32 +108,32 @@
           </div>
 
           <div class="mx-auto mt-16 max-w-2xl sm:mt-24 lg:mt-0 lg:mr-0 lg:ml-10 lg:max-w-none lg:flex-none xl:ml-24">
-            <figure class="rounded-2xl bg-white p-6 shadow-xl ring-1 ring-gray-900/5 sm:p-8">
+            <figure class="rounded-2xl bg-slate-900 p-6 shadow-xl ring-1 ring-slate-800 sm:p-8">
               <div class="mx-auto w-full max-w-md">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-label="The pattern for the phrase geometric" class="h-auto w-full">
                   <title>The pattern for the phrase &quot;geometric&quot;</title>
-                  <rect x="0" y="0" width="100" height="100" rx="12" fill="#ffffff" stroke="#e5e7eb" />
-                  <g transform="translate(0 0)"><circle cx="50" cy="50" r="26" fill="none" stroke="#e71818" stroke-width="14" /></g>
-                  <rect x="110" y="0" width="100" height="100" rx="12" fill="#ffffff" stroke="#e5e7eb" />
-                  <g transform="translate(110 0)"><path d="M50 14 L81 32 V68 L50 86 L19 68 V32 Z" fill="#e71818" /></g>
-                  <rect x="220" y="0" width="100" height="100" rx="12" fill="#ffffff" stroke="#e5e7eb" />
-                  <g transform="translate(220 0)"><circle cx="50" cy="50" r="26" fill="none" stroke="#f5e30d" stroke-width="14" /></g>
-                  <rect x="0" y="110" width="100" height="100" rx="12" fill="#ffffff" stroke="#e5e7eb" />
-                  <g transform="translate(0 110)"><path d="M50 14 L81 32 V68 L50 86 L19 68 V32 Z" fill="#f5e30d" /></g>
-                  <rect x="110" y="110" width="100" height="100" rx="12" fill="#ffffff" stroke="#e5e7eb" />
-                  <g transform="translate(110 110)"><path d="M50 14 L81 32 V68 L50 86 L19 68 V32 Z" fill="#e71818" /></g>
-                  <rect x="220" y="110" width="100" height="100" rx="12" fill="#ffffff" stroke="#e5e7eb" />
-                  <g transform="translate(220 110)"><path d="M50 14 L86 50 L50 86 L14 50 Z" fill="#111827" /></g>
-                  <rect x="0" y="220" width="100" height="100" rx="12" fill="#ffffff" stroke="#e5e7eb" />
-                  <g transform="translate(0 220)"><rect x="20" y="20" width="60" height="60" rx="6" fill="#111827" /></g>
-                  <rect x="110" y="220" width="100" height="100" rx="12" fill="#ffffff" stroke="#e5e7eb" />
-                  <g transform="translate(110 220)"><circle cx="50" cy="50" r="32" fill="#f5e30d" /></g>
-                  <rect x="220" y="220" width="100" height="100" rx="12" fill="#ffffff" stroke="#e5e7eb" />
-                  <g transform="translate(220 220)"><path d="M50 16 L84 80 H16 Z" fill="#e71818" /></g>
+                  <rect x="0" y="0" width="100" height="100" rx="12" fill="#020617" stroke="#1e293b" />
+                  <g transform="translate(0 0)"><circle cx="50" cy="50" r="26" fill="none" stroke="#6366f1" stroke-width="14" /></g>
+                  <rect x="110" y="0" width="100" height="100" rx="12" fill="#020617" stroke="#1e293b" />
+                  <g transform="translate(110 0)"><path d="M50 14 L81 32 V68 L50 86 L19 68 V32 Z" fill="#6366f1" /></g>
+                  <rect x="220" y="0" width="100" height="100" rx="12" fill="#020617" stroke="#1e293b" />
+                  <g transform="translate(220 0)"><circle cx="50" cy="50" r="26" fill="none" stroke="#ec4899" stroke-width="14" /></g>
+                  <rect x="0" y="110" width="100" height="100" rx="12" fill="#020617" stroke="#1e293b" />
+                  <g transform="translate(0 110)"><path d="M50 14 L81 32 V68 L50 86 L19 68 V32 Z" fill="#ec4899" /></g>
+                  <rect x="110" y="110" width="100" height="100" rx="12" fill="#020617" stroke="#1e293b" />
+                  <g transform="translate(110 110)"><path d="M50 14 L81 32 V68 L50 86 L19 68 V32 Z" fill="#6366f1" /></g>
+                  <rect x="220" y="110" width="100" height="100" rx="12" fill="#020617" stroke="#1e293b" />
+                  <g transform="translate(220 110)"><path d="M50 14 L86 50 L50 86 L14 50 Z" fill="#f54905" /></g>
+                  <rect x="0" y="220" width="100" height="100" rx="12" fill="#020617" stroke="#1e293b" />
+                  <g transform="translate(0 220)"><rect x="20" y="20" width="60" height="60" rx="6" fill="#f54905" /></g>
+                  <rect x="110" y="220" width="100" height="100" rx="12" fill="#020617" stroke="#1e293b" />
+                  <g transform="translate(110 220)"><circle cx="50" cy="50" r="32" fill="#ec4899" /></g>
+                  <rect x="220" y="220" width="100" height="100" rx="12" fill="#020617" stroke="#1e293b" />
+                  <g transform="translate(220 220)"><path d="M50 16 L84 80 H16 Z" fill="#6366f1" /></g>
                 </svg>
               </div>
-              <figcaption class="mt-6 text-center text-sm text-gray-500">
-                The pattern for <code class="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-gray-700">geometric</code> — nine characters, nine cells.
+              <figcaption class="mt-6 text-center text-sm text-slate-400">
+                The pattern for <code class="rounded bg-slate-800 px-1.5 py-0.5 font-mono text-slate-300">geometric</code> — nine characters, nine cells.
               </figcaption>
             </figure>
           </div>
@@ -142,13 +141,13 @@
       </section>
 
       <!-- Stats -->
-      <section id="counter" class="border-b border-gray-100">
+      <section id="counter" class="border-b border-slate-800">
         <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <div class="pt-12 pb-9 text-center">
             <h2 class="mb-6 text-3xl leading-tight font-bold sm:text-4xl md:text-5xl lg:text-6xl">
-              Built on <span class="text-primary">simple rules</span>
+              Built on <span class="gradient-text">simple rules</span>
             </h2>
-            <p class="mx-auto w-4/5 text-lg text-gray-600 xl:w-3/5">
+            <p class="mx-auto w-4/5 text-lg text-slate-400 xl:w-3/5">
               The whole mapping fits on one screen. Eight shape families across six colours give more distinct glyphs than the
               Latin alphabet needs, so no two letters ever share a cell.
             </p>
@@ -157,19 +156,19 @@
           <dl class="grid grid-cols-1 items-center justify-center gap-0 pb-12 text-center sm:grid-cols-2 lg:grid-cols-4">
             <div class="px-8 pt-10 sm:px-0 sm:pt-8 sm:pb-7">
               <dd class="text-5xl leading-tight font-bold tracking-wide" data-count-to="26">26</dd>
-              <dt class="text-base text-gray-600">Letters in the mapping</dt>
+              <dt class="text-base text-slate-400">Letters in the mapping</dt>
             </div>
             <div class="px-8 pt-10 sm:px-0 sm:pt-8 sm:pb-7">
               <dd class="text-5xl leading-tight font-bold tracking-wide" data-count-to="8">8</dd>
-              <dt class="text-base text-gray-600">Shape families</dt>
+              <dt class="text-base text-slate-400">Shape families</dt>
             </div>
             <div class="px-8 pt-10 sm:px-0 sm:pt-8 sm:pb-7">
               <dd class="text-5xl leading-tight font-bold tracking-wide" data-count-to="6">6</dd>
-              <dt class="text-base text-gray-600">Palette colours</dt>
+              <dt class="text-base text-slate-400">Palette colours</dt>
             </div>
             <div class="px-8 pt-10 sm:px-0 sm:pt-8 sm:pb-7">
               <dd class="text-5xl leading-tight font-bold tracking-wide" data-count-to="48">48</dd>
-              <dt class="text-base text-gray-600">Distinct glyph cells</dt>
+              <dt class="text-base text-slate-400">Distinct glyph cells</dt>
             </div>
           </dl>
         </div>
@@ -181,9 +180,9 @@
           <div class="mx-auto w-full lg:w-2/3">
             <div class="relative pt-16 pb-16 text-center sm:pt-24">
               <h2 class="pb-6 text-3xl leading-tight font-bold sm:text-4xl md:text-5xl lg:text-6xl">
-                How it <span class="text-primary">works</span>
+                How it <span class="gradient-text">works</span>
               </h2>
-              <p class="text-lg text-gray-600">
+              <p class="text-lg text-slate-400">
                 Three steps, and only the middle one is secret.
               </p>
             </div>
@@ -200,7 +199,7 @@
               <h3 class="pb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl lg:text-5xl">
                 Every character becomes a shape
               </h3>
-              <p class="text-lg leading-relaxed text-gray-600">
+              <p class="text-lg leading-relaxed text-slate-400">
                 A character's position in the alphabet picks its shape; how far it has wrapped past the shape list picks its
                 colour. That is the entire glyph mapping — a pure function with no state, no randomness, and no lookup table
                 to keep in sync.
@@ -218,7 +217,7 @@
             <div class="order-1 w-full lg:order-2 lg:w-1/2">
               <div class="relative">
                 <div class="absolute -top-[10%] -right-[8%] -z-10 h-[120%] w-[110%] rounded-[45%] bg-primary/20 blur-2xl" aria-hidden="true"></div>
-                <div class="relative z-10 grid grid-cols-2 gap-4 rounded-2xl bg-white p-6 shadow-xl ring-1 ring-gray-900/5 sm:grid-cols-3 sm:p-8" data-glyph-legend>
+                <div class="relative z-10 grid grid-cols-2 gap-4 rounded-2xl bg-slate-900 p-6 shadow-xl ring-1 ring-slate-800 sm:grid-cols-3 sm:p-8" data-glyph-legend>
                   <!-- Populated from the glyph mapping in src/pattern.js -->
                 </div>
               </div>
@@ -234,9 +233,9 @@
             <div class="w-full lg:w-1/2">
               <div class="relative">
                 <div class="absolute -top-[10%] -left-[8%] -z-10 h-[120%] w-[110%] rounded-[45%] bg-primary/20 blur-2xl" aria-hidden="true"></div>
-                <div class="relative z-10 rounded-2xl bg-white p-6 shadow-xl ring-1 ring-gray-900/5 sm:p-8">
+                <div class="relative z-10 rounded-2xl bg-slate-900 p-6 shadow-xl ring-1 ring-slate-800 sm:p-8">
                   <div class="mx-auto w-full max-w-sm" data-pattern="published" data-pattern-title="A published pattern grid"></div>
-                  <p class="mt-6 text-center text-sm text-gray-500">
+                  <p class="mt-6 text-center text-sm text-slate-400">
                     Anyone can look at this. Without the mapping it is a picture of shapes.
                   </p>
                 </div>
@@ -247,7 +246,7 @@
               <h3 class="pb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl lg:text-5xl">
                 The grid is public by design
               </h3>
-              <p class="text-lg leading-relaxed text-gray-600">
+              <p class="text-lg leading-relaxed text-slate-400">
                 The generated pattern is meant to be shown. Print it, pin it to a wall, put it on a login screen. What it does
                 not carry is the mapping rules, and the grid on its own does not hand them over.
               </p>
@@ -265,7 +264,7 @@
               <h3 class="pb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl lg:text-5xl">
                 Verification is recognition
               </h3>
-              <p class="text-lg leading-relaxed text-gray-600">
+              <p class="text-lg leading-relaxed text-slate-400">
                 Re-enter the phrase and the pattern is regenerated from scratch. Because generation is deterministic, a correct
                 phrase reproduces the original grid exactly — and a single wrong character visibly changes a cell.
               </p>
@@ -273,10 +272,10 @@
             <div class="order-1 w-full lg:order-2 lg:w-1/2">
               <div class="relative">
                 <div class="absolute -top-[10%] -right-[8%] -z-10 h-[120%] w-[110%] rounded-[45%] bg-primary/20 blur-2xl" aria-hidden="true"></div>
-                <div class="relative z-10 grid grid-cols-2 gap-6 rounded-2xl bg-white p-6 shadow-xl ring-1 ring-gray-900/5 sm:p-8">
+                <div class="relative z-10 grid grid-cols-2 gap-6 rounded-2xl bg-slate-900 p-6 shadow-xl ring-1 ring-slate-800 sm:p-8">
                   <figure>
                     <div data-pattern="anchor" data-pattern-title="The original pattern"></div>
-                    <figcaption class="mt-3 text-center text-xs font-semibold tracking-wider text-gray-500 uppercase">Original</figcaption>
+                    <figcaption class="mt-3 text-center text-xs font-semibold tracking-wider text-slate-400 uppercase">Original</figcaption>
                   </figure>
                   <figure>
                     <div data-pattern="anchvr" data-pattern-title="The pattern after one character changes"></div>
@@ -294,15 +293,15 @@
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div class="mx-auto mb-12 max-w-2xl text-center">
             <h2 class="pb-6 text-3xl leading-tight font-bold sm:text-4xl md:text-5xl lg:text-6xl">
-              Try it <span class="text-primary">yourself</span>
+              Try it <span class="gradient-text">yourself</span>
             </h2>
-            <p class="text-lg text-gray-600">
+            <p class="text-lg text-slate-400">
               Type a phrase. The grid regenerates on every keystroke, entirely in your browser — nothing is sent anywhere.
             </p>
           </div>
 
-          <div class="mx-auto max-w-3xl rounded-2xl bg-white p-6 shadow-xl ring-1 ring-gray-900/5 sm:p-10">
-            <label for="phrase" class="mb-3 block text-sm font-bold tracking-widest text-gray-500 uppercase">
+          <div class="mx-auto max-w-3xl rounded-2xl bg-slate-900 p-6 shadow-xl ring-1 ring-slate-800 sm:p-10">
+            <label for="phrase" class="mb-3 block text-sm font-bold tracking-widest text-slate-400 uppercase">
               Your phrase
             </label>
             <input
@@ -313,9 +312,9 @@
               autocomplete="off"
               spellcheck="false"
               placeholder="Type a phrase"
-              class="w-full rounded-xl border border-gray-200 px-5 py-4 font-mono text-lg transition-colors focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none"
+              class="w-full rounded-xl border border-slate-700 bg-slate-950 px-5 py-4 font-mono text-lg text-slate-100 transition-colors placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none"
             />
-            <p class="mt-3 text-sm text-gray-500">
+            <p class="mt-3 text-sm text-slate-400">
               Letters map to shapes; anything else renders as an empty cell.
             </p>
 
@@ -327,35 +326,35 @@
       </section>
 
       <!-- Principles (dark section) -->
-      <section id="principles" class="relative scroll-mt-20 overflow-hidden bg-black py-16 lg:py-24">
+      <section id="principles" class="relative scroll-mt-20 overflow-hidden bg-slate-900 py-16 lg:py-24">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div class="mx-auto mb-12 text-center lg:mb-16 lg:w-2/3">
             <h2 class="mb-5 text-3xl leading-tight font-bold text-white sm:text-4xl xl:text-5xl">
-              What this is, and what it <span class="text-primary">isn't</span>
+              What this is, and what it <span class="gradient-text">isn't</span>
             </h2>
-            <p class="text-xl leading-relaxed tracking-tight text-gray-300 md:text-2xl">
+            <p class="text-xl leading-relaxed tracking-tight text-slate-400 md:text-2xl">
               Being upfront about the threat model is part of the design.
             </p>
           </div>
 
           <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <div class="rounded-xl bg-white p-6">
-              <h3 class="mb-3 text-lg font-semibold text-gray-900">Deterministic, always</h3>
-              <p class="leading-relaxed text-gray-700">
+            <div class="rounded-xl border border-slate-800 bg-slate-950 p-6">
+              <h3 class="mb-3 text-lg font-semibold text-white">Deterministic, always</h3>
+              <p class="leading-relaxed text-slate-300">
                 The same phrase and the same mapping rules produce a byte-identical grid. Any randomness would have to be
                 seeded from the phrase itself — never from a clock or a random number generator.
               </p>
             </div>
-            <div class="rounded-xl bg-white p-6">
-              <h3 class="mb-3 text-lg font-semibold text-gray-900">Recognisable at a glance</h3>
-              <p class="leading-relaxed text-gray-700">
+            <div class="rounded-xl border border-slate-800 bg-slate-950 p-6">
+              <h3 class="mb-3 text-lg font-semibold text-white">Recognisable at a glance</h3>
+              <p class="leading-relaxed text-slate-300">
                 People are far better at spotting that two pictures differ than at comparing two strings of characters. The
                 grid puts verification in the medium humans are good at.
               </p>
             </div>
-            <div class="rounded-xl bg-white p-6">
-              <h3 class="mb-3 text-lg font-semibold text-gray-900">Not a cipher</h3>
-              <p class="leading-relaxed text-gray-700">
+            <div class="rounded-xl border border-slate-800 bg-slate-950 p-6">
+              <h3 class="mb-3 text-lg font-semibold text-white">Not a cipher</h3>
+              <p class="leading-relaxed text-slate-300">
                 This is a visual encoding scheme, not a vetted cryptographic primitive. It has not been through cryptanalysis
                 and should not stand in for a real cipher where one is needed.
               </p>
@@ -366,22 +365,21 @@
     </main>
 
     <!-- Footer -->
-    <footer class="relative bg-black pt-16 pb-12 sm:pb-16 2xl:pt-24">
+    <footer class="relative border-t border-slate-800 bg-slate-950 pt-16 pb-12 sm:pb-16 2xl:pt-24">
       <div class="w-full px-4 sm:px-6 lg:px-8">
         <div class="mx-auto max-w-7xl 2xl:max-w-[1500px]">
           <div class="flex flex-wrap">
             <div class="order-2 w-full lg:order-1 lg:mr-auto lg:w-1/3">
               <div class="mt-7 text-center sm:text-left md:mt-0 lg:text-left">
                 <a href="./" class="mb-6 inline-flex items-center gap-3 sm:mb-5">
-                  <svg viewBox="0 0 100 100" class="h-10 w-10" aria-hidden="true">
-                    <rect x="4" y="4" width="42" height="42" rx="6" fill="#e71818" />
-                    <circle cx="75" cy="25" r="21" fill="#f5e30d" />
-                    <path d="M25 96 L4 54 H46 Z" fill="#ffffff" />
-                    <path d="M75 54 L96 75 L75 96 L54 75 Z" fill="#e71818" />
+                  <svg viewBox="0 0 300 300" class="h-10 w-10" aria-hidden="true">
+                    <circle cx="150" cy="150" r="150" fill="#f54905" />
+                    <circle cx="150" cy="150" r="90" fill="#ffffff" />
+                    <rect x="50" y="50" width="100" height="100" fill="#f54905" />
                   </svg>
                   <span class="text-lg font-bold text-white">crypto-patterns</span>
                 </a>
-                <p class="mb-6 text-sm font-semibold text-gray-300 sm:mb-8">
+                <p class="mb-6 text-sm font-semibold text-slate-400 sm:mb-8">
                   Text encryption method using geometric patterns.
                 </p>
               </div>
@@ -391,7 +389,7 @@
               <div class="flex flex-wrap">
                 <div class="w-1/2 px-4 md:w-1/4 lg:w-1/3">
                   <div class="mb-6 sm:mb-8 lg:mb-8 2xl:ml-20">
-                    <h2 class="mb-6 text-sm font-semibold text-gray-300 opacity-70">Explore</h2>
+                    <h2 class="mb-6 text-sm font-semibold text-slate-400 opacity-70">Explore</h2>
                     <ul class="space-y-2">
                       <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="#how-it-works">How it works</a></li>
                       <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="#demo">Try it</a></li>
@@ -401,7 +399,7 @@
                 </div>
                 <div class="w-1/2 px-4 md:w-1/4 lg:w-1/3">
                   <div class="mb-6 sm:mb-8 lg:mb-8 2xl:ml-20">
-                    <h2 class="mb-6 text-sm font-semibold text-gray-300 opacity-70">Project</h2>
+                    <h2 class="mb-6 text-sm font-semibold text-slate-400 opacity-70">Project</h2>
                     <ul class="space-y-2">
                       <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="https://github.com/5deen/crypto-patterns">Source</a></li>
                       <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="https://github.com/5deen/crypto-patterns/issues">Issues</a></li>
@@ -410,7 +408,7 @@
                 </div>
                 <div class="w-1/2 px-4 md:w-1/4 lg:w-1/3">
                   <div class="mb-6 sm:mb-8 lg:mb-8 2xl:ml-20">
-                    <h2 class="mb-6 text-sm font-semibold text-gray-300 opacity-70">Legal</h2>
+                    <h2 class="mb-6 text-sm font-semibold text-slate-400 opacity-70">Legal</h2>
                     <ul class="space-y-2">
                       <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="./privacy.html">Privacy</a></li>
                       <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="./contact.html">Contact</a></li>
@@ -421,8 +419,8 @@
             </div>
           </div>
 
-          <div class="mt-10 border-t border-gray-800 pt-8">
-            <p class="text-sm text-gray-400">
+          <div class="mt-10 border-t border-slate-800 pt-8">
+            <p class="text-sm text-slate-400">
               &copy; <span data-year>2026</span> crypto-patterns. MIT licensed. Layout adapted from the
               <a class="text-link hover:underline" href="https://github.com/CloudCannon/sendit-astro-template">SendIt</a>
               template by CloudCannon.

@@ -14,8 +14,22 @@ export const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
 /** The eight shape families a glyph can map to. */
 export const SHAPES = ['circle', 'square', 'triangle', 'diamond', 'hexagon', 'cross', 'ring', 'chevron'];
 
-/** The six colours a glyph can map to. */
-export const COLORS = ['#e71818', '#f5e30d', '#111827', '#2563eb', '#0f9d58', '#f97316'];
+/**
+ * The six colours a glyph can map to, drawn from the 5deen palette.
+ *
+ * All six are light enough to read against the dark cell background — a
+ * near-black in this list would render as an invisible glyph, which would
+ * silently break the "one wrong character is visible" property the whole
+ * scheme rests on. Keep that in mind before changing one.
+ */
+export const COLORS = [
+  '#6366f1', // indigo-500
+  '#ec4899', // pink-500
+  '#f54905', // 5deen orange
+  '#fbbf24', // amber-400
+  '#34d399', // emerald-400
+  '#38bdf8', // sky-400
+];
 
 /**
  * Map a single character to a { shape, color } pair.
@@ -82,18 +96,22 @@ function shapeMarkup(shape, color) {
  * @param {number} [options.cell]      cell size in user units (default 100)
  * @param {number} [options.gap]       gap between cells (default 10)
  * @param {string} [options.title]     accessible title for the SVG
- * @param {boolean} [options.dark]     use the dark cell background
+ * @param {boolean} [options.dark]     dark cell background (default true, to
+ *                                     match the site; pass false for a light
+ *                                     background when rendering elsewhere)
  */
 export function renderPattern(text, options = {}) {
-  const { cell = 100, gap = 10, title = 'Crypto pattern', dark = false } = options;
+  const { cell = 100, gap = 10, title = 'Crypto pattern', dark = true } = options;
 
   const cells = mapText(text);
   const { columns, rows } = gridSize(cells.length);
   const step = cell + gap;
   const width = columns * step - gap;
   const height = rows * step - gap;
-  const cellFill = dark ? '#1f2937' : '#ffffff';
-  const cellStroke = dark ? '#374151' : '#e5e7eb';
+  // Dark cells are slate-950 on a slate-800 hairline, so a grid sitting on a
+  // slate-900 panel still reads as a grid of distinct cells.
+  const cellFill = dark ? '#020617' : '#ffffff';
+  const cellStroke = dark ? '#1e293b' : '#e5e7eb';
 
   const body = cells
     .map((mapped, i) => {
