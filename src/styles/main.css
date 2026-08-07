@@ -68,25 +68,24 @@
 }
 
 /*
- * Theme tokens come from the 5deen design system
- * (github.com/5deen/5deen.github.io): a dark slate surface with indigo and
- * pink accents, and the orange of the 5deen mark.
+ * Theme tokens: a dark slate surface with indigo and pink accents, and the
+ * orange of the logo.
  *
  * The markup refers to these by name — primary/secondary/link/brand — so the
  * palette can be re-pointed here without touching the pages. The neutral
- * surfaces reuse Tailwind's own slate scale, which is what 5deen does.
+ * surfaces reuse Tailwind's own slate scale.
  */
 @theme {
   /*
-   * indigo-400, not the indigo-500 that 5deen uses on its own darker panels.
-   * As text on a slate-900 surface, indigo-500 measures 3.99:1 — below the
-   * 4.5:1 WCAG AA floor. indigo-400 clears it. Button *fills* still use
-   * indigo-600 in the markup, so their white labels pass too.
+   * indigo-400, not indigo-500. As text on a slate-900 surface, indigo-500
+   * measures 3.99:1 — below the 4.5:1 WCAG AA floor. indigo-400 clears it.
+   * Button *fills* still use indigo-600 in the markup, so their white labels
+   * pass too.
    */
   --color-primary: #818cf8; /* indigo-400 — accent text, borders, tints */
   --color-secondary: #ffffff; /* contrast colour on top of primary */
   --color-link: #ec4899; /* pink-500 — the second half of the gradient */
-  --color-brand: #f54905; /* the orange of the 5deen logo */
+  --color-brand: #f54905; /* the orange in the logo */
 
   --font-sans: 'Sora', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-body: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -119,7 +118,7 @@
 }
 
 /*
- * 5deen's signature accent: indigo to pink, clipped to the text. Used on the
+ * Signature accent: indigo to pink, clipped to the text. Used on the
  * highlighted word in section headings, where the light theme used a flat
  * primary colour.
  */

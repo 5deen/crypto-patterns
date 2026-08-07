@@ -71,34 +71,32 @@ The **layout** comes from CloudCannon's MIT-licensed
 darker band for the closing content section, and the `title` + accented-suffix
 heading pattern.
 
-The **colours** come from the [5deen design
-system](https://github.com/5deen/5deen.github.io): a dark slate surface with
-indigo and pink accents.
+The **colours** are the project's own: a dark slate surface with indigo and pink
+accents, plus a brand orange.
 
 | Token | Value | Used for |
 | --- | --- | --- |
 | `primary` | `#818cf8` indigo-400 | accent text, borders, tinted backgrounds |
 | `secondary` | `#ffffff` | contrast colour on top of `primary` |
 | `link` | `#ec4899` pink-500 | the far end of the gradient |
-| `brand` | `#f54905` | the orange of the 5deen logo |
+| `brand` | `#f54905` | the orange in the logo |
 
-Neutrals use Tailwind's own slate scale, as 5deen does: `slate-950` page,
-`slate-900` panels, `slate-800` hairlines, `slate-200`/`slate-300`/`slate-400`
-text, white headings (set in `@layer base`, so a utility on the element still
-wins).
+Neutrals use Tailwind's own slate scale: `slate-950` page, `slate-900` panels,
+`slate-800` hairlines, `slate-200`/`slate-300`/`slate-400` text, white headings
+(set in `@layer base`, so a utility on the element still wins).
 
 Reach for the token names rather than hex values. Two contrast constraints are
 load-bearing and easy to undo by accident:
 
-- `primary` is indigo-**400**, not the indigo-500 that 5deen uses. As text on a
-  `slate-900` panel indigo-500 measures 3.99:1, under the 4.5:1 WCAG AA floor.
+- `primary` is indigo-**400**, not indigo-500. As text on a `slate-900` panel
+  indigo-500 measures 3.99:1, under the 4.5:1 WCAG AA floor.
 - Button *fills* therefore use `bg-indigo-600` in the markup, not `bg-primary`,
   so their white labels pass. White on indigo-500 is 4.47:1 — also just short.
 - Do not drop below `slate-400` for body or caption text on a panel;
   `slate-500` measures 3.69:1 at the sizes used here.
 
-`.gradient-text` (in `main.css`) is 5deen's signature indigo→pink clip, used on
-the accented word in section headings.
+`.gradient-text` (in `main.css`) is the indigo→pink clip used on the accented
+word in section headings.
 
 Both fonts are self-hosted from `public/fonts` — the page makes no external
 requests at all, so it works offline and behind a strict network policy. Only
