@@ -15,7 +15,7 @@ export const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
 export const SHAPES = ['circle', 'square', 'triangle', 'diamond', 'hexagon', 'cross', 'ring', 'chevron'];
 
 /**
- * The six colours a glyph can map to, drawn from the 5deen palette.
+ * The six colours a glyph can map to, drawn from the site palette.
  *
  * All six are light enough to read against the dark cell background — a
  * near-black in this list would render as an invisible glyph, which would
@@ -25,7 +25,7 @@ export const SHAPES = ['circle', 'square', 'triangle', 'diamond', 'hexagon', 'cr
 export const COLORS = [
   '#6366f1', // indigo-500
   '#ec4899', // pink-500
-  '#f54905', // 5deen orange
+  '#f54905', // brand orange
   '#fbbf24', // amber-400
   '#34d399', // emerald-400
   '#38bdf8', // sky-400
