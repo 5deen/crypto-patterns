@@ -1,4 +1,10 @@
-import { ALPHABET, mapCharacter, renderGlyph, renderPattern } from './pattern.js';
+import { ALPHABET, renderGlyph, renderPattern } from './pattern.js';
+import {
+  GLYPH_LIMIT,
+  isTruncated,
+  loadGenerator,
+  renderPattern as renderMedigeist,
+} from './medigeist.js';
 import { AIRTABLE_BETA_FORM_URL } from './config.js';
 
 /** Mobile navigation toggle. */
@@ -20,21 +26,25 @@ function initNav() {
   });
 }
 
-/** Fill the "every character becomes a shape" legend with the first six glyphs. */
+/**
+ * Fill the step-one illustration with sample blocks.
+ *
+ * Decorative only. It deliberately carries no character labels: the demo is
+ * driven by the Medigeist generator, whose mapping is not this one, and
+ * labelling these shapes with letters would assert a correspondence that does
+ * not hold.
+ */
 function initGlyphLegend() {
   const legend = document.querySelector('[data-glyph-legend]');
   if (!legend) return;
 
   legend.innerHTML = Array.from(ALPHABET.slice(0, 6))
-    .map((letter) => {
-      const { shape } = mapCharacter(letter);
-      return `
-        <div class="flex flex-col items-center gap-2 rounded-xl border border-slate-800 p-4">
+    .map(
+      (letter) => `
+        <div class="flex items-center justify-center rounded-xl border border-slate-800 p-6" aria-hidden="true">
           <div class="w-12">${renderGlyph(letter)}</div>
-          <span class="font-mono text-lg font-bold">${letter}</span>
-          <span class="text-xs tracking-wider text-slate-400 uppercase">${shape}</span>
-        </div>`;
-    })
+        </div>`,
+    )
     .join('');
 }
 
@@ -47,23 +57,107 @@ function initStaticPatterns() {
   }
 }
 
-/** The live "try it" panel. */
+/**
+ * The live "try it" panel, driven by the Medigeist generator.
+ *
+ * Three things this has to get right:
+ *
+ * - The generator is ~1 MB of WebAssembly. It is fetched on first interaction,
+ *   not on page load, so it never delays the landing page.
+ * - Each render is ~130 KB of SVG and takes tens of milliseconds, so keystrokes
+ *   are debounced rather than rendering per character.
+ * - Renders can finish out of order. Each one carries a token and a stale
+ *   result is discarded, so the grid always matches what is in the field.
+ */
 function initDemo() {
   const input = document.querySelector('[data-demo-input]');
   const output = document.querySelector('[data-demo-output]');
+  const notice = document.querySelector('[data-demo-notice]');
   if (!input || !output) return;
 
-  const draw = () => {
-    const phrase = input.value.trim();
-    if (!phrase) {
-      output.innerHTML = '<p class="py-12 text-center text-slate-400">Type a phrase to see its pattern.</p>';
-      return;
-    }
-    output.innerHTML = renderPattern(phrase, { title: `Pattern for the phrase ${phrase}` });
+  const message = (text) => {
+    output.innerHTML = '';
+    const p = document.createElement('p');
+    p.className = 'py-12 text-center text-slate-400';
+    p.textContent = text;
+    output.append(p);
   };
 
-  input.addEventListener('input', draw);
-  draw();
+  let token = 0;
+  let timer = null;
+
+  const draw = async () => {
+    const phrase = input.value.trim();
+    const mine = ++token;
+
+    if (notice) {
+      notice.hidden = !isTruncated(phrase);
+    }
+
+    if (!phrase) {
+      message('Type a phrase to see its pattern.');
+      return;
+    }
+
+    try {
+      const svg = await renderMedigeist(phrase);
+      if (mine !== token) return; // a newer phrase is already rendering
+      output.innerHTML = svg;
+      const el = output.querySelector('svg');
+      if (el) {
+        el.setAttribute('role', 'img');
+        el.setAttribute('aria-label', `Pattern for the phrase ${phrase}`);
+        el.classList.add('h-auto', 'w-full', 'rounded-xl');
+      }
+    } catch (error) {
+      if (mine !== token) return;
+      message('The pattern generator could not be loaded. Reload the page to try again.');
+      console.error(error);
+    }
+  };
+
+  input.addEventListener('input', () => {
+    clearTimeout(timer);
+    timer = setTimeout(draw, 200);
+  });
+
+  /*
+   * Hold the first render until the panel is actually approached.
+   *
+   * The field ships with a phrase in it, so rendering on load would pull the
+   * ~1 MB module into the critical path — the demo sits well below the fold and
+   * most visitors never reach it. Whichever comes first, scrolling near the
+   * panel or focusing the field, starts the fetch; by the time the section is
+   * on screen the pattern is usually already drawn.
+   */
+  let started = false;
+  const start = () => {
+    if (started) return;
+    started = true;
+    message('Drawing the pattern…');
+    draw();
+  };
+
+  input.addEventListener('focus', start, { once: true });
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          observer.disconnect();
+          start();
+        }
+      },
+      // Begin a little before the panel arrives, so the download overlaps the scroll.
+      { rootMargin: '400px' },
+    );
+    observer.observe(output.closest('section') || output);
+  } else {
+    start();
+  }
+
+  message('The pattern appears here.');
 }
 
 /** Count the stat figures up when they first scroll into view. */

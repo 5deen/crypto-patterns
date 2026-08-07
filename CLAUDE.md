@@ -52,9 +52,11 @@ contact.html        contact details / controller identification
 signup.html         beta list — links out to an Airtable form
 signin.html         states plainly that accounts are not open yet
 src/config.js       AIRTABLE_BETA_FORM_URL, the one value to fill in
-src/main.js         entry point — wires the page up to the pattern module
-src/pattern.js      glyph mapping + SVG pattern rendering (no DOM access)
+src/main.js         entry point — wires the page up to the generators
+src/medigeist.js    loader for the WASM generator that drives the demo
+src/pattern.js      the original glyph mapping; now decorative only
 src/styles/main.css Tailwind entry + @theme tokens
+public/medigeist/   vendored release.js + release.wasm (see its README)
 public/             copied to the build root as-is (favicon, fonts)
 vite.config.js      Tailwind plugin + the GitHub Pages `base` path
 .github/workflows/  GitHub Actions; deploy.yml publishes to Pages
@@ -165,6 +167,42 @@ With `AIRTABLE_BETA_FORM_URL` empty, the button is disabled and a visible
 notice explains what is missing — an unconfigured deploy says so rather than
 offering a link to nowhere.
 
+## The pattern generator
+
+The demo under **Try it** runs [Medigeist](https://github.com/5deen/asc-set-generator),
+an AssemblyScript program compiled to WebAssembly. `src/medigeist.js` wraps it;
+`createSVGDocument(ratio, set, text)` returns a complete, self-contained SVG.
+
+Four things about it constrain the page:
+
+- **It reads only the first 16 characters.** Longer phrases are truncated
+  silently by the generator, so the demo shows a notice past that length.
+- **It is deterministic** — the same phrase gives a byte-identical document, and
+  one changed character changes the picture. That is what the page claims, and
+  it is the reason this generator fits at all.
+- **The module is ~1 MB and each render is ~130 KB of SVG.** It is therefore
+  fetched lazily, when the demo scrolls near or the field is focused — never on
+  page load — and keystrokes are debounced. Do not move the first render back to
+  load time; the demo sits well below the fold.
+- **It runs entirely in the browser**, with both files served from this origin,
+  so `privacy.html` stays true: no external request, and the phrase never leaves
+  the machine.
+
+`release.js` and `release.wasm` live in `public/medigeist/` rather than `src/`
+because `release.js` locates its binary with `new URL("release.wasm",
+import.meta.url)`. Bundling it would rewrite that URL and break the fetch. The
+import in `medigeist.js` is dynamic and `@vite-ignore`d for the same reason.
+
+`src/pattern.js` is still used, but only for decoration — the hero image, the
+step illustrations and the "one character off" comparison. Its mapping is *not*
+what the demo does, so nothing on the page may present it as the mapping. The
+step-one illustration deliberately carries no character labels for that reason.
+
+The four figures in the stats band — 102 characters, 12 image sets, 16
+characters per pattern, 240 sequences — are properties of the generator, read
+from `glyphs()`, `setNames()` and `glyphLimit()`. If the vendored build changes,
+re-read them rather than assuming.
+
 ## Conventions
 
 - Two-space indent, single quotes, semicolons in JS.
@@ -172,11 +210,9 @@ offering a link to nowhere.
   `src/styles/main.css` only for `@theme` tokens and genuine one-offs.
 - Keep the glyph mapping and pattern-generation logic free of DOM access so it
   stays testable and reusable outside the browser.
-- `COLORS` in `src/pattern.js` must stay six entries, all light enough to read
-  against the dark cell. The landing page quotes 6 colours and 48 glyph cells as
-  facts about that array, and a dark entry would render an invisible glyph —
-  which would quietly break the "one wrong character is visible" property the
-  whole scheme depends on.
+- `COLORS` in `src/pattern.js` must stay light enough to read against the dark
+  cell. A near-black entry renders an invisible glyph. The page no longer quotes
+  its length as a statistic, so the count itself is free.
 
 ## Notes
 

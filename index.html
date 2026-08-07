@@ -147,27 +147,27 @@
               Built on <span class="gradient-text">simple rules</span>
             </h2>
             <p class="mx-auto w-4/5 text-lg text-slate-400 xl:w-3/5">
-              The whole mapping fits on one screen. Eight shape families across six colours give more distinct glyphs than the
-              Latin alphabet needs, so no two letters ever share a cell.
+              Characters map to blocks, the blocks are re-ordered into every rotation of the sequence, and the result is laid
+              out on the smallest square grid that fits.
             </p>
           </div>
 
           <dl class="grid grid-cols-1 items-center justify-center gap-0 pb-12 text-center sm:grid-cols-2 lg:grid-cols-4">
             <div class="px-8 pt-10 sm:px-0 sm:pt-8 sm:pb-7">
-              <dd class="text-5xl leading-tight font-bold tracking-wide" data-count-to="26">26</dd>
-              <dt class="text-base text-slate-400">Letters in the mapping</dt>
+              <dd class="text-5xl leading-tight font-bold tracking-wide" data-count-to="102">102</dd>
+              <dt class="text-base text-slate-400">Characters recognised</dt>
             </div>
             <div class="px-8 pt-10 sm:px-0 sm:pt-8 sm:pb-7">
-              <dd class="text-5xl leading-tight font-bold tracking-wide" data-count-to="8">8</dd>
-              <dt class="text-base text-slate-400">Shape families</dt>
+              <dd class="text-5xl leading-tight font-bold tracking-wide" data-count-to="12">12</dd>
+              <dt class="text-base text-slate-400">Image sets</dt>
             </div>
             <div class="px-8 pt-10 sm:px-0 sm:pt-8 sm:pb-7">
-              <dd class="text-5xl leading-tight font-bold tracking-wide" data-count-to="6">6</dd>
-              <dt class="text-base text-slate-400">Palette colours</dt>
+              <dd class="text-5xl leading-tight font-bold tracking-wide" data-count-to="16">16</dd>
+              <dt class="text-base text-slate-400">Characters per pattern</dt>
             </div>
             <div class="px-8 pt-10 sm:px-0 sm:pt-8 sm:pb-7">
-              <dd class="text-5xl leading-tight font-bold tracking-wide" data-count-to="48">48</dd>
-              <dt class="text-base text-slate-400">Distinct glyph cells</dt>
+              <dd class="text-5xl leading-tight font-bold tracking-wide" data-count-to="240">240</dd>
+              <dt class="text-base text-slate-400">Sequences from 16</dt>
             </div>
           </dl>
         </div>
@@ -196,12 +196,12 @@
             <div class="relative z-20 order-2 w-full lg:order-1 lg:w-1/2">
               <p class="mb-4 text-sm font-bold tracking-widest text-primary uppercase">Step one</p>
               <h3 class="pb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl lg:text-5xl">
-                Every character becomes a shape
+                Every character becomes a block
               </h3>
               <p class="text-lg leading-relaxed text-slate-400">
-                A character's position in the alphabet picks its shape; how far it has wrapped past the shape list picks its
-                colour. That is the entire glyph mapping — a pure function with no state, no randomness, and no lookup table
-                to keep in sync.
+                Each character of the phrase resolves to a block drawn from the selected image set — 102 characters are
+                recognised, including digits, punctuation and umlauts. The blocks are then re-ordered into every rotation of
+                the sequence: 16 symbols give 240 distinct orderings.
               </p>
               <a
                 href="#demo"
@@ -265,7 +265,8 @@
               </h3>
               <p class="text-lg leading-relaxed text-slate-400">
                 Re-enter the phrase and the pattern is regenerated from scratch. Because generation is deterministic, a correct
-                phrase reproduces the original grid exactly — and a single wrong character visibly changes a cell.
+                phrase reproduces the original document exactly — and a single wrong character changes the sequence, and with
+                it the picture.
               </p>
             </div>
             <div class="order-1 w-full lg:order-2 lg:w-1/2">
@@ -295,7 +296,7 @@
               Try it <span class="gradient-text">yourself</span>
             </h2>
             <p class="text-lg text-slate-400">
-              Type a phrase. The grid regenerates on every keystroke, entirely in your browser — nothing is sent anywhere.
+              Type a phrase and the Medigeist generator draws it, entirely in your browser — nothing is sent anywhere.
             </p>
           </div>
 
@@ -314,11 +315,18 @@
               class="w-full rounded-xl border border-slate-700 bg-slate-950 px-5 py-4 font-mono text-lg text-slate-100 transition-colors placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/30 focus:outline-none"
             />
             <p class="mt-3 text-sm text-slate-400">
-              Letters map to shapes; anything else renders as an empty cell.
+              Letters, digits, punctuation and umlauts all map to a block. The first 16 characters are used.
+            </p>
+            <p
+              data-demo-notice
+              hidden
+              class="mt-3 rounded-lg border border-primary/30 bg-primary/5 px-4 py-2 text-sm text-primary"
+            >
+              Only the first 16 characters are read — the rest of the phrase does not change the pattern.
             </p>
 
             <div class="mt-8 flex justify-center">
-              <div class="w-full max-w-md" data-demo-output aria-live="polite"></div>
+              <div class="w-full max-w-lg" data-demo-output aria-live="polite"></div>
             </div>
           </div>
         </div>
