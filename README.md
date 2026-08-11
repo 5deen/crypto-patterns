@@ -1,8 +1,8 @@
-# crypto-patterns
+# Geistgrid
 
 Text encryption method using geometric patterns.
 
-A crypto pattern is a two- or three-dimensional grid featuring various colours and shapes.
+A Geistgrid pattern is a two- or three-dimensional grid featuring various colours and shapes.
 Each shape corresponds to a glyph in the Latin alphabet. 
 
 The goal is to create a text encryption method using geometric patterns.  

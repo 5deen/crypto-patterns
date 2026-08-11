@@ -9,6 +9,10 @@ export default defineConfig({
   // at build time from this value. It applies to the dev server and `preview`
   // too, so all three environments agree on the same paths — rename the repo
   // and this is the one line to change.
+  //
+  // This tracks the *repository* name, which is not the product name: the site
+  // is called Geistgrid, the repo is still crypto-patterns. Changing this to
+  // match the brand would 404 every asset.
   base: '/crypto-patterns/',
   plugins: [tailwindcss()],
 
