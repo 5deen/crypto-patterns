@@ -101,7 +101,7 @@ function shapeMarkup(shape, color) {
  *                                     background when rendering elsewhere)
  */
 export function renderPattern(text, options = {}) {
-  const { cell = 100, gap = 10, title = 'Crypto pattern', dark = true } = options;
+  const { cell = 100, gap = 10, title = 'Geistgrid pattern', dark = true } = options;
 
   const cells = mapText(text);
   const { columns, rows } = gridSize(cells.length);
