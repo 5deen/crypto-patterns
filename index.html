@@ -84,7 +84,8 @@
               Turn text into <span class="gradient-text">geometric patterns</span>.
             </h1>
             <p class="text-pretty text-xl leading-relaxed text-slate-400">
-              Geistgrid maps every character of a phrase to a coloured geometric shape and lays them out on a grid.
+              Geistgrid maps every character of a phrase to a geometric shape and lays them out on a grid. Type the phrase
+              again, and the same grid comes back. Type it wrong, and the pattern breaks.
             </p>
             <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
               <a
@@ -131,7 +132,7 @@
                 </svg>
               </div>
               <figcaption class="mt-6 text-center text-sm text-slate-400">
-                The pattern for <code class="rounded bg-slate-800 px-1.5 py-0.5 font-mono text-slate-300">geometric</code> — nine characters, nine cells.
+                The pattern for <code class="rounded bg-slate-800 px-1.5 py-0.5 font-mono text-slate-300">geometric</code>. Nine characters, nine cells.
               </figcaption>
             </figure>
           </div>
@@ -143,11 +144,11 @@
         <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <div class="pt-12 pb-9 text-center">
             <h2 class="mb-6 text-3xl leading-tight font-bold sm:text-4xl md:text-5xl lg:text-6xl">
-              Built on <span class="gradient-text">simple rules</span>
+              Built on <span class="gradient-text">mapping rules</span>
             </h2>
             <p class="mx-auto w-4/5 text-lg text-slate-400 xl:w-3/5">
-              Characters map to blocks, the blocks are re-ordered into every rotation of the sequence, and the result is laid
-              out on the smallest square grid that fits.
+              Characters map to blocks. The generator reorders the blocks into every rotation of the sequence, and lays out
+              the result on the smallest square grid that fits.
             </p>
           </div>
 
@@ -198,9 +199,9 @@
                 Every character becomes a block
               </h3>
               <p class="text-lg leading-relaxed text-slate-400">
-                Each character of the phrase resolves to a block drawn from the selected image set — 102 characters are
-                recognised, including digits, punctuation and umlauts. The blocks are then re-ordered into every rotation of
-                the sequence: 16 symbols give 240 distinct orderings.
+                Each character of the phrase resolves to a block drawn from the selected image set. The mapping table
+                consists of 102 characters, including digits, punctuation and umlauts. The blocks are then re-ordered into
+                every rotation of the sequence: 16 symbols give 240 distinct orderings.
               </p>
               <a
                 href="#demo"
@@ -245,8 +246,8 @@
                 The grid is public by design
               </h3>
               <p class="text-lg leading-relaxed text-slate-400">
-                The generated pattern is meant to be shown. Print it, pin it to a wall, put it on a login screen. What it does
-                not carry is the mapping rules, and the grid on its own does not hand them over.
+                The generated pattern is meant to be shown. Print it, pin it to a wall, or put it on a login screen. What it
+                does not carry is the mapping rules, and the grid on its own does not hand them over.
               </p>
             </div>
           </div>
@@ -263,9 +264,10 @@
                 Verification is recognition
               </h3>
               <p class="text-lg leading-relaxed text-slate-400">
-                Re-enter the phrase and the pattern is regenerated from scratch. Because generation is deterministic, a correct
-                phrase reproduces the original document exactly — and a single wrong character changes the sequence, and with
-                it the picture.
+                Re-enter the phrase, and the pattern is regenerated from scratch. Because generation is deterministic, a
+                correct phrase reproduces the original document exactly. A single wrong character changes the sequence, and
+                with it the picture. Compare the resulting image with the existing one. If both match, you have proven
+                ownership because you know the initial phrase.
               </p>
             </div>
             <div class="order-1 w-full lg:order-2 lg:w-1/2">
@@ -295,7 +297,8 @@
               Try it <span class="gradient-text">yourself</span>
             </h2>
             <p class="text-lg text-slate-400">
-              Type a phrase and the Medigeist generator draws it, entirely in your browser — nothing is sent anywhere.
+              Type a phrase and the Geistgrid generator draws it, entirely in your browser. No data is sent or stored
+              anywhere.
             </p>
           </div>
 
@@ -348,11 +351,11 @@
               <h3 class="mb-3 text-lg font-semibold text-white">Deterministic, always</h3>
               <p class="leading-relaxed text-slate-300">
                 The same phrase and the same mapping rules produce a byte-identical grid. Any randomness would have to be
-                seeded from the phrase itself — never from a clock or a random number generator.
+                seeded from the phrase itself and never from a clock or a random number generator.
               </p>
             </div>
             <div class="rounded-xl border border-slate-800 bg-slate-950 p-6">
-              <h3 class="mb-3 text-lg font-semibold text-white">Recognisable at a glance</h3>
+              <h3 class="mb-3 text-lg font-semibold text-white">Recognizable at a glance</h3>
               <p class="leading-relaxed text-slate-300">
                 People are far better at spotting that two pictures differ than at comparing two strings of characters. The
                 grid puts verification in the medium humans are good at.
@@ -366,6 +369,56 @@
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- Use cases -->
+      <section id="use-cases" class="scroll-mt-20 py-16 sm:py-24">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="mx-auto mb-12 max-w-2xl text-center">
+            <h2 class="pb-6 text-3xl leading-tight font-bold sm:text-4xl md:text-5xl lg:text-6xl">
+              Use <span class="gradient-text">cases</span>
+            </h2>
+          </div>
+
+          <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <li class="flex items-center gap-4 rounded-xl border border-slate-800 bg-slate-900 p-6">
+              <svg class="h-6 w-6 shrink-0 text-primary" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="round" aria-hidden="true">
+                <path d="M50 14 L86 50 L50 86 L14 50 Z" />
+              </svg>
+              <span class="text-lg text-slate-300">Patterns for decorative fabrics</span>
+            </li>
+            <li class="flex items-center gap-4 rounded-xl border border-slate-800 bg-slate-900 p-6">
+              <svg class="h-6 w-6 shrink-0 text-primary" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="round" aria-hidden="true">
+                <path d="M50 14 L81 32 V68 L50 86 L19 68 V32 Z" />
+              </svg>
+              <span class="text-lg text-slate-300">Design templates for wallpapers, carpets and floors</span>
+            </li>
+            <li class="flex items-center gap-4 rounded-xl border border-slate-800 bg-slate-900 p-6">
+              <svg class="h-6 w-6 shrink-0 text-primary" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="round" aria-hidden="true">
+                <rect x="20" y="20" width="60" height="60" rx="6" />
+              </svg>
+              <span class="text-lg text-slate-300">Textures for assets in virtual worlds</span>
+            </li>
+            <li class="flex items-center gap-4 rounded-xl border border-slate-800 bg-slate-900 p-6">
+              <svg class="h-6 w-6 shrink-0 text-primary" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="round" aria-hidden="true">
+                <path d="M50 16 L84 80 H16 Z" />
+              </svg>
+              <span class="text-lg text-slate-300">Design backgrounds for web pages</span>
+            </li>
+            <li class="flex items-center gap-4 rounded-xl border border-slate-800 bg-slate-900 p-6">
+              <svg class="h-6 w-6 shrink-0 text-primary" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="50" cy="50" r="32" />
+              </svg>
+              <span class="text-lg text-slate-300">Artwork</span>
+            </li>
+            <li class="flex items-center gap-4 rounded-xl border border-slate-800 bg-slate-900 p-6">
+              <svg class="h-6 w-6 shrink-0 text-primary" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="round" aria-hidden="true">
+                <path d="M39 16h22v23h23v22H61v23H39V61H16V39h23Z" />
+              </svg>
+              <span class="text-lg text-slate-300">Visual encryption</span>
+            </li>
+          </ul>
         </div>
       </section>
     </main>
