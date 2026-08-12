@@ -64,25 +64,48 @@ export function gridSize(count) {
   return { columns, rows: Math.max(1, Math.ceil(count / columns)) };
 }
 
-/** SVG path/element body for one shape, drawn inside a 100x100 cell. */
+/**
+ * Stroke weight for a glyph outline, in the 100x100 cell's user units.
+ *
+ * The widest shape reaches x=86, and a centred stroke adds half its width
+ * either side, so this has to stay under 28 for the outline to sit inside the
+ * cell rather than clipping against its rounded corner.
+ */
+const STROKE_WIDTH = 8;
+
+/**
+ * SVG path/element body for one shape, drawn inside a 100x100 cell.
+ *
+ * Every shape is an outline — the colour is carried by the stroke and nothing
+ * is filled. `ring` is the one exception to the shared stroke weight: as a
+ * plain outline it would be nothing but a slightly smaller `circle`, and two
+ * glyphs that look alike would undercut the property the whole scheme rests
+ * on, that one wrong character is visible. Its heavier stroke keeps it reading
+ * as a distinct annulus.
+ *
+ * Joins are rounded because the acute corners on `chevron` and `diamond` would
+ * otherwise throw long mitre spikes past the shape's nominal bounds.
+ */
 function shapeMarkup(shape, color) {
+  const outline = `fill="none" stroke="${color}" stroke-width="${STROKE_WIDTH}" stroke-linejoin="round"`;
+
   switch (shape) {
     case 'circle':
-      return `<circle cx="50" cy="50" r="32" fill="${color}" />`;
+      return `<circle cx="50" cy="50" r="32" ${outline} />`;
     case 'square':
-      return `<rect x="20" y="20" width="60" height="60" rx="6" fill="${color}" />`;
+      return `<rect x="20" y="20" width="60" height="60" rx="6" ${outline} />`;
     case 'triangle':
-      return `<path d="M50 16 L84 80 H16 Z" fill="${color}" />`;
+      return `<path d="M50 16 L84 80 H16 Z" ${outline} />`;
     case 'diamond':
-      return `<path d="M50 14 L86 50 L50 86 L14 50 Z" fill="${color}" />`;
+      return `<path d="M50 14 L86 50 L50 86 L14 50 Z" ${outline} />`;
     case 'hexagon':
-      return `<path d="M50 14 L81 32 V68 L50 86 L19 68 V32 Z" fill="${color}" />`;
+      return `<path d="M50 14 L81 32 V68 L50 86 L19 68 V32 Z" ${outline} />`;
     case 'cross':
-      return `<path d="M39 16h22v23h23v22H61v23H39V61H16V39h23Z" fill="${color}" />`;
+      return `<path d="M39 16h22v23h23v22H61v23H39V61H16V39h23Z" ${outline} />`;
     case 'ring':
       return `<circle cx="50" cy="50" r="26" fill="none" stroke="${color}" stroke-width="14" />`;
     case 'chevron':
-      return `<path d="M22 22 L50 50 L22 78 L34 86 L72 50 L34 14 Z" fill="${color}" />`;
+      return `<path d="M22 22 L50 50 L22 78 L34 86 L72 50 L34 14 Z" ${outline} />`;
     default:
       return '';
   }
