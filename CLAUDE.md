@@ -4,9 +4,9 @@ Guidance for Claude Code when working in this repository.
 
 ## Project
 
-**Geistgrid** is a text encryption method built on geometric patterns. A
-Geistgrid pattern is a two- or three-dimensional grid of coloured shapes, where
-each shape corresponds to a glyph in the Latin alphabet.
+**Geistgrid** is text-based design built on geometric patterns. A Geistgrid
+pattern is a two- or three-dimensional grid of coloured shapes, where each shape
+corresponds to a glyph in the Latin alphabet.
 
 Geistgrid is the product name, shown on every page and used in all prose. The
 GitHub repository is still `5deen/crypto-patterns`, and so are the Pages URL and

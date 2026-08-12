@@ -1,7 +1,7 @@
 {
   "name": "geistgrid",
   "version": "0.1.0",
-  "description": "Text encryption method using geometric patterns.",
+  "description": "Text-based design using geometric patterns.",
   "type": "module",
   "license": "MIT",
   "repository": {
