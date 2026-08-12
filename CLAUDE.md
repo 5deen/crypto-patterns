@@ -204,6 +204,23 @@ step illustrations and the "one character off" comparison. Its mapping is *not*
 what the demo does, so nothing on the page may present it as the mapping. The
 step-one illustration deliberately carries no character labels for that reason.
 
+Its glyphs are **outlines**: the colour lives on the stroke and no shape is
+filled. `ring` keeps a heavier stroke than the shared `STROKE_WIDTH` on purpose
+— as a plain outline it is just a smaller `circle`, and two glyphs that look
+alike weaken the "one wrong character is visible" property.
+
+The hero grid in `index.html` is hand-written SVG that duplicates
+`renderPattern('geometric')` output cell for cell. Nothing enforces the
+duplication, so changing how shapes are drawn silently leaves the hero showing
+the old style. Regenerate it from the module rather than editing it by hand:
+
+```bash
+node --input-type=module -e "
+import { renderPattern } from './src/pattern.js';
+console.log(renderPattern('geometric'));
+"
+```
+
 The four figures in the stats band — 102 characters, 12 image sets, 16
 characters per pattern, 240 sequences — are properties of the generator, read
 from `glyphs()`, `setNames()` and `glyphLimit()`. If the vendored build changes,
