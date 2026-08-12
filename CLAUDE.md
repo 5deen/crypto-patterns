@@ -8,11 +8,11 @@ Guidance for Claude Code when working in this repository.
 pattern is a two- or three-dimensional grid of coloured shapes, where each shape
 corresponds to a glyph in the Latin alphabet.
 
-Geistgrid is the product name, shown on every page and used in all prose. The
-GitHub repository is still `5deen/crypto-patterns`, and so are the Pages URL and
-the Vite `base` path — those track the repo, not the brand. Do not "fix" one to
-match the other: renaming the repo is a deliberate, separate step, and changing
-`base` without it breaks every asset URL on the deployed site.
+Geistgrid is the product name, the repository name and the Pages path. They
+agree today, but they are not the same thing: the Vite `base` path tracks the
+**repository**, not the brand. Renaming the repo means changing `base` in the
+same breath, and changing one without the other breaks every asset URL on the
+deployed site.
 
 The core flow:
 
@@ -115,19 +115,19 @@ for provenance and licensing.
 ## Deployment
 
 The site is published to GitHub Pages at
-<https://5deen.github.io/crypto-patterns/> by `.github/workflows/deploy.yml`,
+<https://5deen.github.io/geistgrid/> by `.github/workflows/deploy.yml`,
 which builds on every push to `main` and uploads `dist/` as a Pages artifact.
 The Pages source in repository settings must be set to **GitHub Actions**, not
 "Deploy from a branch".
 
 Because a project repo is served from a subpath rather than the domain root,
-`vite.config.js` sets `base: '/crypto-patterns/'`. Vite rewrites the absolute
+`vite.config.js` sets `base: '/geistgrid/'`. Vite rewrites the absolute
 URLs it owns — script and stylesheet tags, `<link rel="preload">`, and `url()`
 in CSS — but **not** plain `href` attributes on anchors. So an in-site link must
 be written relative (`href="./"`, `href="#demo"`); `href="/"` would silently
 leave the project site and land on the user's root Pages domain. The `base`
 value applies to `npm run dev` and `npm run preview` as well, so both serve from
-`/crypto-patterns/` and match production. Renaming the repo means changing that
+`/geistgrid/` and match production. Renaming the repo means changing that
 one line.
 
 ## Legal pages
