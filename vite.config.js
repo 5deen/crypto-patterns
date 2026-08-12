@@ -4,16 +4,15 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   // GitHub Pages serves this project repo from a subpath
-  // (https://5deen.github.io/crypto-patterns/), so every absolute asset URL in
+  // (https://5deen.github.io/geistgrid/), so every absolute asset URL in
   // index.html and in main.css has to be prefixed with it. Vite rewrites them
   // at build time from this value. It applies to the dev server and `preview`
-  // too, so all three environments agree on the same paths — rename the repo
-  // and this is the one line to change.
+  // too, so all three environments agree on the same paths.
   //
-  // This tracks the *repository* name, which is not the product name: the site
-  // is called Geistgrid, the repo is still crypto-patterns. Changing this to
-  // match the brand would 404 every asset.
-  base: '/crypto-patterns/',
+  // This tracks the *repository* name. It matches the product name now, but it
+  // is the repo that decides it — rename the repo and this is the one line to
+  // change, or every asset on the deployed site 404s.
+  base: '/geistgrid/',
   plugins: [tailwindcss()],
 
   // Multi-page build. Vite only picks up index.html on its own, so every other
