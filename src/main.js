@@ -1,6 +1,8 @@
 import { ALPHABET, renderGlyph, renderPattern } from './pattern.js';
 import {
+  DEFAULT_LIBRARY,
   GLYPH_LIMIT,
+  LIBRARIES,
   isTruncated,
   loadGenerator,
   renderPattern as renderMedigeist,
@@ -73,7 +75,21 @@ function initDemo() {
   const input = document.querySelector('[data-demo-input]');
   const output = document.querySelector('[data-demo-output]');
   const notice = document.querySelector('[data-demo-notice]');
+  const picker = document.querySelector('[data-demo-library]');
   if (!input || !output) return;
+
+  /*
+   * Fill the picker from the library list rather than duplicating it in the
+   * markup, so adding a build in medigeist.js is the only edit needed.
+   */
+  if (picker) {
+    picker.innerHTML = LIBRARIES.map(
+      (library) => `<option value="${library.id}">${library.label}</option>`,
+    ).join('');
+    picker.value = DEFAULT_LIBRARY;
+  }
+
+  const library = () => (picker ? picker.value : DEFAULT_LIBRARY);
 
   const message = (text) => {
     output.innerHTML = '';
@@ -100,8 +116,8 @@ function initDemo() {
     }
 
     try {
-      const svg = await renderMedigeist(phrase);
-      if (mine !== token) return; // a newer phrase is already rendering
+      const svg = await renderMedigeist(phrase, library());
+      if (mine !== token) return; // a newer phrase or library is already rendering
       output.innerHTML = svg;
       const el = output.querySelector('svg');
       if (el) {
@@ -122,6 +138,19 @@ function initDemo() {
   });
 
   /*
+   * Switching library redraws at once — there are no keystrokes to debounce.
+   * A library not fetched yet has to download first, so say so rather than
+   * leaving the previous pattern up looking like nothing happened.
+   */
+  if (picker) {
+    picker.addEventListener('change', () => {
+      clearTimeout(timer);
+      message('Drawing the pattern…');
+      draw();
+    });
+  }
+
+  /*
    * Hold the first render until the panel is actually approached.
    *
    * The field ships with a phrase in it, so rendering on load would pull the
@@ -139,6 +168,7 @@ function initDemo() {
   };
 
   input.addEventListener('focus', start, { once: true });
+  if (picker) picker.addEventListener('focus', start, { once: true });
 
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(
