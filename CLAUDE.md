@@ -62,7 +62,7 @@ src/main.js         entry point — wires the page up to the generators
 src/medigeist.js    loader for the WASM generator that drives the demo
 src/pattern.js      the original glyph mapping; now decorative only
 src/styles/main.css Tailwind entry + @theme tokens
-public/medigeist/   vendored release.js + release.wasm (see its README)
+public/medigeist/   one vendored WASM build per block library (see its README)
 public/             copied to the build root as-is (favicon, fonts)
 vite.config.js      Tailwind plugin + the GitHub Pages `base` path
 .github/workflows/  GitHub Actions; deploy.yml publishes to Pages
@@ -179,25 +179,45 @@ The demo under **Try it** runs [Medigeist](https://github.com/5deen/asc-set-gene
 an AssemblyScript program compiled to WebAssembly. `src/medigeist.js` wraps it;
 `createSVGDocument(ratio, set, text)` returns a complete, self-contained SVG.
 
-Four things about it constrain the page:
+**There is one build per block library**, `lib0` … `lib9`, matching the files in
+the generator's `assembly/lib`. The **Image set** picker in the demo chooses
+between them, and `LIBRARIES` in `medigeist.js` is the single list the picker is
+built from. `DEFAULT_LIBRARY` is `lib8` — the `name` in the generator's
+`base64/config.json`, and the smallest build.
+
+Every single-library build exposes exactly one image set, always called `set0`,
+because `setMapsArray()` in the generator names sets positionally. That name is
+hard-coded in `medigeist.js`; it is not a free choice.
+
+Five things about the generator constrain the page:
 
 - **It reads only the first 16 characters.** Longer phrases are truncated
   silently by the generator, so the demo shows a notice past that length.
-- **It is deterministic** — the same phrase gives a byte-identical document, and
-  one changed character changes the picture. That is what the page claims, and
-  it is the reason this generator fits at all.
-- **The module is ~1 MB and each render is ~130 KB of SVG.** It is therefore
+- **It is deterministic** — the same phrase and the same library give a
+  byte-identical document, and one changed character changes the picture. That
+  is what the page claims, and it is the reason this generator fits at all.
+  Patterns are only comparable within one library.
+- **A build is 78–342 KB and each render is ~130 KB of SVG.** Builds are
   fetched lazily, when the demo scrolls near or the field is focused — never on
-  page load — and keystrokes are debounced. Do not move the first render back to
-  load time; the demo sits well below the fold.
-- **It runs entirely in the browser**, with both files served from this origin,
+  page load — cached per library, and keystrokes are debounced. Do not move the
+  first render back to load time; the demo sits well below the fold.
+- **It runs entirely in the browser**, with every file served from this origin,
   so `privacy.html` stays true: no external request, and the phrase never leaves
   the machine.
+- **Only the selected library is downloaded.** All ten together are 1.6 MB, so
+  do not preload them or offer a "compare all" view without rethinking this.
 
-`release.js` and `release.wasm` live in `public/medigeist/` rather than `src/`
-because `release.js` locates its binary with `new URL("release.wasm",
-import.meta.url)`. Bundling it would rewrite that URL and break the fetch. The
-import in `medigeist.js` is dynamic and `@vite-ignore`d for the same reason.
+Each library gets its **own directory** under `public/medigeist/`, rather than
+one directory of suffixed files, because `release.js` locates its binary with
+`new URL("release.wasm", import.meta.url)` — the pairing is by directory.
+They live in `public/` rather than `src/` because bundling `release.js` would
+rewrite that URL and break the fetch; the import in `medigeist.js` is dynamic
+and `@vite-ignore`d for the same reason.
+
+Rebuilding these is not `npm run asbuild:release`. The per-library recipe, and
+the reason the lib file must be imported directly rather than through the
+`assembly/lib` barrel — the barrel keeps all ten blobs and leaves the build at
+1 MB — are in `public/medigeist/README.md`.
 
 `src/pattern.js` is still used, but only for decoration — the hero image, the
 step illustrations and the "one character off" comparison. Its mapping is *not*
@@ -221,7 +241,7 @@ console.log(renderPattern('geometric'));
 "
 ```
 
-The four figures in the stats band — 102 characters, 12 image sets, 16
+The four figures in the stats band — 102 characters, 10 image sets, 16
 characters per pattern, 240 sequences — are properties of the generator, read
 from `glyphs()`, `setNames()` and `glyphLimit()`. If the vendored build changes,
 re-read them rather than assuming.
