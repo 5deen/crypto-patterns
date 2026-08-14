@@ -1,10 +1,11 @@
-# Medigeist generators
+# Medigeist generator
 
-Prebuilt WebAssembly builds of [asc-set-generator](https://github.com/5deen/asc-set-generator),
+Prebuilt WebAssembly build of [asc-set-generator](https://github.com/5deen/asc-set-generator),
 vendored so the demo has no external dependency. MIT licensed.
 
-One directory per block library, `lib0` … `lib9`, matching the files in that
-repository's `assembly/lib`. Each contains:
+One directory per block library. The demo currently ships one,
+`cascading_maze_pattern`, named after its block keys — they run
+`cascading_maze_pattern_000` through `_099`. Each directory contains:
 
 - `release.wasm` — the compiled AssemblyScript module
 - `release.js` — the ESM binding. It resolves `release.wasm` relative to its own
@@ -16,44 +17,45 @@ Both live under `public/` rather than `src/` on purpose: Vite copies `public/`
 verbatim, which leaves that `import.meta.url` lookup intact. Bundling
 `release.js` would rewrite the URL and break the fetch.
 
-## Why one build per library
-
-The single combined build these replace contained all ten libraries and weighed
-1 MB whichever image set you asked for. Built against one library it is 78–342 KB,
-and the demo only fetches the one being shown.
-
-The saving depends entirely on importing the library file directly. The barrel
-at `assembly/lib/index.ts` re-exports all ten, so `import { lib0 } from './lib'`
-keeps every blob in the binary and the build stays at 1 MB — dead-code
-elimination only drops the others when the import names the file.
+The AssemblyScript source each build is compiled from is kept in
+`medigeist-src/` at the repository root — deliberately outside `public/`, which
+is served verbatim and would ship the source to every visitor for nothing.
 
 ## Rebuilding
 
-In a checkout of asc-set-generator, for each library, replace
-`assembly/imagesets.ts` with a single-library version and build to its own
-output path:
+A build carries one library. The lib file must be imported **directly**; the
+barrel at `assembly/lib/index.ts` re-exports every library the generator ships,
+which defeats dead-code elimination and leaves the build at 1 MB whatever set
+you asked for.
+
+In a checkout of asc-set-generator, with the library source copied into
+`assembly/lib/<name>.ts`:
 
 ```bash
-for i in $(seq 0 9); do
-  cat > assembly/imagesets.ts <<INNER
-import { lib$i } from './lib/lib$i';
+NAME=cascading_maze_pattern
+cat > assembly/imagesets.ts <<INNER
+import { $NAME } from './lib/$NAME';
 import { SetParams, setImageSets } from './utils';
 
 export const SETS = new Map<string, SetParams>();
 
-SETS.set("set0", new SetParams(setImageSets([lib$i])));
+SETS.set("set0", new SetParams(setImageSets([$NAME])));
 INNER
-  npx asc assembly/index.ts --target release \
-    --outFile "build/lib$i/release.wasm" \
-    --textFile "build/lib$i/release.wat" --sourceMap false
-done
+npx asc assembly/index.ts --target release \
+  --outFile "build/$NAME/release.wasm" \
+  --textFile "build/$NAME/release.wat" --sourceMap false
 git checkout assembly/imagesets.ts
 ```
 
-Then copy each `build/lib<i>/release.js` and `release.wasm` into the matching
-directory here.
+Then copy `release.js` and `release.wasm` into a directory of that name here,
+and add the library to `LIBRARIES` in `src/medigeist.js`.
 
 `SETS.set("set0", …)` is not arbitrary. `setMapsArray()` in `assembly/maps.ts`
 builds its map names positionally — `set0`, `set1`, and so on — so the single
 set in a single-library build has to be `set0`, which is the name
 `src/medigeist.js` passes to `createSVGDocument`.
+
+The map binding inside the source file must match the name used in the import.
+The uploaded source declared its map as `lib0`; it was renamed to
+`cascading_maze_pattern` throughout so the file, the binding, the build
+directory and the id in `LIBRARIES` all agree.

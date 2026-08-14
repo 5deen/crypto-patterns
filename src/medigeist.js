@@ -6,11 +6,10 @@
  * fetched lazily — on first use rather than on page load — and cached, so
  * switching library downloads a build once and never again.
  *
- * Why one build per library rather than the single combined one it replaces:
- * the combined build carried all ten block libraries and weighed 1 MB no
- * matter which set you asked for. Compiled against one library, with the lib
- * file imported directly so dead-code elimination can drop the rest, a build
- * is 78–342 KB. The demo now downloads a fraction of what it did.
+ * A build carries one library and nothing else. The lib file is imported
+ * directly rather than through the `assembly/lib` barrel, so dead-code
+ * elimination can drop every other library the generator ships; through the
+ * barrel every build keeps all of them and lands at 1 MB regardless.
  *
  * The import is deliberately dynamic and marked @vite-ignore: release.js finds
  * its own .wasm with `new URL("release.wasm", import.meta.url)`, and letting
@@ -29,21 +28,20 @@ export const GLYPH_LIMIT = 16;
  * The block libraries offered by the demo, in order.
  *
  * `id` is the directory under public/medigeist and the name the library has in
- * asc-set-generator. `label` is what the picker shows.
- */
-export const LIBRARIES = Array.from({ length: 10 }, (_, i) => ({
-  id: `lib${i}`,
-  label: `Library ${i}`,
-}));
-
-/**
- * The library the demo opens with.
+ * the generator — taken from the block keys, which run `<id>_000` upwards.
+ * `label` is what the picker shows.
  *
- * lib8 is the value of `name` in the generator's base64/config.json — the
- * library that repository is currently authoring against — and it is also the
- * smallest build, so it is the cheapest thing to load first.
+ * The demo ships one library today. Everything downstream is written for a
+ * list, so adding a build means adding an entry here and nothing else: the
+ * picker is generated from this, and appears only once there is a choice to
+ * make.
  */
-export const DEFAULT_LIBRARY = 'lib8';
+export const LIBRARIES = [
+  { id: 'cascading_maze_pattern', label: 'Cascading maze' },
+];
+
+/** The library the demo opens with. */
+export const DEFAULT_LIBRARY = LIBRARIES[0].id;
 
 /**
  * Every single-library build exposes exactly one image set.

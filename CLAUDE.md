@@ -63,6 +63,7 @@ src/medigeist.js    loader for the WASM generator that drives the demo
 src/pattern.js      the original glyph mapping; now decorative only
 src/styles/main.css Tailwind entry + @theme tokens
 public/medigeist/   one vendored WASM build per block library (see its README)
+medigeist-src/      AssemblyScript source for those builds; not served
 public/             copied to the build root as-is (favicon, fonts)
 vite.config.js      Tailwind plugin + the GitHub Pages `base` path
 .github/workflows/  GitHub Actions; deploy.yml publishes to Pages
@@ -179,11 +180,17 @@ The demo under **Try it** runs [Medigeist](https://github.com/5deen/asc-set-gene
 an AssemblyScript program compiled to WebAssembly. `src/medigeist.js` wraps it;
 `createSVGDocument(ratio, set, text)` returns a complete, self-contained SVG.
 
-**There is one build per block library**, `lib0` … `lib9`, matching the files in
-the generator's `assembly/lib`. The **Image set** picker in the demo chooses
-between them, and `LIBRARIES` in `medigeist.js` is the single list the picker is
-built from. `DEFAULT_LIBRARY` is `lib8` — the `name` in the generator's
-`base64/config.json`, and the smallest build.
+**There is one build per block library.** The demo ships one today,
+`cascading_maze_pattern` — 100 blocks, named after its keys, which run
+`cascading_maze_pattern_000` through `_099`. `LIBRARIES` in `medigeist.js` is
+the single list everything is built from: adding a build means adding an entry
+there and nothing else. The **Image set** picker is generated from it and stays
+hidden while there is only one library, since a select with one option is a
+control that cannot do anything.
+
+Its AssemblyScript source lives in `medigeist-src/`, outside `public/` so it is
+not served. Keep it: without it the library cannot be rebuilt, and the
+generator repository is a separate one this repo cannot push to.
 
 Every single-library build exposes exactly one image set, always called `set0`,
 because `setMapsArray()` in the generator names sets positionally. That name is
@@ -197,14 +204,14 @@ Five things about the generator constrain the page:
   byte-identical document, and one changed character changes the picture. That
   is what the page claims, and it is the reason this generator fits at all.
   Patterns are only comparable within one library.
-- **A build is 78–342 KB and each render is ~130 KB of SVG.** Builds are
+- **The build is ~950 KB and each render is ~150 KB of SVG.** Builds are
   fetched lazily, when the demo scrolls near or the field is focused — never on
   page load — cached per library, and keystrokes are debounced. Do not move the
   first render back to load time; the demo sits well below the fold.
 - **It runs entirely in the browser**, with every file served from this origin,
   so `privacy.html` stays true: no external request, and the phrase never leaves
   the machine.
-- **Only the selected library is downloaded.** All ten together are 1.6 MB, so
+- **Only the selected library is downloaded.** Should more libraries be added,
   do not preload them or offer a "compare all" view without rethinking this.
 
 Each library gets its **own directory** under `public/medigeist/`, rather than
@@ -235,10 +242,10 @@ the markup: the hero used to carry a copy of `renderPattern('geometric')`
 transcribed cell for cell, nothing enforced the duplication, and changing how
 shapes are drawn left it showing the old style until someone noticed.
 
-The four figures in the stats band — 102 characters, 10 image sets, 16
-characters per pattern, 240 sequences — are properties of the generator, read
-from `glyphs()`, `setNames()` and `glyphLimit()`. If the vendored build changes,
-re-read them rather than assuming.
+The four figures in the stats band — 102 characters, 100 blocks, 16 characters
+per pattern, 240 sequences — are properties of the generator and of the shipped
+library, read from `glyphs()` and `glyphLimit()` and from the library's entry
+count. If the vendored build changes, re-read them rather than assuming.
 
 ## Conventions
 
