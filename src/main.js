@@ -108,7 +108,7 @@ function initDemo() {
   const message = (text) => {
     output.innerHTML = '';
     const p = document.createElement('p');
-    p.className = 'py-12 text-center text-slate-400';
+    p.className = 'py-12 text-slate-400';
     p.textContent = text;
     output.append(p);
   };
