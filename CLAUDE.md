@@ -196,7 +196,7 @@ Every single-library build exposes exactly one image set, always called `set0`,
 because `setMapsArray()` in the generator names sets positionally. That name is
 hard-coded in `medigeist.js`; it is not a free choice.
 
-Five things about the generator constrain the page:
+Six things about the generator constrain the page:
 
 - **It reads only the first 16 characters.** Longer phrases are truncated
   silently by the generator, so the demo shows a notice past that length.
@@ -213,6 +213,48 @@ Five things about the generator constrain the page:
   the machine.
 - **Only the selected library is downloaded.** Should more libraries be added,
   do not preload them or offer a "compare all" view without rethinking this.
+- **Its output carries the phrase in plain text.** Every document opens with a
+  `<desc id="sequences">` listing the phrase and all its rotations. On the page
+  that is inert; in a file it is not, because a file is what people send each
+  other, and a document that spells out the phrase in its own metadata is not
+  the safe-to-publish object the rest of the page describes. Anything that hands
+  a document to the user has to take that block out first.
+
+The **Download SVG** button in the demo goes through `toFileDocument()` in
+`medigeist.js`, which does exactly two things and neither of them touches the
+drawing:
+
+- **Drops every `<desc>`**, for the reason above. Verify this after changing the
+  vendored build: the point is that the phrase does not appear anywhere in the
+  saved bytes, not that one particular element is gone.
+- **Restates `width`/`height` as `1024`**, because the generator writes `100%`
+  for both — right for a responsive panel, unusable in a standalone file, which
+  has no containing box to resolve a percentage against. The `viewBox` is left
+  alone, so only the intrinsic size changes.
+
+It is string surgery rather than `DOMParser` so the module keeps working outside
+a browser. It saves the document the generator returned rather than the copy in
+the panel, which has picked up a `role`, an `aria-label` and layout classes that
+do not belong in a file.
+
+Saved files are called `geistgrid-<library>-YYYYMMDD-HHMMSS.svg`, in local time,
+and are **not** named after the phrase. A filename is the most visible part of a
+file — a directory listing, a share sheet and an attachment header all show it
+without anyone opening anything — so naming it after the phrase would undo the
+stripping above. The stamp is what keeps one save from overwriting the next.
+
+The library segment comes from the library **id**, not the picker label: the id
+is the generator's own name for the set and the directory it is vendored in,
+while the label is display text somebody may reword. It is in the name because
+patterns are only comparable within one library, so a saved file cannot be read
+against anything without it — which is why the segment is worth carrying now,
+while there is only one library to name.
+
+Reading the clock there does not break the determinism invariant: it names the
+file and never reaches the document. Save the same phrase twice and the two
+files differ by their name and not by a byte inside. Keep it that way — a
+timestamp *in* an SVG would make the same phrase produce two different
+documents and destroy the comparison the whole scheme rests on.
 
 Each library gets its **own directory** under `public/medigeist/`, rather than
 one directory of suffixed files, because `release.js` locates its binary with

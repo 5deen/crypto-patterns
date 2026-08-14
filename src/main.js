@@ -1,11 +1,11 @@
 import { renderPattern } from './pattern.js';
 import {
   DEFAULT_LIBRARY,
-  GLYPH_LIMIT,
   LIBRARIES,
   isTruncated,
   loadGenerator,
   renderPattern as renderMedigeist,
+  toFileDocument,
 } from './medigeist.js';
 import { AIRTABLE_BETA_FORM_URL } from './config.js';
 
@@ -38,9 +38,44 @@ function initStaticPatterns() {
 }
 
 /**
+ * The name a saved pattern is offered under:
+ * `geistgrid-<library>-<YYYYMMDD>-<HHMMSS>.svg`.
+ *
+ * The name deliberately says nothing about the phrase. Naming the file after
+ * what was typed would put the phrase back on the outside of a document we just
+ * took it out of — and in the more visible place of the two, since a filename
+ * shows up in a directory listing, a share sheet and an attachment header
+ * without anyone opening anything.
+ *
+ * The **library** is in the name because patterns are only comparable within
+ * one: the same phrase drawn from another block set is a different picture, so
+ * a saved file cannot be read against anything without knowing which set drew
+ * it. It comes from the library id — the generator's own name for it, and the
+ * directory it is vendored in — rather than the picker label, which is display
+ * text somebody may reword.
+ *
+ * The local-time stamp separates one save from the next: it sorts
+ * chronologically, survives every filesystem, and tells the reader when they
+ * saved rather than what they typed. Two saves inside the same second still
+ * collide, and the browser resolves that by suffixing a number.
+ *
+ * The clock is read for the *name* only. It never reaches the document, which
+ * stays a pure function of the phrase and the library — save the same phrase
+ * twice and the two files differ by their name and not by a byte inside.
+ */
+function filename(library, now = new Date()) {
+  const pad = (value) => String(value).padStart(2, '0');
+  const slug = String(library).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  const date = `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}`;
+  const time = `${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+
+  return `geistgrid-${slug || 'pattern'}-${date}-${time}.svg`;
+}
+
+/**
  * The live "try it" panel, driven by the Medigeist generator.
  *
- * Three things this has to get right:
+ * Four things this has to get right:
  *
  * - The generator is ~1 MB of WebAssembly. It is fetched on first interaction,
  *   not on page load, so it never delays the landing page.
@@ -48,12 +83,16 @@ function initStaticPatterns() {
  *   are debounced rather than rendering per character.
  * - Renders can finish out of order. Each one carries a token and a stale
  *   result is discarded, so the grid always matches what is in the field.
+ * - The download offers the document the generator returned, not the one in the
+ *   panel: the displayed copy has been given a role, a label and layout classes
+ *   for the page, none of which belong in a saved file.
  */
 function initDemo() {
   const input = document.querySelector('[data-demo-input]');
   const output = document.querySelector('[data-demo-output]');
   const notice = document.querySelector('[data-demo-notice]');
   const picker = document.querySelector('[data-demo-library]');
+  const download = document.querySelector('[data-demo-download]');
   if (!input || !output) return;
 
   /*
@@ -87,6 +126,17 @@ function initDemo() {
   let token = 0;
   let timer = null;
 
+  /* The document last drawn, as the generator returned it, with the library
+   * that drew it, or null while there is nothing to save. The button follows
+   * it, so it can never hand over a pattern for a phrase that is no longer in
+   * the field. The library is carried rather than read from the picker at click
+   * time, so the name can only ever say what actually drew the document. */
+  let saved = null;
+  const offer = (svg, id) => {
+    saved = svg ? { svg, library: id } : null;
+    if (download) download.disabled = !saved;
+  };
+
   const draw = async () => {
     const phrase = input.value.trim();
     const mine = ++token;
@@ -96,14 +146,17 @@ function initDemo() {
     }
 
     if (!phrase) {
+      offer(null);
       message('Type a phrase to see its pattern.');
       return;
     }
 
     try {
-      const svg = await renderMedigeist(phrase, library());
+      const id = library();
+      const svg = await renderMedigeist(phrase, id);
       if (mine !== token) return; // a newer phrase or library is already rendering
       output.innerHTML = svg;
+      offer(svg, id);
       const el = output.querySelector('svg');
       if (el) {
         el.setAttribute('role', 'img');
@@ -112,10 +165,35 @@ function initDemo() {
       }
     } catch (error) {
       if (mine !== token) return;
+      offer(null);
       message('The pattern generator could not be loaded. Reload the page to try again.');
       console.error(error);
     }
   };
+
+  /*
+   * Save the pattern as a file, without leaving the machine.
+   *
+   * The blob is built here and handed straight to the browser, so saving makes
+   * no request and the phrase stays local — the same promise the rest of the
+   * demo makes. toFileDocument() takes the phrase back out of the document, so
+   * the file carries the picture and not what drew it. The object URL outlives
+   * the click deliberately: revoking it in the same tick can cancel the save
+   * before the browser has read the blob.
+   */
+  if (download) {
+    download.addEventListener('click', () => {
+      if (!saved) return;
+
+      const blob = new Blob([toFileDocument(saved.svg)], { type: 'image/svg+xml' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename(saved.library);
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+  }
 
   input.addEventListener('input', () => {
     clearTimeout(timer);
@@ -130,6 +208,7 @@ function initDemo() {
   if (picker) {
     picker.addEventListener('change', () => {
       clearTimeout(timer);
+      offer(null); // the drawn pattern belongs to the library being left
       message('Drawing the pattern…');
       draw();
     });
