@@ -248,18 +248,40 @@
             </div>
 
             <div class="mt-8 flex flex-col items-center gap-3">
-              <button
-                type="button"
-                data-demo-download
-                disabled
-                class="inline-flex items-center gap-2 rounded-xl border border-primary bg-primary/10 px-6 py-3 text-base text-primary transition-all duration-300 hover:bg-primary hover:text-secondary focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-primary/10 disabled:hover:text-primary"
+              <div class="flex flex-wrap items-center justify-center gap-3">
+                <button
+                  type="button"
+                  data-demo-download
+                  disabled
+                  class="inline-flex items-center gap-2 rounded-xl border border-primary bg-primary/10 px-6 py-3 text-base text-primary transition-all duration-300 hover:bg-primary hover:text-secondary focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-primary/10 disabled:hover:text-primary"
+                >
+                  <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 19h16" />
+                  </svg>
+                  Download SVG
+                </button>
+                <button
+                  type="button"
+                  data-demo-download-png
+                  disabled
+                  class="inline-flex items-center gap-2 rounded-xl border border-slate-700 px-6 py-3 text-base text-slate-300 transition-all duration-300 hover:border-slate-600 hover:bg-slate-800 hover:text-white focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-slate-700 disabled:hover:bg-transparent disabled:hover:text-slate-300"
+                >
+                  <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 19h16" />
+                  </svg>
+                  Download PNG
+                </button>
+              </div>
+              <p class="text-sm text-slate-400">
+                Saves the pattern above at 1024 × 1024. SVG is the exact document; PNG is a picture of it.
+              </p>
+              <p
+                data-demo-download-notice
+                hidden
+                class="rounded-lg border border-primary/30 bg-primary/5 px-4 py-2 text-sm text-primary"
               >
-                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12m0 0l-4-4m4 4l4-4M4 19h16" />
-                </svg>
-                Download SVG
-              </button>
-              <p class="text-sm text-slate-400">Saves the pattern above as a 1024 × 1024 SVG file.</p>
+                The PNG could not be produced. The SVG download still works.
+              </p>
             </div>
           </div>
         </div>

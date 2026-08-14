@@ -239,7 +239,7 @@ Six things about the generator constrain the page:
   the safe-to-publish object the rest of the page describes. Anything that hands
   a document to the user has to take that block out first.
 
-The **Download SVG** button in the demo goes through `toFileDocument()` in
+Both download buttons in the demo go through `toFileDocument()` in
 `medigeist.js`, which does exactly two things and neither of them touches the
 drawing:
 
@@ -255,6 +255,32 @@ It is string surgery rather than `DOMParser` so the module keeps working outside
 a browser. It saves the document the generator returned rather than the copy in
 the panel, which has picked up a `role`, an `aria-label` and layout classes that
 do not belong in a file.
+
+**Download PNG** rasterizes that same document with `toPNG()` in `main.js`: blob
+URL → `Image` → `drawImage` onto a 1024² canvas → `toBlob()`. It lives in
+`main.js` rather than `medigeist.js` because it needs the DOM, and that module
+stays usable outside a browser. Three things hold it up:
+
+- **The stated `width`/`height` are what make it work.** An SVG carrying the
+  generator's `100%` has no intrinsic size and browsers rasterize it at a default
+  box or not at all. Always hand `toPNG()` the output of `toFileDocument()`,
+  never the raw generator string.
+- **The canvas must stay origin-clean.** Blob URLs are same-origin and the
+  document is self-contained, so `toBlob()` is allowed to return pixels. An SVG
+  that referenced anything external — a font URL, an image, a `foreignObject`
+  pulling in the page — would taint the canvas and break the PNG while leaving
+  the SVG download working, which is a quiet way to break it.
+- **PNG is a picture of the document, not the document.** Rasterizers differ
+  across browsers and versions in antialiasing and color management, so the same
+  phrase gives byte-different PNGs on different machines while giving
+  byte-identical SVGs everywhere. Comparing by eye still works and is what the
+  page asks for; comparing by hash does not. Do not present PNG as the format to
+  verify with, and keep SVG the primary button.
+
+Rasterizing costs a few hundred milliseconds and about 900 KB, so it happens on
+click rather than per render. Both buttons disable while it runs, and a failure
+shows `[data-demo-download-notice]` rather than leaving a button that looks like
+it did nothing.
 
 Saved files are called `geistgrid-<library>-YYYYMMDD-HHMMSS.svg`, in local time,
 and are **not** named after the phrase. A filename is the most visible part of a
