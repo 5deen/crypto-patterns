@@ -1,4 +1,3 @@
-import { renderPattern } from './pattern.js';
 import {
   DEFAULT_LIBRARY,
   LIBRARIES,
@@ -26,15 +25,6 @@ function initNav() {
     toggle.setAttribute('aria-expanded', 'false');
     menu.classList.add('hidden');
   });
-}
-
-/** Render every static [data-pattern] placeholder from its phrase. */
-function initStaticPatterns() {
-  for (const node of document.querySelectorAll('[data-pattern]')) {
-    node.innerHTML = renderPattern(node.dataset.pattern, {
-      title: node.dataset.patternTitle || `Pattern for ${node.dataset.pattern}`,
-    });
-  }
 }
 
 /**
@@ -283,7 +273,6 @@ function initYear() {
 }
 
 initNav();
-initStaticPatterns();
 initDemo();
 initBetaForm();
 initYear();

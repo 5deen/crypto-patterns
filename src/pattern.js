@@ -15,7 +15,7 @@ export const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
 export const SHAPES = ['circle', 'square', 'triangle', 'diamond', 'hexagon', 'cross', 'ring', 'chevron'];
 
 /**
- * The six colours a glyph can map to, drawn from the site palette.
+ * The six colors a glyph can map to, drawn from the site palette.
  *
  * All six are light enough to read against the dark cell background — a
  * near-black in this list would render as an invisible glyph, which would
@@ -35,7 +35,7 @@ export const COLORS = [
  * Map a single character to a { shape, color } pair.
  *
  * The letter's alphabet index picks the shape; the number of full passes
- * through the shape list picks the colour. 8 shapes x 6 colours = 48 distinct
+ * through the shape list picks the color. 8 shapes x 6 colors = 48 distinct
  * cells, comfortably more than the 26 letters of the Latin alphabet, so no two
  * letters collide. Characters outside the alphabet return null and are drawn as
  * a blank cell.
@@ -67,7 +67,7 @@ export function gridSize(count) {
 /**
  * Stroke weight for a glyph outline, in the 100x100 cell's user units.
  *
- * The widest shape reaches x=86, and a centred stroke adds half its width
+ * The widest shape reaches x=86, and a centered stroke adds half its width
  * either side, so this has to stay under 28 for the outline to sit inside the
  * cell rather than clipping against its rounded corner.
  */
@@ -76,7 +76,7 @@ const STROKE_WIDTH = 8;
 /**
  * SVG path/element body for one shape, drawn inside a 100x100 cell.
  *
- * Every shape is an outline — the colour is carried by the stroke and nothing
+ * Every shape is an outline — the color is carried by the stroke and nothing
  * is filled. `ring` is the one exception to the shared stroke weight: as a
  * plain outline it would be nothing but a slightly smaller `circle`, and two
  * glyphs that look alike would undercut the property the whole scheme rests

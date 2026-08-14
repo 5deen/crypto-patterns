@@ -5,7 +5,7 @@ Guidance for Claude Code when working in this repository.
 ## Project
 
 **Geistgrid** is text-based design built on geometric patterns. A Geistgrid
-pattern is a two- or three-dimensional grid of coloured shapes, where each shape
+pattern is a two- or three-dimensional grid of colored shapes, where each shape
 corresponds to a glyph in the Latin alphabet.
 
 Geistgrid is the product name, the repository name and the Pages path. They
@@ -16,18 +16,26 @@ deployed site.
 
 The core flow:
 
-1. A user enters a text password.
+1. A user enters a text phrase.
 2. Each character is mapped to a geometric shape via the glyph mapping.
 3. The system renders a **public** grid of those shapes — the pattern is safe to
    display, since it reveals nothing without the mapping rules.
-4. Re-entering the password re-derives the pattern. If the character sequence
+4. Re-entering the phrase re-derives the pattern. If the character sequence
    matches the original, the regenerated pattern is identical to the one created
-   when the password was defined. That identity check is the verification.
+   when the phrase was defined. That identity check is the verification.
 
-Key invariant: pattern generation must be **deterministic** — the same password
+The site says **phrase**, never "password". The word promises storage, reset and
+recovery, none of which exist here — there is no account, no server and nothing
+held anywhere. Keep it out of copy and out of these notes.
+
+Key invariant: pattern generation must be **deterministic** — the same phrase
 and the same mapping rules always produce a byte-identical pattern. Any
-randomness has to be seeded from the password, never from `Math.random()`, the
+randomness has to be seeded from the phrase, never from `Math.random()`, the
 clock, or iteration order of an unordered collection.
+
+Site copy is **US English** (`colored`, `recognizable`, `August 2, 2026`), and
+every page carries `lang="en-US"`. The German address and legal terms in
+`contact.html` and `privacy.html` are not translated.
 
 ## Commands
 
@@ -45,7 +53,7 @@ There is no test runner wired up yet. If you add one, add the script here.
 - **Vite 8** — dev server and bundler, ESM (`"type": "module"`).
 - **Tailwind CSS 4** — via the `@tailwindcss/vite` plugin. Tailwind v4 is
   configured **in CSS**, not in a `tailwind.config.js`: `src/styles/main.css`
-  does `@import 'tailwindcss'`, and theme customisation belongs in an
+  does `@import 'tailwindcss'`, and theme customization belongs in an
   `@theme { ... }` block in that file.
 - Vanilla JavaScript — no framework. Keep it that way unless asked.
 
@@ -60,7 +68,7 @@ signin.html         states plainly that accounts are not open yet
 src/config.js       AIRTABLE_BETA_FORM_URL, the one value to fill in
 src/main.js         entry point — wires the page up to the generators
 src/medigeist.js    loader for the WASM generator that drives the demo
-src/pattern.js      the original glyph mapping; now decorative only
+src/pattern.js      the original glyph mapping; no longer used by the page
 src/styles/main.css Tailwind entry + @theme tokens
 public/medigeist/   one vendored WASM build per block library (see its README)
 medigeist-src/      AssemblyScript source for those builds; not served
@@ -80,13 +88,13 @@ The **layout** comes from CloudCannon's MIT-licensed
 darker band for the closing content section, and the `title` + accented-suffix
 heading pattern.
 
-The **colours** are the project's own: a dark slate surface with indigo and pink
+The **colors** are the project's own: a dark slate surface with indigo and pink
 accents, plus a brand orange.
 
 | Token | Value | Used for |
 | --- | --- | --- |
 | `primary` | `#818cf8` indigo-400 | accent text, borders, tinted backgrounds |
-| `secondary` | `#ffffff` | contrast colour on top of `primary` |
+| `secondary` | `#ffffff` | contrast color on top of `primary` |
 | `link` | `#ec4899` pink-500 | the far end of the gradient |
 | `brand` | `#f54905` | the orange in the logo |
 
@@ -110,7 +118,7 @@ word in section headings.
 Both fonts are self-hosted from `public/fonts` — the page makes no external
 requests at all, so it works offline and behind a strict network policy. Only
 weights 400–700 exist as files, so do **not** use `font-extrabold` or heavier:
-the browser would synthesise the weight instead. See `public/fonts/README.md`
+the browser would synthesize the weight instead. See `public/fonts/README.md`
 for provenance and licensing.
 
 ## Deployment
@@ -268,22 +276,26 @@ the reason the lib file must be imported directly rather than through the
 `assembly/lib` barrel — the barrel keeps all ten blobs and leaves the build at
 1 MB — are in `public/medigeist/README.md`.
 
-`src/pattern.js` is still used, but only for decoration — the "one character
-off" comparison in step three, which is now its only appearance on the page.
-Its mapping is *not* what the demo does, so nothing on the page may present it
-as the mapping: anything drawn from it stays unlabelled, as that comparison is,
-rather than pairing a shape with the character it supposedly encodes.
+`src/pattern.js` is **no longer used by the page**. It is the original glyph
+mapping and it drew the step illustrations; the last of those, the "one
+character off" comparison in step three, has been removed, so nothing imports
+the module and nothing bundles it. It is kept as the record of that mapping, not
+as live code — `main.js` no longer touches it, and re-wiring it means deciding
+what it is for.
 
-Its glyphs are **outlines**: the colour lives on the stroke and no shape is
+Two things to preserve if it ever comes back. Its mapping is *not* what the demo
+does, so nothing on the page may present it as the mapping: anything drawn from
+it stays unlabeled rather than pairing a shape with the character it supposedly
+encodes. And do not hand-write its output into the markup — the hero used to
+carry a copy of `renderPattern('geometric')` transcribed cell for cell, nothing
+enforced the duplication, and changing how shapes are drawn left it showing the
+old style until someone noticed. Render from the module through `[data-pattern]`
+instead.
+
+Its glyphs are **outlines**: the color lives on the stroke and no shape is
 filled. `ring` keeps a heavier stroke than the shared `STROKE_WIDTH` on purpose
 — as a plain outline it is just a smaller `circle`, and two glyphs that look
 alike weaken the "one wrong character is visible" property.
-
-Everything it draws on the page is rendered from the module at runtime through
-`[data-pattern]`. Do not hand-write pattern SVG into
-the markup: the hero used to carry a copy of `renderPattern('geometric')`
-transcribed cell for cell, nothing enforced the duplication, and changing how
-shapes are drawn left it showing the old style until someone noticed.
 
 The stats band under **Built on mapping rules** used to quote four figures — 102
 characters, 100 blocks, 16 characters per pattern, 240 sequences — and no longer

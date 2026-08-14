@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-US">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Geistgrid — turn text into geometric patterns</title>
     <meta
       name="description"
-      content="Geistgrid turns a text password into a grid of coloured geometric shapes. The grid is public; only the mapping is secret."
+      content="Geistgrid turns a text phrase into a grid of colored geometric shapes. The grid is public; only the mapping is secret."
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <!-- Fonts are self-hosted from public/fonts; see @font-face in src/styles/main.css. -->
@@ -185,34 +185,17 @@
       <!-- Feature three -->
       <section class="overflow-hidden py-16 sm:py-20">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div class="flex flex-col items-center gap-8 lg:flex-row lg:gap-12">
-            <div class="relative z-20 order-2 w-full lg:order-1 lg:w-1/2">
-              <p class="mb-4 text-sm font-bold tracking-widest text-primary uppercase">Step three</p>
-              <h3 class="pb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl lg:text-5xl">
-                Verification is recognition
-              </h3>
-              <p class="text-lg leading-relaxed text-slate-400">
-                Re-enter the phrase, and the service regenerates the pattern from scratch. A correct phrase reproduces the
-                original document exactly. A single wrong character changes the sequence, and with it the picture. Compare
-                the resulting image with the existing one you have downloaded before. If both match, you have proven
-                ownership because you know the initial phrase.
-              </p>
-            </div>
-            <div class="order-1 w-full lg:order-2 lg:w-1/2">
-              <div class="relative">
-                <div class="absolute -top-[10%] -right-[8%] -z-10 h-[120%] w-[110%] rounded-[45%] bg-primary/20 blur-2xl" aria-hidden="true"></div>
-                <div class="relative z-10 grid grid-cols-2 gap-6 rounded-2xl bg-slate-900 p-6 shadow-xl ring-1 ring-slate-800 sm:p-8">
-                  <figure>
-                    <div data-pattern="anchor" data-pattern-title="The original pattern"></div>
-                    <figcaption class="mt-3 text-center text-xs font-semibold tracking-wider text-slate-400 uppercase">Original</figcaption>
-                  </figure>
-                  <figure>
-                    <div data-pattern="anchvr" data-pattern-title="The pattern after one character changes"></div>
-                    <figcaption class="mt-3 text-center text-xs font-semibold tracking-wider text-primary uppercase">One character off</figcaption>
-                  </figure>
-                </div>
-              </div>
-            </div>
+          <div class="mx-auto w-full lg:w-2/3">
+            <p class="mb-4 text-sm font-bold tracking-widest text-primary uppercase">Step three</p>
+            <h3 class="pb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl lg:text-5xl">
+              Verification is recognition
+            </h3>
+            <p class="text-lg leading-relaxed text-slate-400">
+              Re-enter the phrase, and the service regenerates the pattern from scratch. A correct phrase reproduces the
+              original document exactly. A single wrong character changes the sequence, and with it the picture. Compare
+              the resulting image with the existing one you have downloaded before. If both match, you have proven
+              ownership because you know the initial phrase.
+            </p>
           </div>
         </div>
       </section>
