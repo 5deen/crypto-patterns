@@ -81,12 +81,19 @@ function initDemo() {
   /*
    * Fill the picker from the library list rather than duplicating it in the
    * markup, so adding a build in medigeist.js is the only edit needed.
+   *
+   * The field ships hidden and is revealed only when there is more than one
+   * library. A select offering a single option is a control that cannot do
+   * anything, and it invites the reader to look for a choice that is not there.
    */
   if (picker) {
     picker.innerHTML = LIBRARIES.map(
       (library) => `<option value="${library.id}">${library.label}</option>`,
     ).join('');
     picker.value = DEFAULT_LIBRARY;
+
+    const field = picker.closest('[data-demo-library-field]');
+    if (field) field.hidden = LIBRARIES.length < 2;
   }
 
   const library = () => (picker ? picker.value : DEFAULT_LIBRARY);
