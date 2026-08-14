@@ -38,7 +38,8 @@ function initStaticPatterns() {
 }
 
 /**
- * The name a saved pattern is offered under: `geistgrid-pattern-<when>.svg`.
+ * The name a saved pattern is offered under:
+ * `geistgrid-<library>-<YYYYMMDD>-<HHMMSS>.svg`.
  *
  * The name deliberately says nothing about the phrase. Naming the file after
  * what was typed would put the phrase back on the outside of a document we just
@@ -46,21 +47,29 @@ function initStaticPatterns() {
  * shows up in a directory listing, a share sheet and an attachment header
  * without anyone opening anything.
  *
- * A local-time `YYYYMMDD-HHMMSS` stamp separates one save from the next: it
- * sorts chronologically, survives every filesystem, and tells the reader when
- * they saved rather than what they typed. Two saves inside the same second
- * still collide, and the browser resolves that by suffixing a number.
+ * The **library** is in the name because patterns are only comparable within
+ * one: the same phrase drawn from another block set is a different picture, so
+ * a saved file cannot be read against anything without knowing which set drew
+ * it. It comes from the library id — the generator's own name for it, and the
+ * directory it is vendored in — rather than the picker label, which is display
+ * text somebody may reword.
+ *
+ * The local-time stamp separates one save from the next: it sorts
+ * chronologically, survives every filesystem, and tells the reader when they
+ * saved rather than what they typed. Two saves inside the same second still
+ * collide, and the browser resolves that by suffixing a number.
  *
  * The clock is read for the *name* only. It never reaches the document, which
  * stays a pure function of the phrase and the library — save the same phrase
  * twice and the two files differ by their name and not by a byte inside.
  */
-function filename(now = new Date()) {
+function filename(library, now = new Date()) {
   const pad = (value) => String(value).padStart(2, '0');
+  const slug = String(library).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   const date = `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}`;
   const time = `${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
 
-  return `geistgrid-pattern-${date}-${time}.svg`;
+  return `geistgrid-${slug || 'pattern'}-${date}-${time}.svg`;
 }
 
 /**
@@ -117,12 +126,14 @@ function initDemo() {
   let token = 0;
   let timer = null;
 
-  /* The document last drawn, as the generator returned it, or null while there
-   * is nothing to save. The button follows it, so it can never hand over a
-   * pattern for a phrase that is no longer in the field. */
+  /* The document last drawn, as the generator returned it, with the library
+   * that drew it, or null while there is nothing to save. The button follows
+   * it, so it can never hand over a pattern for a phrase that is no longer in
+   * the field. The library is carried rather than read from the picker at click
+   * time, so the name can only ever say what actually drew the document. */
   let saved = null;
-  const offer = (svg) => {
-    saved = svg || null;
+  const offer = (svg, id) => {
+    saved = svg ? { svg, library: id } : null;
     if (download) download.disabled = !saved;
   };
 
@@ -141,10 +152,11 @@ function initDemo() {
     }
 
     try {
-      const svg = await renderMedigeist(phrase, library());
+      const id = library();
+      const svg = await renderMedigeist(phrase, id);
       if (mine !== token) return; // a newer phrase or library is already rendering
       output.innerHTML = svg;
-      offer(svg);
+      offer(svg, id);
       const el = output.querySelector('svg');
       if (el) {
         el.setAttribute('role', 'img');
@@ -173,11 +185,11 @@ function initDemo() {
     download.addEventListener('click', () => {
       if (!saved) return;
 
-      const blob = new Blob([toFileDocument(saved)], { type: 'image/svg+xml' });
+      const blob = new Blob([toFileDocument(saved.svg)], { type: 'image/svg+xml' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = filename();
+      link.download = filename(saved.library);
       link.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     });

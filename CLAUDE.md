@@ -237,11 +237,18 @@ a browser. It saves the document the generator returned rather than the copy in
 the panel, which has picked up a `role`, an `aria-label` and layout classes that
 do not belong in a file.
 
-Saved files are called `geistgrid-pattern-YYYYMMDD-HHMMSS.svg`, in local time,
+Saved files are called `geistgrid-<library>-YYYYMMDD-HHMMSS.svg`, in local time,
 and are **not** named after the phrase. A filename is the most visible part of a
 file — a directory listing, a share sheet and an attachment header all show it
 without anyone opening anything — so naming it after the phrase would undo the
 stripping above. The stamp is what keeps one save from overwriting the next.
+
+The library segment comes from the library **id**, not the picker label: the id
+is the generator's own name for the set and the directory it is vendored in,
+while the label is display text somebody may reword. It is in the name because
+patterns are only comparable within one library, so a saved file cannot be read
+against anything without it — which is why the segment is worth carrying now,
+while there is only one library to name.
 
 Reading the clock there does not break the determinism invariant: it names the
 file and never reaches the document. Save the same phrase twice and the two
