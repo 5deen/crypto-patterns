@@ -6,6 +6,7 @@ import {
   isTruncated,
   loadGenerator,
   renderPattern as renderMedigeist,
+  withFixedSize,
 } from './medigeist.js';
 import { AIRTABLE_BETA_FORM_URL } from './config.js';
 
@@ -38,9 +39,28 @@ function initStaticPatterns() {
 }
 
 /**
+ * A filename for a saved pattern.
+ *
+ * Only the first GLYPH_LIMIT characters shape the document, so only those name
+ * it — a longer phrase would put characters in the name that made no difference
+ * to the file. Everything outside a-z0-9 collapses to a dash, so punctuation in
+ * a phrase cannot smuggle a path separator or a leading dot into the name.
+ */
+function patternFilename(phrase) {
+  const slug = Array.from(phrase)
+    .slice(0, GLYPH_LIMIT)
+    .join('')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
+  return `geistgrid-${slug || 'pattern'}.svg`;
+}
+
+/**
  * The live "try it" panel, driven by the Medigeist generator.
  *
- * Three things this has to get right:
+ * Four things this has to get right:
  *
  * - The generator is ~1 MB of WebAssembly. It is fetched on first interaction,
  *   not on page load, so it never delays the landing page.
@@ -48,12 +68,16 @@ function initStaticPatterns() {
  *   are debounced rather than rendering per character.
  * - Renders can finish out of order. Each one carries a token and a stale
  *   result is discarded, so the grid always matches what is in the field.
+ * - The download offers the document the generator returned, not the one in the
+ *   panel: the displayed copy has been given a role, a label and layout classes
+ *   for the page, none of which belong in a saved file.
  */
 function initDemo() {
   const input = document.querySelector('[data-demo-input]');
   const output = document.querySelector('[data-demo-output]');
   const notice = document.querySelector('[data-demo-notice]');
   const picker = document.querySelector('[data-demo-library]');
+  const download = document.querySelector('[data-demo-download]');
   if (!input || !output) return;
 
   /*
@@ -87,6 +111,15 @@ function initDemo() {
   let token = 0;
   let timer = null;
 
+  /* The document last drawn, as the generator returned it, or null while there
+   * is nothing to save. The button follows it, so it can never hand over a
+   * pattern for a phrase that is no longer in the field. */
+  let saved = null;
+  const offer = (svg, phrase) => {
+    saved = svg ? { svg, phrase } : null;
+    if (download) download.disabled = !saved;
+  };
+
   const draw = async () => {
     const phrase = input.value.trim();
     const mine = ++token;
@@ -96,6 +129,7 @@ function initDemo() {
     }
 
     if (!phrase) {
+      offer(null);
       message('Type a phrase to see its pattern.');
       return;
     }
@@ -104,6 +138,7 @@ function initDemo() {
       const svg = await renderMedigeist(phrase, library());
       if (mine !== token) return; // a newer phrase or library is already rendering
       output.innerHTML = svg;
+      offer(svg, phrase);
       const el = output.querySelector('svg');
       if (el) {
         el.setAttribute('role', 'img');
@@ -112,10 +147,33 @@ function initDemo() {
       }
     } catch (error) {
       if (mine !== token) return;
+      offer(null);
       message('The pattern generator could not be loaded. Reload the page to try again.');
       console.error(error);
     }
   };
+
+  /*
+   * Save the pattern as a file, without leaving the machine.
+   *
+   * The blob is built here and handed straight to the browser, so saving makes
+   * no request and the phrase stays local — the same promise the rest of the
+   * demo makes. The object URL outlives the click deliberately: revoking it in
+   * the same tick can cancel the save before the browser has read the blob.
+   */
+  if (download) {
+    download.addEventListener('click', () => {
+      if (!saved) return;
+
+      const blob = new Blob([withFixedSize(saved.svg)], { type: 'image/svg+xml' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = patternFilename(saved.phrase);
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+  }
 
   input.addEventListener('input', () => {
     clearTimeout(timer);
@@ -130,6 +188,7 @@ function initDemo() {
   if (picker) {
     picker.addEventListener('change', () => {
       clearTimeout(timer);
+      offer(null); // the drawn pattern belongs to the library being left
       message('Drawing the pattern…');
       draw();
     });

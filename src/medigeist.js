@@ -100,6 +100,29 @@ export async function renderPattern(text, id = DEFAULT_LIBRARY) {
   return createSVGDocument(RATIO, SET, text);
 }
 
+/** Edge length, in pixels, stated on a document saved to a file. */
+export const DOWNLOAD_SIZE = 1024;
+
+/**
+ * The same document, with concrete pixel dimensions, for saving to a file.
+ *
+ * The generator writes `width="100%" height="100%"` on the root. That is what
+ * the responsive panel wants and what a standalone file cannot use: an editor
+ * opening the file has no containing box to resolve a percentage against, and
+ * different tools guess differently. The `viewBox` is left alone, so the
+ * drawing is byte-for-byte the one on screen — only its intrinsic size is
+ * stated.
+ *
+ * String surgery rather than DOMParser on purpose: this module stays free of
+ * DOM access so it can be used outside a browser.
+ */
+export function withFixedSize(svg, size = DOWNLOAD_SIZE) {
+  return svg.replace(
+    /<svg\b[^>]*>/,
+    (tag) => `<svg width="${size}" height="${size}"${tag.slice(4).replace(/\s(?:width|height)="[^"]*"/g, '')}`,
+  );
+}
+
 /** True when the phrase is longer than the generator will read. */
 export function isTruncated(text) {
   return Array.from(text).length > GLYPH_LIMIT;

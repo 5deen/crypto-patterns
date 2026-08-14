@@ -196,7 +196,7 @@ Every single-library build exposes exactly one image set, always called `set0`,
 because `setMapsArray()` in the generator names sets positionally. That name is
 hard-coded in `medigeist.js`; it is not a free choice.
 
-Five things about the generator constrain the page:
+Six things about the generator constrain the page:
 
 - **It reads only the first 16 characters.** Longer phrases are truncated
   silently by the generator, so the demo shows a notice past that length.
@@ -213,6 +213,23 @@ Five things about the generator constrain the page:
   the machine.
 - **Only the selected library is downloaded.** Should more libraries be added,
   do not preload them or offer a "compare all" view without rethinking this.
+- **Its output carries the phrase in plain text.** Every document opens with a
+  `<desc id="sequences">` listing the phrase and all its rotations, so an SVG is
+  not the safe-to-publish object the rest of the page describes — that claim
+  holds for the *picture*, not for the file. The demo's **Download SVG** button
+  saves the document as generated, metadata included, and section 3 of
+  `privacy.html` says so. Anything that invites publishing a file rather than an
+  image has to strip that block first.
+
+The download button saves the document the generator returned, not the copy in
+the panel — the displayed one has been given a `role`, an `aria-label` and
+layout classes that do not belong in a file. `withFixedSize()` in
+`medigeist.js` restates the root's `width`/`height` as `1024`, because the
+generator writes `100%` for both: right for a responsive panel, unusable for a
+standalone file, which has no containing box to resolve a percentage against.
+It leaves the `viewBox` alone, so the drawing is byte-identical to the one on
+screen and only the intrinsic size changes. It is string surgery rather than
+`DOMParser` so the module keeps working outside a browser.
 
 Each library gets its **own directory** under `public/medigeist/`, rather than
 one directory of suffixed files, because `release.js` locates its binary with
