@@ -143,64 +143,41 @@
       <!-- Feature one -->
       <section class="overflow-hidden py-16 sm:py-20">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div class="flex flex-col items-center gap-8 lg:flex-row lg:gap-12">
-            <div class="relative z-20 order-2 w-full lg:order-1 lg:w-1/2">
-              <p class="mb-4 text-sm font-bold tracking-widest text-primary uppercase">Step one</p>
-              <h3 class="pb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl lg:text-5xl">
-                Every character becomes a block
-              </h3>
-              <p class="text-lg leading-relaxed text-slate-400">
-                Each character of the phrase resolves to a block drawn from the selected image set. The mapping table
-                consists of 102 characters, including digits, punctuation and umlauts. The blocks are then re-ordered into
-                every rotation of the sequence: 16 symbols give 240 distinct orderings.
-              </p>
-              <a
-                href="#demo"
-                class="group mt-6 inline-flex items-center gap-2 text-lg font-bold tracking-wider text-primary transition-all duration-300 hover:text-primary/80"
-              >
-                See the mapping
-                <svg class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
-            </div>
-            <div class="order-1 w-full lg:order-2 lg:w-1/2">
-              <div class="relative">
-                <div class="absolute -top-[10%] -right-[8%] -z-10 h-[120%] w-[110%] rounded-[45%] bg-primary/20 blur-2xl" aria-hidden="true"></div>
-                <div class="relative z-10 grid grid-cols-2 gap-4 rounded-2xl bg-slate-900 p-6 shadow-xl ring-1 ring-slate-800 sm:grid-cols-3 sm:p-8" data-glyph-legend>
-                  <!-- Populated from the glyph mapping in src/pattern.js -->
-                </div>
-              </div>
-            </div>
+          <div class="mx-auto w-full lg:w-2/3">
+            <p class="mb-4 text-sm font-bold tracking-widest text-primary uppercase">Step one</p>
+            <h3 class="pb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl lg:text-5xl">
+              Every character becomes a block
+            </h3>
+            <p class="text-lg leading-relaxed text-slate-400">
+              Each character of the phrase resolves to a block drawn from the selected image set. The mapping table
+              consists of 102 characters, including digits, punctuation and umlauts. The blocks are then re-ordered into
+              every rotation of the sequence: 16 symbols give 240 distinct orderings.
+            </p>
+            <a
+              href="#demo"
+              class="group mt-6 inline-flex items-center gap-2 text-lg font-bold tracking-wider text-primary transition-all duration-300 hover:text-primary/80"
+            >
+              See the mapping
+              <svg class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
           </div>
         </div>
       </section>
 
-      <!-- Feature two (reversed) -->
+      <!-- Feature two -->
       <section class="overflow-hidden py-16 sm:py-20">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div class="flex flex-col items-center gap-8 lg:flex-row lg:gap-12">
-            <div class="w-full lg:w-1/2">
-              <div class="relative">
-                <div class="absolute -top-[10%] -left-[8%] -z-10 h-[120%] w-[110%] rounded-[45%] bg-primary/20 blur-2xl" aria-hidden="true"></div>
-                <div class="relative z-10 rounded-2xl bg-slate-900 p-6 shadow-xl ring-1 ring-slate-800 sm:p-8">
-                  <div class="mx-auto w-full max-w-sm" data-pattern="published" data-pattern-title="A published pattern grid"></div>
-                  <p class="mt-6 text-center text-sm text-slate-400">
-                    Anyone can look at this. Without the mapping it is a picture of shapes.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="relative z-20 w-full lg:w-1/2">
-              <p class="mb-4 text-sm font-bold tracking-widest text-primary uppercase">Step two</p>
-              <h3 class="pb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl lg:text-5xl">
-                The grid is public by design
-              </h3>
-              <p class="text-lg leading-relaxed text-slate-400">
-                The generated pattern is meant to be shown. Print it, pin it to a wall, or put it on a login screen. What it
-                does not carry is the mapping rules, and the grid on its own does not hand them over.
-              </p>
-            </div>
+          <div class="mx-auto w-full lg:w-2/3">
+            <p class="mb-4 text-sm font-bold tracking-widest text-primary uppercase">Step two</p>
+            <h3 class="pb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl lg:text-5xl">
+              The grid is public by design
+            </h3>
+            <p class="text-lg leading-relaxed text-slate-400">
+              The generated pattern is meant to be shown. Print it, pin it to a wall, or put it on a login screen. What it
+              does not carry is the mapping rules, and the grid on its own does not hand them over.
+            </p>
           </div>
         </div>
       </section>

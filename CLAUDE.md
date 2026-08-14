@@ -226,10 +226,11 @@ the reason the lib file must be imported directly rather than through the
 `assembly/lib` barrel — the barrel keeps all ten blobs and leaves the build at
 1 MB — are in `public/medigeist/README.md`.
 
-`src/pattern.js` is still used, but only for decoration — the step
-illustrations and the "one character off" comparison. Its mapping is *not*
-what the demo does, so nothing on the page may present it as the mapping. The
-step-one illustration deliberately carries no character labels for that reason.
+`src/pattern.js` is still used, but only for decoration — the "one character
+off" comparison in step three, which is now its only appearance on the page.
+Its mapping is *not* what the demo does, so nothing on the page may present it
+as the mapping: anything drawn from it stays unlabelled, as that comparison is,
+rather than pairing a shape with the character it supposedly encodes.
 
 Its glyphs are **outlines**: the colour lives on the stroke and no shape is
 filled. `ring` keeps a heavier stroke than the shared `STROKE_WIDTH` on purpose
@@ -237,7 +238,7 @@ filled. `ring` keeps a heavier stroke than the shared `STROKE_WIDTH` on purpose
 alike weaken the "one wrong character is visible" property.
 
 Everything it draws on the page is rendered from the module at runtime through
-`[data-pattern]` and `[data-glyph-legend]`. Do not hand-write pattern SVG into
+`[data-pattern]`. Do not hand-write pattern SVG into
 the markup: the hero used to carry a copy of `renderPattern('geometric')`
 transcribed cell for cell, nothing enforced the duplication, and changing how
 shapes are drawn left it showing the old style until someone noticed.
