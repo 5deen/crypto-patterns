@@ -104,23 +104,35 @@ export async function renderPattern(text, id = DEFAULT_LIBRARY) {
 export const DOWNLOAD_SIZE = 1024;
 
 /**
- * The same document, with concrete pixel dimensions, for saving to a file.
+ * The document prepared for saving to a file.
  *
- * The generator writes `width="100%" height="100%"` on the root. That is what
- * the responsive panel wants and what a standalone file cannot use: an editor
- * opening the file has no containing box to resolve a percentage against, and
- * different tools guess differently. The `viewBox` is left alone, so the
- * drawing is byte-for-byte the one on screen — only its intrinsic size is
- * stated.
+ * Two changes, and the drawing is not one of them — every element that paints
+ * anything is left exactly as the generator emitted it.
+ *
+ * **The description is dropped.** Each document opens with a
+ * `<desc id="sequences">` holding the phrase in plain text and every rotation
+ * of it. On the page that is inert; in a file it is not, because the file is
+ * the thing people send to each other, and the whole premise is that a pattern
+ * can be shown without giving up what produced it. A saved document that spells
+ * out the phrase in its own metadata breaks that promise for anyone who opens
+ * it in a text editor.
+ *
+ * **The size is stated.** The generator writes `width="100%" height="100%"` on
+ * the root, which is what the responsive panel wants and what a standalone file
+ * cannot use: a viewer opening the file has no containing box to resolve a
+ * percentage against, and different tools guess differently. The `viewBox` is
+ * left alone, so only the intrinsic size changes.
  *
  * String surgery rather than DOMParser on purpose: this module stays free of
  * DOM access so it can be used outside a browser.
  */
-export function withFixedSize(svg, size = DOWNLOAD_SIZE) {
-  return svg.replace(
-    /<svg\b[^>]*>/,
-    (tag) => `<svg width="${size}" height="${size}"${tag.slice(4).replace(/\s(?:width|height)="[^"]*"/g, '')}`,
-  );
+export function toFileDocument(svg, size = DOWNLOAD_SIZE) {
+  return svg
+    .replace(/<desc\b[^>]*>[\s\S]*?<\/desc>/g, '')
+    .replace(
+      /<svg\b[^>]*>/,
+      (tag) => `<svg width="${size}" height="${size}"${tag.slice(4).replace(/\s(?:width|height)="[^"]*"/g, '')}`,
+    );
 }
 
 /** True when the phrase is longer than the generator will read. */

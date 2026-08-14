@@ -214,22 +214,35 @@ Six things about the generator constrain the page:
 - **Only the selected library is downloaded.** Should more libraries be added,
   do not preload them or offer a "compare all" view without rethinking this.
 - **Its output carries the phrase in plain text.** Every document opens with a
-  `<desc id="sequences">` listing the phrase and all its rotations, so an SVG is
-  not the safe-to-publish object the rest of the page describes — that claim
-  holds for the *picture*, not for the file. The demo's **Download SVG** button
-  saves the document as generated, metadata included, and section 3 of
-  `privacy.html` says so. Anything that invites publishing a file rather than an
-  image has to strip that block first.
+  `<desc id="sequences">` listing the phrase and all its rotations. On the page
+  that is inert; in a file it is not, because a file is what people send each
+  other, and a document that spells out the phrase in its own metadata is not
+  the safe-to-publish object the rest of the page describes. Anything that hands
+  a document to the user has to take that block out first.
 
-The download button saves the document the generator returned, not the copy in
-the panel — the displayed one has been given a `role`, an `aria-label` and
-layout classes that do not belong in a file. `withFixedSize()` in
-`medigeist.js` restates the root's `width`/`height` as `1024`, because the
-generator writes `100%` for both: right for a responsive panel, unusable for a
-standalone file, which has no containing box to resolve a percentage against.
-It leaves the `viewBox` alone, so the drawing is byte-identical to the one on
-screen and only the intrinsic size changes. It is string surgery rather than
-`DOMParser` so the module keeps working outside a browser.
+The **Download SVG** button in the demo goes through `toFileDocument()` in
+`medigeist.js`, which does exactly two things and neither of them touches the
+drawing:
+
+- **Drops every `<desc>`**, for the reason above. Verify this after changing the
+  vendored build: the point is that the phrase does not appear anywhere in the
+  saved bytes, not that one particular element is gone.
+- **Restates `width`/`height` as `1024`**, because the generator writes `100%`
+  for both — right for a responsive panel, unusable in a standalone file, which
+  has no containing box to resolve a percentage against. The `viewBox` is left
+  alone, so only the intrinsic size changes.
+
+It is string surgery rather than `DOMParser` so the module keeps working outside
+a browser. It saves the document the generator returned rather than the copy in
+the panel, which has picked up a `role`, an `aria-label` and layout classes that
+do not belong in a file.
+
+The saved file is called `geistgrid-pattern.svg` and is **not** named after the
+phrase. A filename is the most visible part of a file — a directory listing, a
+share sheet and an attachment header all show it without anyone opening
+anything — so naming it after the phrase would undo the stripping above. Two
+saves in one folder collide and the browser suffixes a number; that is the
+accepted cost.
 
 Each library gets its **own directory** under `public/medigeist/`, rather than
 one directory of suffixed files, because `release.js` locates its binary with

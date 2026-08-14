@@ -1,12 +1,11 @@
 import { renderPattern } from './pattern.js';
 import {
   DEFAULT_LIBRARY,
-  GLYPH_LIMIT,
   LIBRARIES,
   isTruncated,
   loadGenerator,
   renderPattern as renderMedigeist,
-  withFixedSize,
+  toFileDocument,
 } from './medigeist.js';
 import { AIRTABLE_BETA_FORM_URL } from './config.js';
 
@@ -39,23 +38,17 @@ function initStaticPatterns() {
 }
 
 /**
- * A filename for a saved pattern.
+ * The name a saved pattern is offered under.
  *
- * Only the first GLYPH_LIMIT characters shape the document, so only those name
- * it — a longer phrase would put characters in the name that made no difference
- * to the file. Everything outside a-z0-9 collapses to a dash, so punctuation in
- * a phrase cannot smuggle a path separator or a leading dot into the name.
+ * Deliberately says nothing about the phrase. Naming the file after what was
+ * typed would put the phrase back on the outside of a document we just took it
+ * out of — and in the more visible place of the two, since a filename shows up
+ * in a directory listing, a share sheet and an attachment header without anyone
+ * opening anything. Two saves in one folder collide, and the browser resolves
+ * that by suffixing a number; that is the cost of not labelling the file with
+ * the secret it was drawn from.
  */
-function patternFilename(phrase) {
-  const slug = Array.from(phrase)
-    .slice(0, GLYPH_LIMIT)
-    .join('')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-
-  return `geistgrid-${slug || 'pattern'}.svg`;
-}
+const FILENAME = 'geistgrid-pattern.svg';
 
 /**
  * The live "try it" panel, driven by the Medigeist generator.
@@ -115,8 +108,8 @@ function initDemo() {
    * is nothing to save. The button follows it, so it can never hand over a
    * pattern for a phrase that is no longer in the field. */
   let saved = null;
-  const offer = (svg, phrase) => {
-    saved = svg ? { svg, phrase } : null;
+  const offer = (svg) => {
+    saved = svg || null;
     if (download) download.disabled = !saved;
   };
 
@@ -138,7 +131,7 @@ function initDemo() {
       const svg = await renderMedigeist(phrase, library());
       if (mine !== token) return; // a newer phrase or library is already rendering
       output.innerHTML = svg;
-      offer(svg, phrase);
+      offer(svg);
       const el = output.querySelector('svg');
       if (el) {
         el.setAttribute('role', 'img');
@@ -158,18 +151,20 @@ function initDemo() {
    *
    * The blob is built here and handed straight to the browser, so saving makes
    * no request and the phrase stays local — the same promise the rest of the
-   * demo makes. The object URL outlives the click deliberately: revoking it in
-   * the same tick can cancel the save before the browser has read the blob.
+   * demo makes. toFileDocument() takes the phrase back out of the document, so
+   * the file carries the picture and not what drew it. The object URL outlives
+   * the click deliberately: revoking it in the same tick can cancel the save
+   * before the browser has read the blob.
    */
   if (download) {
     download.addEventListener('click', () => {
       if (!saved) return;
 
-      const blob = new Blob([withFixedSize(saved.svg)], { type: 'image/svg+xml' });
+      const blob = new Blob([toFileDocument(saved)], { type: 'image/svg+xml' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = patternFilename(saved.phrase);
+      link.download = FILENAME;
       link.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     });
