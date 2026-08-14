@@ -1,5 +1,6 @@
 import {
   DEFAULT_LIBRARY,
+  DOWNLOAD_SIZE,
   LIBRARIES,
   isTruncated,
   loadGenerator,
@@ -29,7 +30,7 @@ function initNav() {
 
 /**
  * The name a saved pattern is offered under:
- * `geistgrid-<library>-<YYYYMMDD>-<HHMMSS>.svg`.
+ * `geistgrid-<library>-<YYYYMMDD>-<HHMMSS>.<extension>`.
  *
  * The name deliberately says nothing about the phrase. Naming the file after
  * what was typed would put the phrase back on the outside of a document we just
@@ -53,13 +54,59 @@ function initNav() {
  * stays a pure function of the phrase and the library — save the same phrase
  * twice and the two files differ by their name and not by a byte inside.
  */
-function filename(library, now = new Date()) {
+function filename(library, extension, now = new Date()) {
   const pad = (value) => String(value).padStart(2, '0');
   const slug = String(library).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   const date = `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}`;
   const time = `${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
 
-  return `geistgrid-${slug || 'pattern'}-${date}-${time}.svg`;
+  return `geistgrid-${slug || 'pattern'}-${date}-${time}.${extension}`;
+}
+
+/**
+ * Rasterize a document to a PNG blob of `size` square, in the browser.
+ *
+ * The document is loaded as an image from a blob URL and painted onto a canvas.
+ * Both are same-origin and the document is self-contained — no external
+ * reference, no `foreignObject` — so the canvas stays origin-clean and
+ * `toBlob()` is allowed to return pixels.
+ *
+ * This depends on `toFileDocument()` having stated real dimensions: an SVG
+ * carrying the generator's `width="100%" height="100%"` has no intrinsic size,
+ * and browsers rasterize it at a default box or not at all. Pass it the same
+ * document the SVG button saves, never the raw generator output.
+ *
+ * PNG is a picture of the document, not the document. Rasterizers differ across
+ * browsers and versions in antialiasing and color management, so the same phrase
+ * gives byte-different PNGs on different machines while giving byte-identical
+ * SVGs everywhere. Comparing by eye still works, which is what the page asks
+ * for; comparing by hash does not.
+ */
+async function toPNG(svg, size = DOWNLOAD_SIZE) {
+  const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
+
+  try {
+    const image = new Image();
+    await new Promise((resolve, reject) => {
+      image.onload = resolve;
+      image.onerror = () => reject(new Error('The pattern could not be loaded for rasterizing.'));
+      image.src = url;
+    });
+
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    canvas.getContext('2d').drawImage(image, 0, 0, size, size);
+
+    return await new Promise((resolve, reject) => {
+      canvas.toBlob(
+        (blob) => (blob ? resolve(blob) : reject(new Error('The canvas produced no PNG.'))),
+        'image/png',
+      );
+    });
+  } finally {
+    URL.revokeObjectURL(url);
+  }
 }
 
 /**
@@ -73,7 +120,7 @@ function filename(library, now = new Date()) {
  *   are debounced rather than rendering per character.
  * - Renders can finish out of order. Each one carries a token and a stale
  *   result is discarded, so the grid always matches what is in the field.
- * - The download offers the document the generator returned, not the one in the
+ * - The downloads offer the document the generator returned, not the one in the
  *   panel: the displayed copy has been given a role, a label and layout classes
  *   for the page, none of which belong in a saved file.
  */
@@ -83,6 +130,8 @@ function initDemo() {
   const notice = document.querySelector('[data-demo-notice]');
   const picker = document.querySelector('[data-demo-library]');
   const download = document.querySelector('[data-demo-download]');
+  const downloadPNG = document.querySelector('[data-demo-download-png]');
+  const downloadNotice = document.querySelector('[data-demo-download-notice]');
   if (!input || !output) return;
 
   /*
@@ -124,7 +173,9 @@ function initDemo() {
   let saved = null;
   const offer = (svg, id) => {
     saved = svg ? { svg, library: id } : null;
-    if (download) download.disabled = !saved;
+    for (const button of [download, downloadPNG]) {
+      if (button) button.disabled = !saved;
+    }
   };
 
   const draw = async () => {
@@ -171,17 +222,50 @@ function initDemo() {
    * the click deliberately: revoking it in the same tick can cancel the save
    * before the browser has read the blob.
    */
+  const save = (blob, extension) => {
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename(saved.library, extension);
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
+
   if (download) {
     download.addEventListener('click', () => {
       if (!saved) return;
+      save(new Blob([toFileDocument(saved.svg)], { type: 'image/svg+xml' }), 'svg');
+    });
+  }
 
-      const blob = new Blob([toFileDocument(saved.svg)], { type: 'image/svg+xml' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = filename(saved.library);
-      link.click();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
+  /*
+   * The PNG is rasterized on demand rather than kept alongside every render.
+   * It costs a few hundred milliseconds and about 900 KB, and most visitors
+   * never ask for one, so producing it per keystroke would be waste.
+   *
+   * Both buttons go down while it runs — the click is not instant, and a second
+   * click mid-rasterize would start a parallel one. A failure re-enables them
+   * and says so rather than leaving a button that looks like it did nothing;
+   * the SVG path is unaffected by it.
+   */
+  if (downloadPNG) {
+    downloadPNG.addEventListener('click', async () => {
+      if (!saved || downloadPNG.disabled) return;
+
+      const { svg } = saved;
+      downloadPNG.disabled = true;
+      if (download) download.disabled = true;
+      if (downloadNotice) downloadNotice.hidden = true;
+
+      try {
+        save(await toPNG(toFileDocument(svg)), 'png');
+      } catch (error) {
+        if (downloadNotice) downloadNotice.hidden = false;
+        console.error(error);
+      } finally {
+        // Re-enable against what is on screen now, not what was there on click.
+        offer(saved && saved.svg, saved && saved.library);
+      }
     });
   }
 
