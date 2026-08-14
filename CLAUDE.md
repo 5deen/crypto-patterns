@@ -242,10 +242,12 @@ the markup: the hero used to carry a copy of `renderPattern('geometric')`
 transcribed cell for cell, nothing enforced the duplication, and changing how
 shapes are drawn left it showing the old style until someone noticed.
 
-The four figures in the stats band — 102 characters, 100 blocks, 16 characters
-per pattern, 240 sequences — are properties of the generator and of the shipped
-library, read from `glyphs()` and `glyphLimit()` and from the library's entry
-count. If the vendored build changes, re-read them rather than assuming.
+The stats band under **Built on mapping rules** used to quote four figures — 102
+characters, 100 blocks, 16 characters per pattern, 240 sequences — and no longer
+does. Any figure put back there is a property of the generator and of the
+shipped library: read it from `glyphs()`, `glyphLimit()` or the library's entry
+count rather than transcribing a number that the next vendored build silently
+falsifies.
 
 ## Conventions
 
