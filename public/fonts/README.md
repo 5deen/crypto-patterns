@@ -3,7 +3,7 @@
 Self-hosted webfonts for the landing page. Declared via `@font-face` in
 `src/styles/main.css` and served from the site root as `/fonts/*.woff2`.
 
-| Family | Weights | Designer | Licence |
+| Family | Weights | Designer | License |
 | --- | --- | --- | --- |
 | Sora | 400, 500, 600, 700 | Jonathan Barnbrook | SIL Open Font License 1.1 |
 | Space Grotesk | 400, 500, 600, 700 | Florian Karsten | SIL Open Font License 1.1 |
@@ -15,4 +15,4 @@ redistribution as part of a larger work.
 
 Only the latin subset is included, and only these four weights exist as real
 files — nothing in the markup should ask for 800 or heavier, or the browser will
-synthesise the weight and the result looks smeared.
+synthesize the weight and the result looks smeared.
