@@ -197,43 +197,6 @@ function initDemo() {
   message('The pattern appears here.');
 }
 
-/** Count the stat figures up when they first scroll into view. */
-function initCounters() {
-  const counters = document.querySelectorAll('[data-count-to]');
-  if (!counters.length) return;
-
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion || !('IntersectionObserver' in window)) return;
-
-  const animate = (element) => {
-    const target = Number(element.dataset.countTo);
-    const duration = 900;
-    const start = performance.now();
-
-    const step = (now) => {
-      const progress = Math.min((now - start) / duration, 1);
-      // Ease-out cubic, so the number settles rather than stopping dead.
-      element.textContent = String(Math.round(target * (1 - (1 - progress) ** 3)));
-      if (progress < 1) requestAnimationFrame(step);
-    };
-
-    requestAnimationFrame(step);
-  };
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        animate(entry.target);
-        observer.unobserve(entry.target);
-      }
-    },
-    { threshold: 0.5 },
-  );
-
-  for (const counter of counters) observer.observe(counter);
-}
-
 /**
  * Point the beta button at the Airtable form, once one is configured.
  *
@@ -266,6 +229,5 @@ initNav();
 initGlyphLegend();
 initStaticPatterns();
 initDemo();
-initCounters();
 initBetaForm();
 initYear();
