@@ -1,4 +1,4 @@
-import { ALPHABET, renderGlyph, renderPattern } from './pattern.js';
+import { renderPattern } from './pattern.js';
 import {
   DEFAULT_LIBRARY,
   GLYPH_LIMIT,
@@ -26,28 +26,6 @@ function initNav() {
     toggle.setAttribute('aria-expanded', 'false');
     menu.classList.add('hidden');
   });
-}
-
-/**
- * Fill the step-one illustration with sample blocks.
- *
- * Decorative only. It deliberately carries no character labels: the demo is
- * driven by the Medigeist generator, whose mapping is not this one, and
- * labelling these shapes with letters would assert a correspondence that does
- * not hold.
- */
-function initGlyphLegend() {
-  const legend = document.querySelector('[data-glyph-legend]');
-  if (!legend) return;
-
-  legend.innerHTML = Array.from(ALPHABET.slice(0, 6))
-    .map(
-      (letter) => `
-        <div class="flex items-center justify-center rounded-xl border border-slate-800 p-6" aria-hidden="true">
-          <div class="w-12">${renderGlyph(letter)}</div>
-        </div>`,
-    )
-    .join('');
 }
 
 /** Render every static [data-pattern] placeholder from its phrase. */
@@ -226,7 +204,6 @@ function initYear() {
 }
 
 initNav();
-initGlyphLegend();
 initStaticPatterns();
 initDemo();
 initBetaForm();
