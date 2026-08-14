@@ -76,8 +76,8 @@
         <div class="pointer-events-none absolute -top-40 left-0 -z-10 hidden h-[671px] w-96 rotate-12 rounded-[45%] bg-primary/30 blur-3xl lg:block" aria-hidden="true"></div>
         <div class="pointer-events-none absolute -top-64 left-1/2 -z-10 h-[900px] w-[900px] -translate-x-1/2 rounded-[45%] bg-primary/10 blur-3xl lg:left-auto lg:right-0 lg:translate-x-1/3" aria-hidden="true"></div>
 
-        <div class="mx-auto max-w-[1500px] px-6 pt-16 pb-24 sm:pb-32 lg:px-8 lg:py-32">
-          <div class="mx-auto max-w-2xl">
+        <div class="mx-auto max-w-7xl px-4 pt-16 pb-24 sm:px-6 sm:pb-32 lg:px-8 lg:py-32">
+          <div class="max-w-2xl">
             <p class="mb-5 inline-flex items-center rounded-full border border-primary/20 bg-slate-900 px-4 py-1.5 text-sm font-semibold tracking-wider text-primary uppercase">
               Text-based Pattern Design
             </p>
@@ -112,11 +112,11 @@
       <!-- Mapping rules -->
       <section id="mapping-rules" class="border-b border-slate-800">
         <div class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div class="pt-12 pb-12 text-center">
+          <div class="pt-12 pb-12">
             <h2 class="mb-6 text-3xl leading-tight font-bold sm:text-4xl md:text-5xl lg:text-6xl">
               Built on <span class="gradient-text">mapping rules</span>
             </h2>
-            <p class="mx-auto w-4/5 text-lg text-slate-400 xl:w-3/5">
+            <p class="w-4/5 text-lg text-slate-400 xl:w-3/5">
               Characters map to blocks. The generator reorders the blocks into every rotation of the sequence, and lays out
               the result on the smallest square grid that fits.
             </p>
@@ -127,8 +127,8 @@
       <!-- Section heading -->
       <section id="how-it-works" class="scroll-mt-20 py-0">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div class="mx-auto w-full lg:w-2/3">
-            <div class="relative pt-16 pb-16 text-center sm:pt-24">
+          <div class="w-full lg:w-2/3">
+            <div class="relative pt-16 pb-16 sm:pt-24">
               <h2 class="pb-6 text-3xl leading-tight font-bold sm:text-4xl md:text-5xl lg:text-6xl">
                 How it <span class="gradient-text">works</span>
               </h2>
@@ -143,7 +143,7 @@
       <!-- Feature one -->
       <section class="overflow-hidden py-16 sm:py-20">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div class="mx-auto w-full lg:w-2/3">
+          <div class="w-full lg:w-2/3">
             <p class="mb-4 text-sm font-bold tracking-widest text-primary uppercase">Step one</p>
             <h3 class="pb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl lg:text-5xl">
               Every character becomes a block
@@ -153,15 +153,6 @@
               consists of 102 characters, including digits, punctuation and umlauts. The blocks are then re-ordered into
               every rotation of the sequence: 16 symbols give 240 distinct orderings.
             </p>
-            <a
-              href="#demo"
-              class="group mt-6 inline-flex items-center gap-2 text-lg font-bold tracking-wider text-primary transition-all duration-300 hover:text-primary/80"
-            >
-              See the mapping
-              <svg class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </a>
           </div>
         </div>
       </section>
@@ -169,7 +160,7 @@
       <!-- Feature two -->
       <section class="overflow-hidden py-16 sm:py-20">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div class="mx-auto w-full lg:w-2/3">
+          <div class="w-full lg:w-2/3">
             <p class="mb-4 text-sm font-bold tracking-widest text-primary uppercase">Step two</p>
             <h3 class="pb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl lg:text-5xl">
               The grid is public by design
@@ -185,7 +176,7 @@
       <!-- Feature three -->
       <section class="overflow-hidden py-16 sm:py-20">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div class="mx-auto w-full lg:w-2/3">
+          <div class="w-full lg:w-2/3">
             <p class="mb-4 text-sm font-bold tracking-widest text-primary uppercase">Step three</p>
             <h3 class="pb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl lg:text-5xl">
               Verification is recognition
@@ -203,7 +194,7 @@
       <!-- Interactive demo -->
       <section id="demo" class="scroll-mt-20 bg-primary/5 py-16 sm:py-24">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div class="mx-auto mb-12 max-w-2xl text-center">
+          <div class="mb-12 max-w-2xl">
             <h2 class="pb-6 text-3xl leading-tight font-bold sm:text-4xl md:text-5xl lg:text-6xl">
               Try it <span class="gradient-text">yourself</span>
             </h2>
@@ -213,7 +204,7 @@
             </p>
           </div>
 
-          <div class="mx-auto max-w-3xl rounded-2xl bg-slate-900 p-6 shadow-xl ring-1 ring-slate-800 sm:p-10">
+          <div class="max-w-3xl rounded-2xl bg-slate-900 p-6 shadow-xl ring-1 ring-slate-800 sm:p-10">
             <label for="phrase" class="mb-3 block text-sm font-bold tracking-widest text-slate-400 uppercase">
               Your phrase
             </label>
@@ -252,11 +243,11 @@
               Only the first 16 characters are read — the rest of the phrase does not change the pattern.
             </p>
 
-            <div class="mt-8 flex justify-center">
+            <div class="mt-8 flex">
               <div class="w-full max-w-lg" data-demo-output aria-live="polite"></div>
             </div>
 
-            <div class="mt-8 flex flex-col items-center gap-3">
+            <div class="mt-8 flex flex-col items-start gap-3">
               <button
                 type="button"
                 data-demo-download
@@ -277,7 +268,7 @@
       <!-- Principles (dark section) -->
       <section id="principles" class="relative scroll-mt-20 overflow-hidden bg-slate-900 py-16 lg:py-24">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div class="mx-auto mb-12 text-center lg:mb-16 lg:w-2/3">
+          <div class="mb-12 lg:mb-16 lg:w-2/3">
             <h2 class="mb-5 text-3xl leading-tight font-bold text-white sm:text-4xl xl:text-5xl">
               What this is, and what it <span class="gradient-text">isn't</span>
             </h2>
@@ -315,7 +306,7 @@
       <!-- Use cases -->
       <section id="use-cases" class="scroll-mt-20 py-16 sm:py-24">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div class="mx-auto mb-12 max-w-2xl text-center">
+          <div class="mb-12 max-w-2xl">
             <h2 class="pb-6 text-3xl leading-tight font-bold sm:text-4xl md:text-5xl lg:text-6xl">
               Use <span class="gradient-text">cases</span>
             </h2>
@@ -369,7 +360,7 @@
         <div class="mx-auto max-w-7xl 2xl:max-w-[1500px]">
           <div class="flex flex-wrap">
             <div class="order-2 w-full lg:order-1 lg:mr-auto lg:w-1/3">
-              <div class="mt-7 text-center sm:text-left md:mt-0 lg:text-left">
+              <div class="mt-7 md:mt-0">
                 <a href="./" class="mb-6 inline-flex items-center gap-3 sm:mb-5">
                   <svg viewBox="0 0 300 300" class="h-10 w-10" aria-hidden="true">
                     <circle cx="150" cy="150" r="150" fill="#f54905" />

@@ -84,9 +84,18 @@ in it against the project root, so keep those absolute-from-root. Anything in
 
 The **layout** comes from CloudCannon's MIT-licensed
 [SendIt](https://github.com/CloudCannon/sendit-astro-template) template —
-`max-w-7xl` containers, `py-16 sm:py-20` sections, alternating feature rows, a
-darker band for the closing content section, and the `title` + accented-suffix
-heading pattern.
+`py-16 sm:py-20` sections, a darker band for the closing content section, and
+the `title` + accented-suffix heading pattern. Its centred headings and
+alternating image rows are not used here.
+
+Everything is **left-aligned and hangs off one edge**: every page-level
+container is `mx-auto max-w-7xl px-4 sm:px-6 lg:px-8`, no block carries
+`text-center`, and a narrower reading column (`max-w-2xl`, `max-w-3xl`,
+`lg:w-2/3`) is nested *inside* that container rather than centred on its own.
+The nav, the hero, every section heading and the legal-page body all start at
+the same x as a result — 112px at a 1440px viewport, 24px at 768. A block that
+sets its own `mx-auto` breaks that line, which is why the sub-page bodies are
+wrapped rather than being `mx-auto max-w-3xl` themselves.
 
 The **colors** are the project's own: a dark slate surface with indigo and pink
 accents, plus a brand orange.
