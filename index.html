@@ -318,7 +318,9 @@
               <h3 class="mb-3 text-lg font-semibold text-white">Not a cipher</h3>
               <p class="leading-relaxed text-slate-300">
                 This is a visual encoding scheme, not a vetted cryptographic primitive. It has not been through cryptanalysis
-                and should not stand in for a real cipher where one is needed.
+                and should not stand in for a real cipher where one is needed. The generator is public and runs in your
+                browser, so a phrase somebody could guess can be found from its own pattern by trying candidates until one
+                matches. Choose a phrase the way you would choose a password.
               </p>
             </div>
           </div>
@@ -382,11 +384,6 @@
               </p>
             </li>
           </ul>
-
-          <p class="mx-auto mt-8 max-w-3xl text-center text-sm text-slate-400">
-            All four assume the phrase is chosen like a password. The generator is public and runs in the browser, so a
-            phrase somebody could guess can be found from the pattern by trying candidates until one matches.
-          </p>
         </div>
       </section>
     </main>
