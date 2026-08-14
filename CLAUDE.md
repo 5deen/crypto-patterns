@@ -84,18 +84,20 @@ in it against the project root, so keep those absolute-from-root. Anything in
 
 The **layout** comes from CloudCannon's MIT-licensed
 [SendIt](https://github.com/CloudCannon/sendit-astro-template) template —
-`py-16 sm:py-20` sections, a darker band for the closing content section, and
-the `title` + accented-suffix heading pattern. Its centred headings and
-alternating image rows are not used here.
+`max-w-7xl` containers, `py-16 sm:py-20` sections, a darker band for the closing
+content section, the `title` + accented-suffix heading pattern, and its
+**centered** section headings and intros. Its alternating image rows are not
+used, since the feature rows here carry no illustrations any more.
 
-Everything is **left-aligned and hangs off one edge**: every page-level
-container is `mx-auto max-w-7xl px-4 sm:px-6 lg:px-8`, no block carries
-`text-center`, and a narrower reading column (`max-w-2xl`, `max-w-3xl`,
-`lg:w-2/3`) is nested *inside* that container rather than centred on its own.
-The nav, the hero, every section heading and the legal-page body all start at
-the same x as a result — 112px at a 1440px viewport, 24px at 768. A block that
-sets its own `mx-auto` breaks that line, which is why the sub-page bodies are
-wrapped rather than being `mx-auto max-w-3xl` themselves.
+Section headings, section intros and the legal-page headers are centered blocks
+(`mx-auto ... text-center`); body copy inside a step or a legal section is
+left-aligned within its own column. A previous change flattened all of it to a
+single left edge and was reverted, so leave the centering alone unless asked —
+but note what that change surfaced: the hero container is `max-w-[1500px]`
+rather than `max-w-7xl`, and the legal-page bodies set `mx-auto max-w-3xl` on
+the body element itself. Neither shares the `max-w-7xl` grid the nav and the
+sections use, which is invisible while those blocks are centered and obvious the
+moment anything is left-aligned.
 
 The **colors** are the project's own: a dark slate surface with indigo and pink
 accents, plus a brand orange.
