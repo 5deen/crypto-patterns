@@ -237,12 +237,17 @@ a browser. It saves the document the generator returned rather than the copy in
 the panel, which has picked up a `role`, an `aria-label` and layout classes that
 do not belong in a file.
 
-The saved file is called `geistgrid-pattern.svg` and is **not** named after the
-phrase. A filename is the most visible part of a file — a directory listing, a
-share sheet and an attachment header all show it without anyone opening
-anything — so naming it after the phrase would undo the stripping above. Two
-saves in one folder collide and the browser suffixes a number; that is the
-accepted cost.
+Saved files are called `geistgrid-pattern-YYYYMMDD-HHMMSS.svg`, in local time,
+and are **not** named after the phrase. A filename is the most visible part of a
+file — a directory listing, a share sheet and an attachment header all show it
+without anyone opening anything — so naming it after the phrase would undo the
+stripping above. The stamp is what keeps one save from overwriting the next.
+
+Reading the clock there does not break the determinism invariant: it names the
+file and never reaches the document. Save the same phrase twice and the two
+files differ by their name and not by a byte inside. Keep it that way — a
+timestamp *in* an SVG would make the same phrase produce two different
+documents and destroy the comparison the whole scheme rests on.
 
 Each library gets its **own directory** under `public/medigeist/`, rather than
 one directory of suffixed files, because `release.js` locates its binary with

@@ -38,17 +38,30 @@ function initStaticPatterns() {
 }
 
 /**
- * The name a saved pattern is offered under.
+ * The name a saved pattern is offered under: `geistgrid-pattern-<when>.svg`.
  *
- * Deliberately says nothing about the phrase. Naming the file after what was
- * typed would put the phrase back on the outside of a document we just took it
- * out of — and in the more visible place of the two, since a filename shows up
- * in a directory listing, a share sheet and an attachment header without anyone
- * opening anything. Two saves in one folder collide, and the browser resolves
- * that by suffixing a number; that is the cost of not labelling the file with
- * the secret it was drawn from.
+ * The name deliberately says nothing about the phrase. Naming the file after
+ * what was typed would put the phrase back on the outside of a document we just
+ * took it out of — and in the more visible place of the two, since a filename
+ * shows up in a directory listing, a share sheet and an attachment header
+ * without anyone opening anything.
+ *
+ * A local-time `YYYYMMDD-HHMMSS` stamp separates one save from the next: it
+ * sorts chronologically, survives every filesystem, and tells the reader when
+ * they saved rather than what they typed. Two saves inside the same second
+ * still collide, and the browser resolves that by suffixing a number.
+ *
+ * The clock is read for the *name* only. It never reaches the document, which
+ * stays a pure function of the phrase and the library — save the same phrase
+ * twice and the two files differ by their name and not by a byte inside.
  */
-const FILENAME = 'geistgrid-pattern.svg';
+function filename(now = new Date()) {
+  const pad = (value) => String(value).padStart(2, '0');
+  const date = `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}`;
+  const time = `${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+
+  return `geistgrid-pattern-${date}-${time}.svg`;
+}
 
 /**
  * The live "try it" panel, driven by the Medigeist generator.
@@ -164,7 +177,7 @@ function initDemo() {
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = FILENAME;
+      link.download = filename();
       link.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
     });
