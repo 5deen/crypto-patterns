@@ -129,6 +129,23 @@ Do not skip this — a wrong build fails silently and looks fine in the markup.
    ~9%. That breaks the "one wrong character is visible" claim the whole page
    rests on, so report the number rather than shipping it silently.
 
+   `rect.canvas` is the only fill that varies per block, and the fix when it does
+   not is `recolor.py`, next to this file:
+
+   ```bash
+   python3 .claude/skills/add-library/recolor.py medigeist-src/<binding>.ts \
+     --reference medigeist-src/<a-library-that-reads-well>.ts \
+     --hue 196 224 --light 38 77 --sat 24 52
+   ```
+
+   It gives each block the reference library's *position* within its hue,
+   lightness and saturation ranges, remapped into the bands you pass — so the
+   two libraries share a cadence and differ only in colour family. Pick bands
+   around the library's existing fill so it keeps its character; the light range
+   is what does most of the work, since contrast between neighbouring blocks is
+   what a reader actually sees. Rebuild and re-measure afterwards: it rewrites
+   the source, not the wasm.
+
 ## 7. Update the docs in the same change
 
 - `public/medigeist/README.md` — the list of shipped libraries.

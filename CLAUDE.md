@@ -225,15 +225,25 @@ Their AssemblyScript sources live in `medigeist-src/`, outside `public/` so they
 are not served. Keep them: without them a library cannot be rebuilt, and the
 generator repository is a separate one this repo cannot push to.
 
-**The two libraries are not equally legible, and it is a property of the blocks
-rather than of the generator.** Every block in `v3.12` carries its own canvas
-fill — 193 distinct colors — while every block in `v2.11` shares one
-(`#a7bdce`), leaving thin orientation lines as the only difference between them.
-Measured by rasterizing a phrase and the same phrase one character off, `v3.12`
-changes about 9.5% of pixels and `v2.11` about 0.6%: the second is deterministic
-and byte-different, but a reader cannot see the change. Any new library is worth
-checking the same way before it ships, because the page's central claim is that
-a wrong character is *visible*.
+**A library is only useful if its blocks look different from each other**, and
+that is a property of the blocks rather than of the generator. `rect.canvas` is
+the only fill that varies per block; the geometry is thin lines over it. As
+supplied, every block in `v2.11` shared one fill (`#a7bdce`), so the library
+rendered as a near-uniform field: fully deterministic, but a reader could not
+see a changed character. Measured by rasterizing a phrase against the same
+phrase one character off, it moved **0.6%** of pixels where `v3.12` moved 9.5%.
+
+`v2.11` now carries 193 distinct fills and measures **9.47%**, the same as
+`v3.12`, because the palette was not invented — `.claude/skills/add-library/recolor.py`
+takes each block's position within the reference library's hue, lightness and
+saturation ranges and remaps it into the target's own bands. The two libraries
+therefore share a cadence and differ only in color family, blue against orange.
+Nothing but the canvas fill is rewritten; every block's geometry, line color and
+`<desc>` are byte-identical to what was supplied.
+
+Check any new library the same way before it ships. The page's central claim is
+that a wrong character is *visible*, and a library can satisfy every other
+invariant while failing that one silently.
 
 Every single-library build exposes exactly one image set, always called `set0`,
 because `setMapsArray()` in the generator names sets positionally. That name is
