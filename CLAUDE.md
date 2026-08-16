@@ -254,7 +254,7 @@ and are right to:
 | --- | --- | --- |
 | `v3.12` | 9.47% | 97.9% |
 | `v3.13` | 2.18% | 94.9% |
-| `v3.14` | 3.03% | 93.4% |
+| `v3.14` | 3.39% | 93.6% |
 | `v2.11` | 9.47% | — |
 
 The right-hand column is the ceiling — two unrelated phrases — and every library
@@ -266,7 +266,10 @@ uniform dot field was not. Recoloring it into greys was tried, measured 6.31%,
 and looked worse — mid-grey canvases sap the contrast the black lines depend on.
 `v3.14` splits each block's background into four quadrants in two high-contrast
 colors, so its blocks are plainly distinct even though a one-character change
-often swaps in a block sharing some quadrants.
+often swaps in a block sharing some quadrants. Its quadrant rects **overlap by
+design** — 0.504 wide at a 0.496 offset rather than exact halves — because
+abutting them at 0.5 leaves an antialiasing seam that draws a faint grid over
+every pattern. Keep the overlap if the blocks are ever regenerated.
 
 So read the measurement alongside the rendering. A low number is a reason to
 look, not a reason to recolor.
