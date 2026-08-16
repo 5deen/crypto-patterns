@@ -199,18 +199,19 @@ The demo under **Try it** runs [Medigeist](https://github.com/5deen/asc-set-gene
 an AssemblyScript program compiled to WebAssembly. `src/medigeist.js` wraps it;
 `createSVGDocument(ratio, set, text)` returns a complete, self-contained SVG.
 
-**There is one build per block library.** The demo ships four, each named
+**There is one build per block library.** The demo ships five, each named
 after the prefix its keys share, whose keys run `<id>_001` upwards:
 `cascading_orientation_pattern_v3.12` (193 blocks),
 `cascading_orientation_pattern_v3.13` (102),
-`cascading_orientation_pattern_v3.14` (128) and
+`cascading_orientation_pattern_v3.14` (128),
+`cascading_orientation_pattern_v3.15` (102) and
 `cascading_orientation_pattern_v2.11` (193). `LIBRARIES` in `medigeist.js` is
 the single list everything is built from: adding a build means adding an entry
 there and nothing else. The **Image set** picker is generated from it, and hides
 itself while there is only one library, since a select with one option is a
 control that cannot do anything.
 
-A library id can carry a **dot**, as all four of these do. AssemblyScript
+A library id can carry a **dot**, as all five of these do. AssemblyScript
 identifiers and module filenames cannot, so the map binding and the file under
 `medigeist-src/` use `_` where the id uses `.`
 (`cascading_orientation_pattern_v3_12`). The id with the dot is what the
@@ -255,6 +256,7 @@ and are right to:
 | `v3.12` | 9.47% | 97.9% |
 | `v3.13` | 2.18% | 94.9% |
 | `v3.14` | 3.39% | 93.6% |
+| `v3.15` | 2.26% | 95.0% |
 | `v2.11` | 9.47% | — |
 
 The right-hand column is the ceiling — two unrelated phrases — and every library
@@ -270,6 +272,14 @@ often swaps in a block sharing some quadrants. Its quadrant rects **overlap by
 design** — 0.504 wide at a 0.496 offset rather than exact halves — because
 abutting them at 0.5 leaves an antialiasing seam that draws a faint grid over
 every pattern. Keep the overlap if the blocks are ever regenerated.
+
+`v3.15` is `v3.13`'s structure in color: every block is a half-split of
+`#c7c7ff` against `#000057` at its own rotation, 102 distinct angles stepping
+about 3.53° from 1.70°, so the blocks differ by the *angle* of a high-contrast
+edge. Its single `rect.canvas` fill would let `recolor.py` run, and it should
+not: the variation is geometric and already legible, and recoloring would fight
+the design rather than rescue it. Its figures land where `v3.13`'s do, which is
+what a stated variation of it should do.
 
 So read the measurement alongside the rendering. A low number is a reason to
 look, not a reason to recolor.
