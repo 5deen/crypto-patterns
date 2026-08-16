@@ -42,6 +42,7 @@ export const GLYPH_LIMIT = 16;
 export const LIBRARIES = [
   { id: 'cascading_orientation_pattern_v3.12', label: 'Cascading orientation v3.12' },
   { id: 'cascading_orientation_pattern_v3.13', label: 'Cascading orientation v3.13' },
+  { id: 'cascading_orientation_pattern_v3.14', label: 'Cascading orientation v3.14' },
   { id: 'cascading_orientation_pattern_v2.11', label: 'Cascading orientation v2.11' },
 ];
 
