@@ -318,7 +318,7 @@ drawing:
 - **Drops every `<desc>`**, for the reason above. Verify this after changing the
   vendored build: the point is that the phrase does not appear anywhere in the
   saved bytes, not that one particular element is gone.
-- **Restates `width`/`height` as `1024`**, because the generator writes `100%`
+- **Restates `width`/`height` as `1080`**, because the generator writes `100%`
   for both — right for a responsive panel, unusable in a standalone file, which
   has no containing box to resolve a percentage against. The `viewBox` is left
   alone, so only the intrinsic size changes.
@@ -329,7 +329,7 @@ the panel, which has picked up a `role`, an `aria-label` and layout classes that
 do not belong in a file.
 
 **Download PNG** rasterizes that same document with `toPNG()` in `main.js`: blob
-URL → `Image` → `drawImage` onto a 1024² canvas → `toBlob()`. It lives in
+URL → `Image` → `drawImage` onto a 1080² canvas → `toBlob()`. It lives in
 `main.js` rather than `medigeist.js` because it needs the DOM, and that module
 stays usable outside a browser. Three things hold it up:
 

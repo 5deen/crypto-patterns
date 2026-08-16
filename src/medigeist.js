@@ -107,7 +107,7 @@ export async function renderPattern(text, id = DEFAULT_LIBRARY) {
 }
 
 /** Edge length, in pixels, stated on a document saved to a file. */
-export const DOWNLOAD_SIZE = 1024;
+export const DOWNLOAD_SIZE = 1080;
 
 /**
  * The document prepared for saving to a file.
