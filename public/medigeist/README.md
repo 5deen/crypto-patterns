@@ -3,9 +3,20 @@
 Prebuilt WebAssembly build of [asc-set-generator](https://github.com/5deen/asc-set-generator),
 vendored so the demo has no external dependency. MIT licensed.
 
-One directory per block library. The demo currently ships one,
-`cascading_maze_pattern`, named after its block keys — they run
-`cascading_maze_pattern_000` through `_099`. Each directory contains:
+One directory per block library, named after the prefix its block keys share.
+The demo ships two:
+
+| Directory | Blocks | Keys |
+| --- | --- | --- |
+| `cascading_orientation_pattern_v3.12` | 193 | `cascading_orientation_pattern_v3.12_001` … `_193` |
+| `cascading_orientation_pattern_v2.11` | 193 | `cascading_orientation_pattern_v2.11_001` … `_193` |
+
+A library name can carry a dot, as these do. AssemblyScript identifiers and
+module filenames cannot, so the map binding and the file under `medigeist-src/`
+use `_` where the id uses `.` — `cascading_orientation_pattern_v3_12`. The id
+with the dot is what the directory, `LIBRARIES` and the saved filename use.
+
+Each directory contains:
 
 - `release.wasm` — the compiled AssemblyScript module
 - `release.js` — the ESM binding. It resolves `release.wasm` relative to its own
@@ -29,10 +40,10 @@ which defeats dead-code elimination and leaves the build at 1 MB whatever set
 you asked for.
 
 In a checkout of asc-set-generator, with the library source copied into
-`assembly/lib/<name>.ts`:
+`assembly/lib/<binding>.ts`:
 
 ```bash
-NAME=cascading_maze_pattern
+NAME=cascading_orientation_pattern_v3_12
 cat > assembly/imagesets.ts <<INNER
 import { $NAME } from './lib/$NAME';
 import { SetParams, setImageSets } from './utils';
@@ -56,6 +67,17 @@ set in a single-library build has to be `set0`, which is the name
 `src/medigeist.js` passes to `createSVGDocument`.
 
 The map binding inside the source file must match the name used in the import.
-The uploaded source declared its map as `lib0`; it was renamed to
-`cascading_maze_pattern` throughout so the file, the binding, the build
-directory and the id in `LIBRARIES` all agree.
+The uploaded sources declared their map as `lib0` — `base64/config.json` in the
+generator repository holds that name under its `name` key, and it changes — so
+each was renamed to its own binding throughout, leaving the file, the binding
+and the id in `LIBRARIES` in agreement.
+
+Rename it **anchored to the statement forms**, `^export const lib0\b` and
+`^lib0\.set\(`. A bare search-and-replace also hits `lib0` inside the base64
+payloads, which corrupts block images while still building cleanly.
+
+`--sourceMap false` writes a stray file literally named `false` beside the
+output; delete it and `release.wat`, neither of which is vendored.
+
+Adding or removing a library end to end is written up as the `add-library` and
+`remove-library` skills under `.claude/skills/`.
