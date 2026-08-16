@@ -4,12 +4,13 @@ Prebuilt WebAssembly build of [asc-set-generator](https://github.com/5deen/asc-s
 vendored so the demo has no external dependency. MIT licensed.
 
 One directory per block library, named after the prefix its block keys share.
-The demo ships three:
+The demo ships four:
 
 | Directory | Blocks | Keys | Build |
 | --- | --- | --- | --- |
 | `cascading_orientation_pattern_v3.12` | 193 | `…_001` … `_193` | ~1.7 MB |
 | `cascading_orientation_pattern_v3.13` | 102 | `…_001` … `_102` | ~1.3 MB |
+| `cascading_orientation_pattern_v3.14` | 128 | `…_001` … `_128` | ~1.5 MB |
 | `cascading_orientation_pattern_v2.11` | 193 | `…_001` … `_193` | ~1.7 MB |
 
 The build size tracks the block count, which is the only thing that varies

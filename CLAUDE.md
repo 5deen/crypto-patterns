@@ -199,17 +199,18 @@ The demo under **Try it** runs [Medigeist](https://github.com/5deen/asc-set-gene
 an AssemblyScript program compiled to WebAssembly. `src/medigeist.js` wraps it;
 `createSVGDocument(ratio, set, text)` returns a complete, self-contained SVG.
 
-**There is one build per block library.** The demo ships three, each named
+**There is one build per block library.** The demo ships four, each named
 after the prefix its keys share, whose keys run `<id>_001` upwards:
 `cascading_orientation_pattern_v3.12` (193 blocks),
-`cascading_orientation_pattern_v3.13` (102) and
+`cascading_orientation_pattern_v3.13` (102),
+`cascading_orientation_pattern_v3.14` (128) and
 `cascading_orientation_pattern_v2.11` (193). `LIBRARIES` in `medigeist.js` is
 the single list everything is built from: adding a build means adding an entry
 there and nothing else. The **Image set** picker is generated from it, and hides
 itself while there is only one library, since a select with one option is a
 control that cannot do anything.
 
-A library id can carry a **dot**, as all three of these do. AssemblyScript
+A library id can carry a **dot**, as all four of these do. AssemblyScript
 identifiers and module filenames cannot, so the map binding and the file under
 `medigeist-src/` use `_` where the id uses `.`
 (`cascading_orientation_pattern_v3_12`). The id with the dot is what the
@@ -246,14 +247,36 @@ Check any new library the same way before it ships. The page's central claim is
 that a wrong character is *visible*, and a library can satisfy every other
 invariant while failing that one silently.
 
-**The number is evidence, not a verdict.** `v3.13` also carries a single canvas
-fill — white — and measures **2.18%**, but it ships unrecolored on purpose: it
-is black line art on white, so its blocks differ by drawing rather than by
-color, and the picture is legibly structured where `v2.11`'s uniform dot field
-was not. Recoloring it into greys was tried and measured 6.31%, a better number
-and a worse picture: mid-grey canvases sap the contrast the black lines depend
-on. Read the measurement alongside the rendering, and treat a low number as a
-reason to look rather than a reason to recolor.
+**The number is evidence, not a verdict.** Two libraries ship with a low one
+and are right to:
+
+| Library | One character off | Unrelated phrase |
+| --- | --- | --- |
+| `v3.12` | 9.47% | 97.9% |
+| `v3.13` | 2.18% | 94.9% |
+| `v3.14` | 3.03% | 93.4% |
+| `v2.11` | 9.47% | — |
+
+The right-hand column is the ceiling — two unrelated phrases — and every library
+clears 93%, so they all discriminate. What varies is how much of the picture a
+*single* character moves, and a low figure there means something different in
+each case. `v3.13` is black line art on white: its blocks differ by drawing
+rather than by fill, and the picture is legibly structured where `v2.11`'s
+uniform dot field was not. Recoloring it into greys was tried, measured 6.31%,
+and looked worse — mid-grey canvases sap the contrast the black lines depend on.
+`v3.14` splits each block's background into four quadrants in two high-contrast
+colors, so its blocks are plainly distinct even though a one-character change
+often swaps in a block sharing some quadrants.
+
+So read the measurement alongside the rendering. A low number is a reason to
+look, not a reason to recolor.
+
+**`recolor.py` does not fit every library.** It rewrites the fill in a
+`rect.canvas` rule, which is how `v3.12`, `v2.11` and `v3.13` carry color.
+`v3.14` has no such rule — its quadrants are `<rect>` elements with inline
+`fill` attributes — so the script finds nothing and stops rather than guessing.
+That is the correct outcome: a library coloring itself another way needs its own
+treatment, not this one.
 
 Every single-library build exposes exactly one image set, always called `set0`,
 because `setMapsArray()` in the generator names sets positionally. That name is
@@ -271,7 +294,8 @@ Six things about the generator constrain the page:
   fetched lazily, when the demo scrolls near or the field is focused — never on
   page load — cached per library, and keystrokes are debounced. Do not move the
   first render back to load time; the demo sits well below the fold. The size
-  tracks the block count: 102 blocks land at ~1.3 MB, 193 at ~1.7 MB.
+  tracks the block count: 102 blocks land at ~1.3 MB, 128 at ~1.5 MB, 193 at
+  ~1.7 MB.
 - **It runs entirely in the browser**, with every file served from this origin,
   so `privacy.html` stays true: no external request, and the phrase never leaves
   the machine.

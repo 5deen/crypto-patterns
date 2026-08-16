@@ -146,6 +146,17 @@ Do not skip this — a wrong build fails silently and looks fine in the markup.
    what a reader actually sees. Rebuild and re-measure afterwards: it rewrites
    the source, not the wasm.
 
+   **The number is evidence, not a verdict, and the tool does not fit every
+   library.** Measure two unrelated phrases as well: that is the library's
+   ceiling, and every library shipped so far clears 93%, so a low
+   one-character figure means the change is small rather than that the library
+   cannot discriminate. `v3.13` measures 2.18% and ships unrecoloured because it
+   is line art whose blocks differ by drawing; `v3.14` measures 3.03% and has no
+   `rect.canvas` rule at all — its background is four `<rect>` quadrants with
+   inline fills — so `recolor.py` stops rather than guessing, which is right.
+   Recolour when the *rendering* is uniform, as `v2.11`'s was, not when a number
+   is low. Report both figures either way.
+
 ## 7. Update the docs in the same change
 
 - `public/medigeist/README.md` — the list of shipped libraries.
