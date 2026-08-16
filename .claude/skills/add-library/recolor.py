@@ -65,15 +65,27 @@ def main():
     text = target.read_text(encoding='utf-8')
     reference = [canvas_hls(p) for p in payloads(pathlib.Path(args.reference).read_text(encoding='utf-8'))]
     count = len(payloads(text))
-    if len(reference) != count:
-        raise SystemExit(f'block counts differ: reference {len(reference)}, target {count}')
+    if not reference or not count:
+        raise SystemExit('reference or target carries no blocks')
 
     spans = [(min(c), max(c)) for c in zip(*reference)]
     index = iter(range(count))
 
+    def sampled(i):
+        """The reference's rhythm at target position i.
+
+        Libraries differ in size — 102 blocks against 193 — so the reference is
+        walked proportionally rather than one for one. What carries over is the
+        shape of the sweep, not a block-to-block correspondence, which would not
+        mean anything between two different sets anyway.
+        """
+        if count == 1:
+            return reference[0]
+        return reference[round(i * (len(reference) - 1) / (count - 1))]
+
     def recolor(match):
         i = next(index)
-        h, l, s = reference[i]
+        h, l, s = sampled(i)
         hue = rescale(h, spans[0], tuple(args.hue))
         light = rescale(l, spans[1], tuple(args.light))
         sat = rescale(s, spans[2], tuple(args.sat))
