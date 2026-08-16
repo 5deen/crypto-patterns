@@ -28,16 +28,20 @@ export const GLYPH_LIMIT = 16;
  * The block libraries offered by the demo, in order.
  *
  * `id` is the directory under public/medigeist and the name the library has in
- * the generator — taken from the block keys, which run `<id>_000` upwards.
- * `label` is what the picker shows.
+ * the generator — the prefix its block keys share, which run `<id>_001` upwards.
+ * `label` is what the picker shows. The first entry is the default.
  *
- * The demo ships one library today. Everything downstream is written for a
- * list, so adding a build means adding an entry here and nothing else: the
- * picker is generated from this, and appears only once there is a choice to
- * make.
+ * Everything downstream is written for a list, so adding a build means adding
+ * an entry here and nothing else: the picker is generated from this, and shows
+ * itself only once there is more than one choice to make.
+ *
+ * A pattern is only comparable against another drawn from the same library.
+ * Two entries here are two separate schemes that happen to share a demo, not
+ * two views of one.
  */
 export const LIBRARIES = [
-  { id: 'cascading_maze_pattern', label: 'Cascading maze' },
+  { id: 'cascading_orientation_pattern_v3.12', label: 'Cascading orientation v3.12' },
+  { id: 'cascading_orientation_pattern_v2.11', label: 'Cascading orientation v2.11' },
 ];
 
 /** The library the demo opens with. */

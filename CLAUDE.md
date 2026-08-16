@@ -199,17 +199,41 @@ The demo under **Try it** runs [Medigeist](https://github.com/5deen/asc-set-gene
 an AssemblyScript program compiled to WebAssembly. `src/medigeist.js` wraps it;
 `createSVGDocument(ratio, set, text)` returns a complete, self-contained SVG.
 
-**There is one build per block library.** The demo ships one today,
-`cascading_maze_pattern` — 100 blocks, named after its keys, which run
-`cascading_maze_pattern_000` through `_099`. `LIBRARIES` in `medigeist.js` is
-the single list everything is built from: adding a build means adding an entry
-there and nothing else. The **Image set** picker is generated from it and stays
-hidden while there is only one library, since a select with one option is a
+**There is one build per block library.** The demo ships two, each 193 blocks
+and named after the prefix its keys share:
+`cascading_orientation_pattern_v3.12` and `cascading_orientation_pattern_v2.11`,
+whose keys run `<id>_001` through `_193`. `LIBRARIES` in `medigeist.js` is the
+single list everything is built from: adding a build means adding an entry there
+and nothing else. The **Image set** picker is generated from it, and hides
+itself while there is only one library, since a select with one option is a
 control that cannot do anything.
 
-Its AssemblyScript source lives in `medigeist-src/`, outside `public/` so it is
-not served. Keep it: without it the library cannot be rebuilt, and the
+A library id can carry a **dot**, as both of these do. AssemblyScript
+identifiers and module filenames cannot, so the map binding and the file under
+`medigeist-src/` use `_` where the id uses `.`
+(`cascading_orientation_pattern_v3_12`). The id with the dot is what the
+vendored directory, the `LIBRARIES` entry and the saved filename use; the
+filename slug turns it into `v3-12`.
+
+Adding and removing a library are written up as the `add-library` and
+`remove-library` skills in `.claude/skills/`. They exist because the work spans
+four places — the build, `public/medigeist/<id>/`, `medigeist-src/` and
+`LIBRARIES` — and missing one leaves either a picker entry that 404s or a
+megabyte of dead weight.
+
+Their AssemblyScript sources live in `medigeist-src/`, outside `public/` so they
+are not served. Keep them: without them a library cannot be rebuilt, and the
 generator repository is a separate one this repo cannot push to.
+
+**The two libraries are not equally legible, and it is a property of the blocks
+rather than of the generator.** Every block in `v3.12` carries its own canvas
+fill — 193 distinct colors — while every block in `v2.11` shares one
+(`#a7bdce`), leaving thin orientation lines as the only difference between them.
+Measured by rasterizing a phrase and the same phrase one character off, `v3.12`
+changes about 9.5% of pixels and `v2.11` about 0.6%: the second is deterministic
+and byte-different, but a reader cannot see the change. Any new library is worth
+checking the same way before it ships, because the page's central claim is that
+a wrong character is *visible*.
 
 Every single-library build exposes exactly one image set, always called `set0`,
 because `setMapsArray()` in the generator names sets positionally. That name is
@@ -223,10 +247,11 @@ Six things about the generator constrain the page:
   byte-identical document, and one changed character changes the picture. That
   is what the page claims, and it is the reason this generator fits at all.
   Patterns are only comparable within one library.
-- **The build is ~950 KB and each render is ~150 KB of SVG.** Builds are
+- **Each build is ~1.7 MB and each render is ~150 KB of SVG.** Builds are
   fetched lazily, when the demo scrolls near or the field is focused — never on
   page load — cached per library, and keystrokes are debounced. Do not move the
-  first render back to load time; the demo sits well below the fold.
+  first render back to load time; the demo sits well below the fold. The size
+  tracks the block count: 193 blocks cost roughly what 100 did plus half again.
 - **It runs entirely in the browser**, with every file served from this origin,
   so `privacy.html` stays true: no external request, and the phrase never leaves
   the machine.
