@@ -4,12 +4,16 @@ Prebuilt WebAssembly build of [asc-set-generator](https://github.com/5deen/asc-s
 vendored so the demo has no external dependency. MIT licensed.
 
 One directory per block library, named after the prefix its block keys share.
-The demo ships two:
+The demo ships three:
 
-| Directory | Blocks | Keys |
-| --- | --- | --- |
-| `cascading_orientation_pattern_v3.12` | 193 | `cascading_orientation_pattern_v3.12_001` … `_193` |
-| `cascading_orientation_pattern_v2.11` | 193 | `cascading_orientation_pattern_v2.11_001` … `_193` |
+| Directory | Blocks | Keys | Build |
+| --- | --- | --- | --- |
+| `cascading_orientation_pattern_v3.12` | 193 | `…_001` … `_193` | ~1.7 MB |
+| `cascading_orientation_pattern_v3.13` | 102 | `…_001` … `_102` | ~1.3 MB |
+| `cascading_orientation_pattern_v2.11` | 193 | `…_001` … `_193` | ~1.7 MB |
+
+The build size tracks the block count, which is the only thing that varies
+between them at this scale.
 
 A library name can carry a dot, as these do. AssemblyScript identifiers and
 module filenames cannot, so the map binding and the file under `medigeist-src/`

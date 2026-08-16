@@ -199,16 +199,17 @@ The demo under **Try it** runs [Medigeist](https://github.com/5deen/asc-set-gene
 an AssemblyScript program compiled to WebAssembly. `src/medigeist.js` wraps it;
 `createSVGDocument(ratio, set, text)` returns a complete, self-contained SVG.
 
-**There is one build per block library.** The demo ships two, each 193 blocks
-and named after the prefix its keys share:
-`cascading_orientation_pattern_v3.12` and `cascading_orientation_pattern_v2.11`,
-whose keys run `<id>_001` through `_193`. `LIBRARIES` in `medigeist.js` is the
-single list everything is built from: adding a build means adding an entry there
-and nothing else. The **Image set** picker is generated from it, and hides
+**There is one build per block library.** The demo ships three, each named
+after the prefix its keys share, whose keys run `<id>_001` upwards:
+`cascading_orientation_pattern_v3.12` (193 blocks),
+`cascading_orientation_pattern_v3.13` (102) and
+`cascading_orientation_pattern_v2.11` (193). `LIBRARIES` in `medigeist.js` is
+the single list everything is built from: adding a build means adding an entry
+there and nothing else. The **Image set** picker is generated from it, and hides
 itself while there is only one library, since a select with one option is a
 control that cannot do anything.
 
-A library id can carry a **dot**, as both of these do. AssemblyScript
+A library id can carry a **dot**, as all three of these do. AssemblyScript
 identifiers and module filenames cannot, so the map binding and the file under
 `medigeist-src/` use `_` where the id uses `.`
 (`cascading_orientation_pattern_v3_12`). The id with the dot is what the
@@ -245,6 +246,15 @@ Check any new library the same way before it ships. The page's central claim is
 that a wrong character is *visible*, and a library can satisfy every other
 invariant while failing that one silently.
 
+**The number is evidence, not a verdict.** `v3.13` also carries a single canvas
+fill — white — and measures **2.18%**, but it ships unrecolored on purpose: it
+is black line art on white, so its blocks differ by drawing rather than by
+color, and the picture is legibly structured where `v2.11`'s uniform dot field
+was not. Recoloring it into greys was tried and measured 6.31%, a better number
+and a worse picture: mid-grey canvases sap the contrast the black lines depend
+on. Read the measurement alongside the rendering, and treat a low number as a
+reason to look rather than a reason to recolor.
+
 Every single-library build exposes exactly one image set, always called `set0`,
 because `setMapsArray()` in the generator names sets positionally. That name is
 hard-coded in `medigeist.js`; it is not a free choice.
@@ -257,11 +267,11 @@ Six things about the generator constrain the page:
   byte-identical document, and one changed character changes the picture. That
   is what the page claims, and it is the reason this generator fits at all.
   Patterns are only comparable within one library.
-- **Each build is ~1.7 MB and each render is ~150 KB of SVG.** Builds are
+- **A build is 1.3–1.7 MB and each render is ~150 KB of SVG.** Builds are
   fetched lazily, when the demo scrolls near or the field is focused — never on
   page load — cached per library, and keystrokes are debounced. Do not move the
   first render back to load time; the demo sits well below the fold. The size
-  tracks the block count: 193 blocks cost roughly what 100 did plus half again.
+  tracks the block count: 102 blocks land at ~1.3 MB, 193 at ~1.7 MB.
 - **It runs entirely in the browser**, with every file served from this origin,
   so `privacy.html` stays true: no external request, and the phrase never leaves
   the machine.
